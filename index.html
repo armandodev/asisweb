@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TODO: Inicio | Asignaturas -->
     <title>Iniciar sesión | CeTIS no. 121</title>
+
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
   </head>
   <body>
     <dialog id="dm-welcome" class="dm" open>
-      <h3 class="dm-welcome-title">
-        BIENVENIDO(A),
-        <span class="dm-welcome-title-span">(Nombre del docente)</span>
-      </h3>
-      <button id="dm-welcome-close">Cerrar</button>
+      <div class="dm-wrapper">
+        <h3 class="dm-welcome-title">
+          BIENVENIDO(A),
+          <span class="dm-welcome-title-span">(Nombre del docente)</span>
+        </h3>
+        <button id="dm-welcome-close">Cerrar</button>
+      </div>
     </dialog>
 
     <!-- <button id="dm-welcome-show">Modal</button> -->
