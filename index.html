@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TODO: Inicio | Asignaturas -->
-    <title>Iniciar sesión | CeTIS no. 121</title>
+    <title>Iniciar sesión | CETIS 121</title>
 
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/global.css" />
@@ -24,43 +24,91 @@
     </dialog>
 
     <header id="th">
-      <h1 id="th-title">Asignaturas</h1>
+      <div class="th-wrapper">
+        <h1 id="th-title">Asignaturas</h1>
 
-      <nav id="th-nav">
-        <ul id="th-nav-links">
-          <li class="th-nav-link active">
-            <a href="">Inicio</a>
-          </li>
-          <li class="th-nav-link">
-            <a href="">Horario</a>
-          </li>
-          <li class="th-nav-link">
-            <a href="">Asignaturas</a>
-          </li>
-          <li class="th-nav-link">
-            <a href="">Reportes</a>
-          </li>
-        </ul>
-      </nav>
+        <nav id="th-nav">
+          <ul id="th-nav-links">
+            <li class="th-nav-link active">
+              <a href="">Inicio</a>
+            </li>
+            <li class="th-nav-link">
+              <a href="">Horario</a>
+            </li>
+            <li class="th-nav-link">
+              <a href="">Asignaturas</a>
+            </li>
+            <li class="th-nav-link">
+              <a href="">Reportes</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <!-- <main id="main"> -->
-    <!-- <section id="m-subjects">
-        <article class="m-subject">
-          <header class="m-subject-header">
-            <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
-          </header>
-          <p class="m-subject-group">
-            <span class="grade">3°</span>
-            <span class="group">A</span>
-            <span class="cereer">Informática</span>
-          </p>
-          <footer class="m-subject-footer">
-            <a href="./" class="m-subject-footer-link">Tomar asistencia</a>
-          </footer>
-        </article>
-      </section> -->
-    <!-- <section id="m-login">
+    <main id="main">
+      <section id="m-subjects">
+        <a class="m-subject-wrapper-link" href="./">
+          <article class="m-subject">
+            <header class="m-subject-header">
+              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
+            </header>
+            <p class="m-subject-group">
+              <span class="grade-group">
+                Grado y grupo:
+                <span class="grade">3°</span>
+                <span class="group">A</span>
+              </span>
+              <span class="grade-group">
+                Grado y grupo:
+                <span class="grade">3°</span>
+                <span class="group">A</span>
+              </span>
+              <span class="cereer">Especialidad: Informática</span>
+            </p>
+            <footer class="m-subject-footer">
+              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
+            </footer>
+          </article>
+        </a>
+        <a class="m-subject-wrapper-link" href="./">
+          <article class="m-subject">
+            <header class="m-subject-header">
+              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
+            </header>
+            <p class="m-subject-group">
+              <span class="grade-group">
+                Grado y grupo:
+                <span class="grade">3°</span>
+                <span class="group">A</span>
+              </span>
+              <span class="cereer">Especialidad: Informática</span>
+            </p>
+            <footer class="m-subject-footer">
+              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
+            </footer>
+          </article>
+        </a>
+        <a class="m-subject-wrapper-link" href="./">
+          <article class="m-subject">
+            <header class="m-subject-header">
+              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
+            </header>
+            <p class="m-subject-group">
+              <span class="grade-group">
+                Grado y grupo:
+                <span class="grade">3°</span>
+                <span class="group">A</span>
+              </span>
+              <span class="cereer">Especialidad: Informática</span>
+            </p>
+            <footer class="m-subject-footer">
+              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
+            </footer>
+          </article>
+        </a>
+      </section>
+      <!-- <section id="m-login">
         <h1 id="m-login-title">Inicia sesión</h1>
         <form action="./" method="post" id="m-login-form">
           <label>
@@ -92,10 +140,10 @@
 
         <a class="m-login-link" href="./">¿Olvidaste tu contraseña?</a>
       </section> -->
-    <!-- </main> -->
+    </main>
 
-    <!-- <footer id="bf">
-      <small>&copy; CeTIS no. 121</small>
-    </footer> -->
+    <footer id="bf">
+      <small>&copy; CETIS 121</small>
+    </footer>
   </body>
 </html>
