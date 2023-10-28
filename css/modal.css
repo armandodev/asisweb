@@ -1,5 +1,15 @@
-.dm {
-  display: grid;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+dialog.dm {
   place-items: center;
   background: rgb(0 0 0 / 20%);
   width: 100%;
@@ -10,6 +20,15 @@
   top: 0;
   left: 0;
   z-index: 9999;
+}
+
+dialog.dm:open {
+  display: grid;
+  animation: fadeIn 0.3s ease-in-out;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  -moz-animation: fadeIn 0.3s ease-in-out;
+  -ms-animation: fadeIn 0.3s ease-in-out;
+  -o-animation: fadeIn 0.3s ease-in-out;
 }
 
 .dm-wrapper {
@@ -30,4 +49,30 @@
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+}
+
+.dm-button {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.3rem 1rem;
+  border-radius: 0.2rem;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  -ms-border-radius: 0.2rem;
+  -o-border-radius: 0.2rem;
+  border: 2px solid #222;
+  background: #fff;
+  color: #222;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.dm-button:hover {
+  background: #222;
+  color: #fff;
 }
