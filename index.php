@@ -1,30 +1,38 @@
+<?php
+require_once './includes/session.php';
+
+$isLogged = isset($_SESSION['user']) ? true : false;
+?>
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Inicio | Asignaturas -->
-    <title>Iniciar sesión | CETIS 121</title>
 
-    <link rel="stylesheet" href="./css/normalize.css" />
-    <link rel="stylesheet" href="./css/global.css" />
-    <link rel="stylesheet" href="./css/modal.css" />
-    <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/footer.css" />
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="stylesheet" href="./css/login-form.css" />
-  </head>
-  <body>
-    <dialog id="dm-welcome" class="dm">
-      <div class="dm-wrapper">
-        <h3 class="dm-welcome-title">
-          BIENVENIDO(A),
-          <span class="dm-welcome-title-span">(Nombre del docente)</span>
-        </h3>
-        <button id="dm-welcome-close" class="dm-button">Cerrar</button>
-      </div>
-    </dialog>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- TODO: Inicio | Asignaturas -->
+  <title>Iniciar sesión | CETIS 121</title>
 
+  <link rel="stylesheet" href="./css/normalize.css" />
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/modal.css" />
+  <link rel="stylesheet" href="./css/header.css" />
+  <link rel="stylesheet" href="./css/footer.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <link rel="stylesheet" href="./css/login-form.css" />
+</head>
+
+<body>
+  <dialog id="dm-welcome" class="dm">
+    <div class="dm-wrapper">
+      <h3 class="dm-welcome-title">
+        BIENVENIDO(A),
+        <span class="dm-welcome-title-span">(Nombre del docente)</span>
+      </h3>
+      <button id="dm-welcome-close" class="dm-button">Cerrar</button>
+    </div>
+  </dialog>
+
+  <?php if ($isLogged) { ?>
     <header id="th">
       <div class="th-wrapper">
         <h1 id="th-title">Asignaturas</h1>
@@ -47,9 +55,11 @@
         </nav>
       </div>
     </header>
+  <?php } ?>
 
-    <main id="main">
-      <!-- <section id="m-subjects">
+  <main id="main">
+    <?php if ($isLogged) { ?>
+      <section id="m-subjects">
         <a class="m-subject-wrapper-link" href="./">
           <article class="m-subject">
             <header class="m-subject-header">
@@ -109,34 +119,19 @@
             </footer>
           </article>
         </a>
-      </section> -->
+      </section>
+    <?php } else { ?>
       <section id="m-login">
         <h1 id="m-login-title">Inicia sesión</h1>
         <form action="./" method="post" id="m-login-form">
           <label>
             RFC:
-            <input
-              type="text"
-              name="rfc"
-              id="rfc"
-              placeholder="Ej. MAAJ000101HDFRRL09"
-              minlength="12"
-              maxlength="14"
-              required
-            />
+            <input type="text" name="rfc" id="rfc" placeholder="Ej. MAAJ000101HDFRRL09" minlength="12" maxlength="14" required />
           </label>
 
           <label>
             Contraseña:
-            <input
-              type="text"
-              name="password"
-              id="password"
-              placeholder="Contraseña"
-              minlength="6"
-              maxlength="16"
-              required
-            />
+            <input type="text" name="password" id="password" placeholder="Contraseña" minlength="6" maxlength="16" required />
           </label>
 
           <input id="login-submit" type="submit" value="Iniciar sesión" />
@@ -144,10 +139,12 @@
 
         <a class="m-login-link" href="./">¿Olvidaste tu contraseña?</a>
       </section>
-    </main>
+    <?php } ?>
+  </main>
 
-    <footer id="bf">
-      <small id="bf-copyright">&copy; CETIS 121</small>
-    </footer>
-  </body>
+  <footer id="bf">
+    <small id="bf-copyright">&copy; CETIS 121</small>
+  </footer>
+</body>
+
 </html>
