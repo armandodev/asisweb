@@ -2,6 +2,7 @@
 require_once './includes/session.php';
 
 $isLogged = isset($_SESSION['user']) ? true : false;
+$welcomeMessage = !isset($_SESSION['welcomeMessage']) ? 'open' : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -22,7 +23,7 @@ $isLogged = isset($_SESSION['user']) ? true : false;
 </head>
 
 <body>
-  <dialog id="dm-welcome" class="dm">
+  <dialog id="dm-welcome" class="dm" <?php echo $welcomeMessage ?>>
     <div class="dm-wrapper">
       <h3 class="dm-welcome-title">
         BIENVENIDO(A),

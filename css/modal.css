@@ -22,7 +22,7 @@ dialog.dm {
   z-index: 9999;
 }
 
-dialog.dm:open {
+dialog.dm[open=""] {
   display: grid;
   animation: fadeIn 0.3s ease-in-out;
   -webkit-animation: fadeIn 0.3s ease-in-out;

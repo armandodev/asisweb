@@ -9,6 +9,10 @@
   max-width: none;
 }
 
+#dm-welcome .dm-wrapper {
+  justify-content: center;
+}
+
 #main {
   min-height: 80vh;
 }
