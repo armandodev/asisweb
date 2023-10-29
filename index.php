@@ -1,8 +1,6 @@
 <?php
 require_once './includes/session.php';
 
-$isLogged = isset($_SESSION['user']) ? true : false;
-
 if (isset($_SESSION['login']) && $_SESSION['login'] && $isLogged) {
   $welcomeMessage = 'open';
   unset($_SESSION['login']);
