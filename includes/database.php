@@ -1,9 +1,12 @@
 <?php
 class Database extends SQLite3
 {
+  private $path;
+
   function __construct()
   {
-    $this->open("./../asisweb.db");
+    $this->path = realpath(__DIR__ . "/../asisweb.db");
+    $this->open($this->path);
   }
 
   public function selectUser($rfc)

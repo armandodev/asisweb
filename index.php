@@ -61,6 +61,9 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
             <li class="th-nav-link">
               <a href="">Reportes</a>
             </li>
+            <li class="th-nav-link">
+              <a href="./auth/logout.php">Cerrar sesión</a>
+            </li>
           </ul>
         </nav>
       </div>
