@@ -14,7 +14,7 @@ class Database extends SQLite3
     $stmt = $this->prepare($query);
 
     if (!$stmt) {
-      throw new Exception('Error al preparar/ejecutar la consulta', 4);
+      throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
     }
 
     $stmt->bindParam(':rfc', $rfc);
@@ -22,14 +22,14 @@ class Database extends SQLite3
     $result = $stmt->execute();
 
     if (!$result) {
-      throw new Exception('Error al preparar/ejecutar la consulta', 4);
+      throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
     }
 
     // Obtén el resultado
     $user = $result->fetchArray(SQLITE3_ASSOC);
 
     if (!$user) {
-      throw new Exception('El usuario no existe', 5);
+      throw new Exception(ERROR_MESSAGES[ERROR_USER_NOT_FOUND], ERROR_USER_NOT_FOUND);
     }
 
     return $user;
@@ -38,7 +38,7 @@ class Database extends SQLite3
   public function login($user, $password)
   {
     if (!password_verify($password . $user['salt'], $user['password'])) {
-      throw new Exception('La contraseña es incorrecta', 6);
+      throw new Exception(ERROR_MESSAGES[ERROR_WRONG_PASSWORD], ERROR_WRONG_PASSWORD);
     }
 
     $_SESSION['user'] = $user;
