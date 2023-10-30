@@ -27,7 +27,7 @@
 .dm-welcome-title-span {
   display: block;
   color: #07b;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 #main {
@@ -94,6 +94,8 @@
 }
 
 .m-subject-footer-link {
+  border: none;
+  cursor: pointer;
   text-decoration: none;
   background: #07b;
   color: #fff;

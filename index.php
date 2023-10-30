@@ -36,7 +36,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
     <div class="dm-wrapper">
       <h3 class="dm-welcome-title">
         BIENVENIDO(A),
-        <span class="dm-welcome-title-span">(Nombre del docente)</span>
+        <span class="dm-welcome-title-span"><?php echo $nombre ?></span>
       </h3>
       <button id="dm-welcome-close" class="dm-button">Cerrar</button>
     </div>
