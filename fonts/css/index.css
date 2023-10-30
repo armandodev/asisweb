@@ -1,0 +1,158 @@
+/* Establece la fuente Montserrat con el peso de 900 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 900 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 700 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 700 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 600 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 600 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-SemiBoldItalic.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 500 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 500 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 400 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 400 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 300 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 300 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 200 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 200 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-ExtraLightItalic.woff2")
+    format("woff2");
+  font-weight: 200;
+  font-style: italic;
+}
+
+/* Establece la fuente Montserrat con el peso de 100 */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* Establece la fuente Montserrat con el peso de 100 itálica */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./../montserrat-font/Montserrat-ThinItalic.woff2") format("woff2");
+  font-weight: 100;
+  font-style: italic;
+}
+
+/* Establece la fuente Material Icons para los iconos de la página */
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("./../icons-font/material-icons.woff2") format("woff2");
+}
+
+/* Se establece la regla que renderiza la fuente al encontrar un elemento con esta clase */
+.material-icons {
+  color: inherit;
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.75em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga";
+}
