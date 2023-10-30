@@ -6,10 +6,10 @@ if (isset($_SESSION['login']) && $_SESSION['login'] && $isLogged) {
   unset($_SESSION['login']);
 }
 
-if (isset($_SESSION['loginError']) && isset($_SESSION['login']) && !$_SESSION['login']) {
-  $errorMessage = $_SESSION['loginError'];
-  /* unset($_SESSION['login']);
-  unset($_SESSION['loginError']); */
+if (isset($_SESSION['error']) && isset($_SESSION['login']) && !$_SESSION['login']) {
+  $errorMessage = $_SESSION['error']['message'];
+  unset($_SESSION['login']);
+  unset($_SESSION['error']);
 }
 
 $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
@@ -36,7 +36,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
     <div class="dm-wrapper">
       <h3 class="dm-welcome-title">
         BIENVENIDO(A),
-        <span class="dm-welcome-title-span"><?php echo $nombre ?></span>
+        <span class="dm-welcome-title-span"><?php echo "$nombre $paterno" ?></span>
       </h3>
       <button id="dm-welcome-close" class="dm-button">Cerrar</button>
     </div>
@@ -137,9 +137,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
       <section id="m-login">
         <h1 id="m-login-title">Inicia sesión</h1>
         <form action="./auth/login.php" method="post" id="m-login-form">
-          <?php if (isset($errorMessage)) { ?>
-            <p class="m-login-error"><?php echo $errorMessage ?></p>
-          <?php } ?>
+          <p id="error-message" class="m-login-error"><?php echo isset($errorMessage) ? $errorMessage : '' ?></p>
           <label>
             RFC:
             <input type="text" name="rfc" id="rfc" placeholder="Ej. MAAJ000101HDFRRL09" minlength="12" maxlength="14" required />
@@ -163,6 +161,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   </footer>
 
   <script src="./js/modal-welcome.js"></script>
+  <script src="./js/validations/error-message.js"></script>
 </body>
 
 </html>
