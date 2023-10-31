@@ -23,6 +23,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   <title><?php echo $title ?></title>
 
   <link rel="stylesheet" href="./css/normalize.css" />
+  <link rel="stylesheet" href="./fonts/css/index.css">
   <link rel="stylesheet" href="./css/global.css" />
   <link rel="stylesheet" href="./css/modal.css" />
   <link rel="stylesheet" href="./css/header.css" />
@@ -50,22 +51,50 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
         <nav id="th-nav">
           <ul id="th-nav-links">
             <li class="th-nav-link active">
-              <a href="">Inicio</a>
+              <a href="">
+                <span class="material-icons">
+                  home
+                </span>
+                Inicio
+              </a>
             </li>
             <li class="th-nav-link">
-              <a href="">Horario</a>
+              <a href="">
+                <span class="material-icons">
+                  schedule
+                </span>
+                Inicio
+              </a>
             </li>
             <li class="th-nav-link">
-              <a href="">Asignaturas</a>
+              <a href="">
+                <span class="material-icons">
+                  report
+                </span>
+                Inicio
+              </a>
             </li>
             <li class="th-nav-link">
-              <a href="">Reportes</a>
-            </li>
+              <a href="">
+                <span class="material-icons">
+                  settings
+                </span>
+                Inicio
+              </a>
             <li class="th-nav-link">
-              <a href="./auth/logout.php">Cerrar sesión</a>
+              <a href="./auth/logout.php">
+                <span class="material-icons">
+                  logout
+                </span>
+                Inicio
+              </a>
             </li>
           </ul>
         </nav>
+
+        <span class="material-icons">
+          menu
+        </span>
       </div>
     </header>
   <?php } ?>
@@ -73,31 +102,8 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   <main id="main">
     <?php if ($isLogged) { ?>
       <section id="m-subjects">
-        <a class="m-subject-wrapper-link" href="./">
-          <article class="m-subject">
-            <header class="m-subject-header">
-              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
-            </header>
-            <p class="m-subject-group">
-              <span class="grade-group">
-                Grado y grupo:
-                <span class="grade">3°</span>
-                <span class="group">A</span>
-              </span>
-              <span class="grade-group">
-                Grado y grupo:
-                <span class="grade">3°</span>
-                <span class="group">A</span>
-              </span>
-              <span class="career">Especialidad: Informática</span>
-            </p>
-            <footer class="m-subject-footer">
-              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
-            </footer>
-          </article>
-        </a>
-        <a class="m-subject-wrapper-link" href="./">
-          <article class="m-subject">
+        <article class="m-subject">
+          <a class="m-subject-wrapper-link" href="./">
             <header class="m-subject-header">
               <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
             </header>
@@ -109,13 +115,17 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
               </span>
               <span class="career">Especialidad: Informática</span>
             </p>
-            <footer class="m-subject-footer">
-              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
-            </footer>
-          </article>
-        </a>
-        <a class="m-subject-wrapper-link" href="./">
-          <article class="m-subject">
+          </a>
+          <footer class="m-subject-footer">
+            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
+              <span class="material-icons">
+                check_circle
+              </span>
+            </a>
+          </footer>
+        </article>
+        <article class="m-subject">
+          <a class="m-subject-wrapper-link" href="./">
             <header class="m-subject-header">
               <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
             </header>
@@ -127,11 +137,37 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
               </span>
               <span class="career">Especialidad: Informática</span>
             </p>
-            <footer class="m-subject-footer">
-              <button id="m-subject-attendance-link" class="m-subject-footer-link">Tomar asistencia</but>
-            </footer>
-          </article>
-        </a>
+          </a>
+          <footer class="m-subject-footer">
+            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
+              <span class="material-icons">
+                check_circle
+              </span>
+            </a>
+          </footer>
+        </article>
+        <article class="m-subject">
+          <a class="m-subject-wrapper-link" href="./">
+            <header class="m-subject-header">
+              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
+            </header>
+            <p class="m-subject-group">
+              <span class="grade-group">
+                Grado y grupo:
+                <span class="grade">3°</span>
+                <span class="group">A</span>
+              </span>
+              <span class="career">Especialidad: Informática</span>
+            </p>
+          </a>
+          <footer class="m-subject-footer">
+            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
+              <span class="material-icons">
+                check_circle
+              </span>
+            </a>
+          </footer>
+        </article>
       </section>
     <?php } else { ?>
       <section id="m-login">
