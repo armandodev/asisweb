@@ -13,12 +13,14 @@ if (isset($_SESSION['error']) && isset($_SESSION['login']) && !$_SESSION['login'
 }
 
 if ($isLogged) {
-  $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
+  $title = 'Asignaturas | CETIS 121';
   $subjects = $db->selectSubjects();
 
   if (count($subjects) === 0) {
     $errorMessage = ERROR_MESSAGES[ERROR_NO_SUBJECTS];
   }
+} else {
+  $title = 'Iniciar sesión | CETIS 121';
 }
 ?>
 <!DOCTYPE html>
