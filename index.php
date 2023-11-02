@@ -13,6 +13,12 @@ if (isset($_SESSION['error']) && isset($_SESSION['login']) && !$_SESSION['login'
 }
 
 $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
+
+$subjects = $db->selectSubjects();
+
+if (count($subjects) === 0) {
+  $errorMessage = ERROR_MESSAGES[ERROR_NO_SUBJECTS];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -103,72 +109,34 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   <main id="main">
     <?php if ($isLogged) { ?>
       <section id="m-subjects">
-        <article class="m-subject">
-          <a class="m-subject-wrapper-link" href="./">
-            <header class="m-subject-header">
-              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
-            </header>
-            <p class="m-subject-group">
-              <span class="grade-group">
-                Grado y grupo:
-                <span class="grade">3°</span>
-                <span class="group">A</span>
-              </span>
-              <span class="career">Especialidad: Informática</span>
-            </p>
-          </a>
-          <footer class="m-subject-footer">
-            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
-              <span class="material-icons">
-                check_circle
-              </span>
-            </a>
-          </footer>
-        </article>
-        <article class="m-subject">
-          <a class="m-subject-wrapper-link" href="./">
-            <header class="m-subject-header">
-              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
-            </header>
-            <p class="m-subject-group">
-              <span class="grade-group">
-                Grado y grupo:
-                <span class="grade">3°</span>
-                <span class="group">A</span>
-              </span>
-              <span class="career">Especialidad: Informática</span>
-            </p>
-          </a>
-          <footer class="m-subject-footer">
-            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
-              <span class="material-icons">
-                check_circle
-              </span>
-            </a>
-          </footer>
-        </article>
-        <article class="m-subject">
-          <a class="m-subject-wrapper-link" href="./">
-            <header class="m-subject-header">
-              <h3 class="m-subject-header-name">Nombre de la asignatura</h3>
-            </header>
-            <p class="m-subject-group">
-              <span class="grade-group">
-                Grado y grupo:
-                <span class="grade">3°</span>
-                <span class="group">A</span>
-              </span>
-              <span class="career">Especialidad: Informática</span>
-            </p>
-          </a>
-          <footer class="m-subject-footer">
-            <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
-              <span class="material-icons">
-                check_circle
-              </span>
-            </a>
-          </footer>
-        </article>
+        <?php if (isset($errorMessage)) { ?>
+          <p id="m-subjects-error"><?php echo $errorMessage ?></p>
+          <?php } else {
+          foreach ($subjects as $subject) { ?>
+            <article class="m-subject">
+              <a class="m-subject-wrapper-link" href="./">
+                <header class="m-subject-header">
+                  <h3 class="m-subject-header-name"><?php echo $subject['nombre'] ?></h3>
+                </header>
+                <p class="m-subject-group">
+                  <span class="grade-group">
+                    Grado y grupo:
+                    <span class="grade"><?php echo $subject['semestre'] ?>°</span>
+                    <span class="group"><?php echo $subject['grupo'] ?></span>
+                  </span>
+                  <span class="career">Especialidad: <?php echo $subject['especialidad'] ?></span>
+                </p>
+              </a>
+              <footer class="m-subject-footer">
+                <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
+                  <span class="material-icons">
+                    check_circle
+                  </span>
+                </a>
+              </footer>
+            </article>
+        <?php }
+        } ?>
       </section>
     <?php } else { ?>
       <section id="m-login">

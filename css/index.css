@@ -16,6 +16,7 @@
 #main {
   min-height: 80vh;
   padding: 1rem; /* Agregado el padding aquí */
+  justify-content: center;
 }
 
 .dm-welcome-title {
@@ -34,9 +35,17 @@
 #m-subjects {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
   width: 100%;
+}
+
+#m-subjects-error {
+  text-align: center;
+  opacity: 0.5;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 1rem 0;
 }
 
 .m-subject {
@@ -115,9 +124,5 @@
 @media screen and (max-width: 480px) {
   .m-subject {
     flex-basis: calc(100% - 1rem);
-  }
-
-  #m-subjects {
-    justify-content: center;
   }
 }

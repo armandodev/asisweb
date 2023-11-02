@@ -47,4 +47,26 @@ class Database extends SQLite3
     $_SESSION['user'] = $user;
     $_SESSION['login'] = true;
   }
+
+  public function selectSubjects()
+  {
+    $rfc = $_SESSION['user']['rfc'];
+
+    $query = "SELECT DISTINCT asignaturas.nombre, grupos.semestre, grupos.grupo, grupos.especialidad
+    FROM listas
+    INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID
+    INNER JOIN grupos ON listas.grupoID = grupos.grupoID
+    WHERE listas.rfc = :rfc;
+    ";
+    $stmt = $this->prepare($query);
+    $stmt->bindParam(':rfc', $rfc);
+
+    $result = $stmt->execute();
+    $subjects = array();
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+      $subjects[] = $row;
+    }
+
+    return $subjects;
+  }
 }
