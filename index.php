@@ -46,12 +46,13 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   <?php if ($isLogged) { ?>
     <header id="th">
       <div class="th-wrapper">
+        <div id="th-hide-menu"></div>
         <h1 id="th-title">Asignaturas</h1>
 
         <nav id="th-nav">
           <ul id="th-nav-links">
             <li class="th-nav-link active">
-              <a href="">
+              <a data-text="inicio" href="">
                 <span class="material-icons">
                   home
                 </span>
@@ -59,40 +60,40 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
               </a>
             </li>
             <li class="th-nav-link">
-              <a href="">
+              <a data-text="horario" href="">
                 <span class="material-icons">
                   schedule
                 </span>
-                Inicio
+                Horario
               </a>
             </li>
             <li class="th-nav-link">
-              <a href="">
+              <a data-text="reportar un problema" href="">
                 <span class="material-icons">
                   report
                 </span>
-                Inicio
+                Reportar un problema
               </a>
             </li>
             <li class="th-nav-link">
-              <a href="">
+              <a data-text="ajustes" href="">
                 <span class="material-icons">
                   settings
                 </span>
-                Inicio
+                Ajustes
               </a>
             <li class="th-nav-link">
-              <a href="./auth/logout.php">
+              <a data-text="cerrar sesión" href="./auth/logout.php">
                 <span class="material-icons">
                   logout
                 </span>
-                Inicio
+                Cerrar sesión
               </a>
             </li>
           </ul>
         </nav>
 
-        <span class="material-icons">
+        <span id="th-show-menu" class="material-icons">
           menu
         </span>
       </div>
@@ -197,6 +198,7 @@ $title = $isLogged ? 'Asignaturas | CETIS 121' : 'Iniciar sesión | CETIS 121';
   </footer>
 
   <script src="./js/modal-welcome.js"></script>
+  <script src="./js/header.js"></script>
   <script src="./js/validations/error-message.js"></script>
 </body>
 

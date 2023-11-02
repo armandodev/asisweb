@@ -34,7 +34,7 @@
 #m-subjects {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: stretch;
   width: 100%;
 }
@@ -115,5 +115,9 @@
 @media screen and (max-width: 480px) {
   .m-subject {
     flex-basis: calc(100% - 1rem);
+  }
+
+  #m-subjects {
+    justify-content: center;
   }
 }

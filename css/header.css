@@ -12,6 +12,23 @@
   margin: 0 auto;
 }
 
+#th-hide-menu {
+  display: none;
+  background: rgb(0 0 0 / 20%);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  opacity: 0;
+  transition: all 500ms ease;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+}
+
 #th-title {
   font-size: 1.5rem;
   font-weight: 500;
@@ -22,18 +39,55 @@
 
 #th-nav-links {
   display: flex;
-  gap: 1rem;
-  align-items: center;
+  flex-direction: column;
   list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #efefef;
+  width: 80%;
+  max-width: 400px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -400px;
+  z-index: 100;
+  transition: all 500ms ease;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+}
+
+.th-nav-link {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  transition: background 0.3s ease;
+  -webkit-transition: background 0.3s ease;
+  -moz-transition: background 0.3s ease;
+  -ms-transition: background 0.3s ease;
+  -o-transition: background 0.3s ease;
+}
+
+.th-nav-link:last-child {
+  border-bottom: none;
+}
+
+.th-nav-link:hover {
+  background: #ccc;
+}
+
+.th-nav-link.active {
+  background: #ccc;
 }
 
 .th-nav-link a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
-  color: #333;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 1rem;
   box-sizing: border-box;
+  color: #333;
   transition: color 0.3s ease;
   -webkit-transition: color 0.3s ease;
   -moz-transition: color 0.3s ease;
@@ -50,48 +104,10 @@
   opacity: 0.5;
 }
 
-@media screen and (max-width: 480px) {
-  #th-nav-links {
-    margin: 0;
-    padding: 0;
-    background: #efefef;
-    width: 80%;
-    height: 100vh;
-    gap: 0;
-    flex-direction: column;
-    align-items: start;
-    list-style: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 100;
-  }
-
-  .th-nav-link {
-    width: 100%;
-    text-align: start;
-    border-bottom: 1px solid #ccc;
-    transition: background 0.3s ease;
-    -webkit-transition: background 0.3s ease;
-    -moz-transition: background 0.3s ease;
-    -ms-transition: background 0.3s ease;
-    -o-transition: background 0.3s ease;
-  }
-
-  .th-nav-link:last-child {
-    border-bottom: none;
-  }
-
-  .th-nav-link:hover {
-    background: #ccc;
-  }
-
-  .th-nav-link.active {
-    background: #ccc;
-  }
-
-  .th-nav-link a {
-    justify-content: start;
-    padding: 1rem;
-  }
+#th-show-menu {
+  display: block;
+  user-select: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 2rem;
 }
