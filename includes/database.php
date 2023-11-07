@@ -52,7 +52,7 @@ class Database extends SQLite3
   {
     $rfc = $_SESSION['user']['rfc'];
 
-    $query = "SELECT DISTINCT asignaturas.nombre, grupos.semestre, grupos.grupo, grupos.especialidad
+    $query = "SELECT DISTINCT asignaturas.nombre, grupos.grupoID, grupos.semestre, grupos.grupo, grupos.especialidad
     FROM listas
     INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID
     INNER JOIN grupos ON listas.grupoID = grupos.grupoID
