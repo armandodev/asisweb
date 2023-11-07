@@ -1,7 +1,7 @@
-const errorContainer = document.getElementById("error-message");
+const errorContainer = document.getElementById('error-message')
 
 if (errorContainer) {
-  errorContainer.innerHTML == ""
-    ? (errorContainer.style.display = "none")
-    : (errorContainer.style.display = "block");
+  errorContainer.innerHTML == ''
+    ? (errorContainer.style.display = 'none')
+    : (errorContainer.style.display = 'block')
 }
