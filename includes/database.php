@@ -69,4 +69,20 @@ class Database extends SQLite3
 
     return $subjects;
   }
+
+  public function selectGroupList() {
+    if (!isset($_GET['id'])) {
+      header('Location: ./');
+      exit();
+    }
+
+    if(!is_numeric($_GET['id'])) {
+      header('Location: ./');
+      exit();
+    }
+
+    $groupID = $_GET['id'];
+
+    $query = "SELECT docentes.nombre, docentes.apellidoPaterno, docentes.apellidoMaterno, grupos.semestre, grupos.grupo, grupos.especialidad, asignaturas.nombre AS asignatura";
+  }
 }

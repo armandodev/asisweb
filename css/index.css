@@ -13,7 +13,6 @@
 }
 
 #main {
-  min-height: 80vh;
   padding: 1rem;
   justify-content: center;
 }
@@ -113,16 +112,4 @@
 
 .m-subject-footer-link:hover {
   background: #06a;
-}
-
-@media screen and (max-width: 768px) {
-  .m-subject {
-    flex-basis: calc(50% - 1rem);
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .m-subject {
-    flex-basis: calc(100% - 1rem);
-  }
 }

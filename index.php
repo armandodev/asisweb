@@ -117,7 +117,7 @@ if ($isLogged) {
           <?php } else {
           foreach ($subjects as $subject) { ?>
             <article class="m-subject">
-              <a class="m-subject-wrapper-link" href="./list?id=<?php echo urlencode($subject['grupoID']) ?>">
+              <a class="m-subject-wrapper-link" href="./list.php?id=<?php echo urlencode($subject['grupoID']) ?>">
                 <header class="m-subject-header">
                   <h3 class="m-subject-header-name"><?php echo $subject['nombre'] ?></h3>
                 </header>
