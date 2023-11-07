@@ -1,5 +1,4 @@
-#dm-welcome .dm-wrapper,
-#main {
+#dm-welcome .dm-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -15,7 +14,7 @@
 
 #main {
   min-height: 80vh;
-  padding: 1rem; /* Agregado el padding aquí */
+  padding: 1rem;
   justify-content: center;
 }
 
@@ -33,11 +32,13 @@
 }
 
 #m-subjects {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 1rem;
+  place-content: start;
+  place-items: stretch;
   width: 100%;
+  min-height: 80vh;
 }
 
 #m-subjects-error {
@@ -55,7 +56,6 @@
   background: #efefef;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-  flex-basis: calc(33.33% - 1rem); /* 1rem en lugar de 1rem */
   box-sizing: border-box;
   border-radius: 0.8rem;
 }
