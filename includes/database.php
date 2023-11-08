@@ -52,7 +52,7 @@ class Database extends SQLite3
   {
     $rfc = $_SESSION['user']['rfc'];
 
-    $query = "SELECT DISTINCT asignaturas.nombre, grupos.grupoID, grupos.semestre, grupos.grupo, grupos.especialidad
+    $query = "SELECT DISTINCT listas.asignaturaID, asignaturas.nombre, listas.grupoID, grupos.semestre, grupos.grupo, grupos.especialidad
     FROM listas
     INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID
     INNER JOIN grupos ON listas.grupoID = grupos.grupoID
@@ -70,19 +70,57 @@ class Database extends SQLite3
     return $subjects;
   }
 
-  public function selectGroupList() {
-    if (!isset($_GET['id'])) {
+  public function selectGroupInfo()
+  {
+    if (!isset($_GET['groupID'])) {
       header('Location: ./');
       exit();
     }
 
-    if(!is_numeric($_GET['id'])) {
+    if (!is_numeric($_GET['groupID'])) {
       header('Location: ./');
       exit();
     }
 
-    $groupID = $_GET['id'];
+    $groupID = $_GET['groupID'];
 
-    $query = "SELECT docentes.nombre, docentes.apellidoPaterno, docentes.apellidoMaterno, grupos.semestre, grupos.grupo, grupos.especialidad, asignaturas.nombre AS asignatura";
+    $query = "SELECT grupos.semestre, grupos.grupo, grupos.especialidad, asignaturas.nombre AS nombreAsignatura, docentes.nombre AS nombreDocente, docentes.paterno, docentes.materno FROM listas INNER JOIN grupos ON listas.grupoID = grupos.grupoID INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID INNER JOIN docentes ON listas.rfc = docentes.rfc WHERE listas.grupoID = :groupID LIMIT 1";
+    $stmt = $this->prepare($query);
+    $stmt->bindParam(':groupID', $groupID);
+
+    $result = $stmt->execute();
+    $groupInfo = $result->fetchArray(SQLITE3_ASSOC);
+
+    return $groupInfo;
+  }
+
+  public function selectGroupList()
+  {
+    if (!isset($_GET['groupID']) || !isset($_GET['subjectID'])) {
+      header('Location: ./');
+      exit();
+    }
+
+    if (!is_numeric($_GET['groupID']) || !is_numeric($_GET['subjectID'])) {
+      header('Location: ./');
+      exit();
+    }
+
+    $groupID = $_GET['groupID'];
+    $subjectID = $_GET['subjectID'];
+
+    $query = "SELECT alumnos.nombre, alumnos.paterno, alumnos.materno, listas.asistencias FROM listas INNER JOIN alumnos ON listas.noControl = alumnos.noControl WHERE listas.grupoID = :groupID AND listas.asignaturaID = :subjectID ORDER BY alumnos.paterno ASC";
+
+    $stmt = $this->prepare($query);
+    $stmt->bindParam(':groupID', $groupID);
+    $stmt->bindParam(':subjectID', $subjectID);
+
+    $result = $stmt->execute();
+    $groupList = array();
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+      $groupList[] = $row;
+    }
+
+    return $groupList;
   }
 }

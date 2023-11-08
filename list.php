@@ -1,5 +1,15 @@
 <?php
-$title = "Grupo | Asignatura";
+require_once './includes/session.php';
+
+if (!$isLogged) {
+  header('Location: ./');
+  exit();
+}
+
+$groupInfo = $db->selectGroupInfo();
+$groupList = $db->selectGroupList();
+
+$title = $groupInfo['nombreAsignatura'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -77,15 +87,22 @@ $title = "Grupo | Asignatura";
   <main id="main">
     <section id="group-info">
       <article class="group-info-wrapper">
-        <h2 class="subtitle">Grupo | Asignatura</h2>
+        <h2 class="subtitle">
+          <?php echo $groupInfo['nombreAsignatura'] ?>
+        </h2>
         <ul class="group-info-data">
-          <li class="group-info-data-item">Asignatura: Asignatura</li>
-          <li class="group-info-data-item">Semestre y grupo: 5°A</li>
-          <li class="group-info-data-item">Especialidad: Programación</li>
-          <li class="group-info-data-item">Docente: John Doe</li>
+          <li class="group-info-data-item">
+            Semestre y grupo: <?php echo $groupInfo['semestre'] . "°" . $groupInfo['grupo'] ?>
+          </li>
+          <li class="group-info-data-item">
+            Especialidad: <?php echo $groupInfo['especialidad'] ?>
+          </li>
+          <li class="group-info-data-item">
+            Docente: <?php echo $groupInfo['nombreDocente'] . " " . $groupInfo['paterno'] . " " . $groupInfo['materno'] ?>
+          </li>
         </ul>
         <div class="link-container">
-          <a class="m-link" href="./attendance.php<?php echo urlencode($_GET['id']) ?>">
+          <a class="m-link" href="./attendance.php?groupID=<?php echo urlencode($subject['grupoID']) ?>&subjectID=<?php echo urlencode($subject['asignaturaID']) ?>">
             <span class="material-icons">
               check_circle
             </span>
@@ -98,9 +115,11 @@ $title = "Grupo | Asignatura";
       <article class="group-list-wrapper">
         <h2 class="subtitle">Lista de alumnos</h2>
         <ol class="group-list">
-          <li class="group-list-item">
-            Jorge Armando Ceras Cárdenas
-          </li>
+          <?php foreach ($groupList as $groupListItem) { ?>
+            <li class="group-list-item">
+              <?php echo $groupListItem['paterno'] . " " . $groupListItem['materno'] . " " . $groupListItem['nombre'] ?>
+            </li>
+          <?php } ?>
         </ol>
       </article>
     </section>

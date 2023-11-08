@@ -117,7 +117,7 @@ if ($isLogged) {
           <?php } else {
           foreach ($subjects as $subject) { ?>
             <article class="m-subject">
-              <a class="m-subject-wrapper-link" href="./list.php?id=<?php echo urlencode($subject['grupoID']) ?>">
+              <a class="m-subject-wrapper-link" href="./list.php?groupID=<?php echo urlencode($subject['grupoID']) ?>&subjectID=<?php echo urlencode($subject['asignaturaID']) ?>">
                 <header class="m-subject-header">
                   <h3 class="m-subject-header-name"><?php echo $subject['nombre'] ?></h3>
                 </header>
@@ -131,7 +131,7 @@ if ($isLogged) {
                 </p>
               </a>
               <footer class="m-subject-footer">
-                <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php">
+                <a id="m-subject-attendance-link" class="m-subject-footer-link" href="./attendance.php?groupID=<?php echo urlencode($subject['grupoID']) ?>&subjectID=<?php echo urlencode($subject['asignaturaID']) ?>">
                   <span class="material-icons">
                     check_circle
                   </span>
