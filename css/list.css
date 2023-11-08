@@ -33,10 +33,64 @@
   color: #fff;
   font-weight: 500;
   padding: 0.3rem 0.6rem;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   border-radius: 0.3rem;
-  transition: background 0.3s ease;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+.m-link:hover {
+  background: #06a;
+}
+
+.m-link.input {
+  background: #fff;
+  color: #07b;
+  border: 1px solid #07b;
+  cursor: pointer;
+}
+
+.m-link.input:hover {
+  background: #07b;
+  color: #fff;
 }
 
 .m-subject-footer-link:hover {
   background: #06a;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.group-list-item label {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-list-item-checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.group-list-item-checkbox:checked {
+  background: #07b;
+}
+
+#cancel {
+  background: #ff4949;
+}
+
+#cancel:hover {
+  background: #ff2929;
 }

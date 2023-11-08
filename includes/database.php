@@ -116,7 +116,7 @@ class Database extends SQLite3
     $groupID = $_GET['groupID'];
     $subjectID = $_GET['subjectID'];
 
-    $query = "SELECT alumnos.nombre, alumnos.paterno, alumnos.materno, listas.asistencias FROM listas INNER JOIN alumnos ON listas.noControl = alumnos.noControl WHERE listas.grupoID = :groupID AND listas.asignaturaID = :subjectID ORDER BY alumnos.paterno ASC";
+    $query = "SELECT alumnos.noControl, alumnos.nombre, alumnos.paterno, alumnos.materno, listas.asistencias FROM listas INNER JOIN alumnos ON listas.noControl = alumnos.noControl WHERE listas.grupoID = :groupID AND listas.asignaturaID = :subjectID ORDER BY alumnos.paterno ASC";
 
     $stmt = $this->prepare($query);
     $stmt->bindParam(':groupID', $groupID);
