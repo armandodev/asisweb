@@ -102,7 +102,7 @@ $title = $groupInfo['nombreAsignatura'];
           </li>
         </ul>
         <div class="link-container">
-          <a class="m-link" href="./attendance.php?groupID=<?php echo urlencode($subject['grupoID']) ?>&subjectID=<?php echo urlencode($subject['asignaturaID']) ?>">
+          <a class="m-link" href="./attendance.php?groupID=<?php echo urlencode($_GET['groupID']) ?>&subjectID=<?php echo urlencode($_GET['subjectID']) ?>">
             <span class="material-icons">
               check_circle
             </span>

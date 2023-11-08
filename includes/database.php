@@ -83,13 +83,20 @@ class Database extends SQLite3
     }
 
     $groupID = $_GET['groupID'];
+    $subjectID = $_GET['subjectID'];
 
-    $query = "SELECT grupos.semestre, grupos.grupo, grupos.especialidad, asignaturas.nombre AS nombreAsignatura, docentes.nombre AS nombreDocente, docentes.paterno, docentes.materno FROM listas INNER JOIN grupos ON listas.grupoID = grupos.grupoID INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID INNER JOIN docentes ON listas.rfc = docentes.rfc WHERE listas.grupoID = :groupID LIMIT 1";
+    $query = "SELECT grupos.semestre, grupos.grupo, grupos.especialidad, asignaturas.nombre AS nombreAsignatura, docentes.nombre AS nombreDocente, docentes.paterno, docentes.materno FROM listas INNER JOIN grupos ON listas.grupoID = grupos.grupoID INNER JOIN asignaturas ON listas.asignaturaID = asignaturas.asignaturaID INNER JOIN docentes ON listas.rfc = docentes.rfc WHERE listas.grupoID = :groupID AND listas.asignaturaID = :subjectID";
     $stmt = $this->prepare($query);
     $stmt->bindParam(':groupID', $groupID);
+    $stmt->bindParam(':subjectID', $subjectID);
 
     $result = $stmt->execute();
     $groupInfo = $result->fetchArray(SQLITE3_ASSOC);
+
+    if (count($groupInfo) == 0) {
+      header('Location: ./');
+      exit();
+    }
 
     return $groupInfo;
   }
@@ -119,6 +126,11 @@ class Database extends SQLite3
     $groupList = array();
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
       $groupList[] = $row;
+    }
+
+    if (count($groupList) == 0) {
+      header('Location: ./');
+      exit();
     }
 
     return $groupList;
