@@ -115,7 +115,7 @@ $title = $groupInfo['nombreAsignatura'];
     <section id="group-list">
       <article class="group-list-wrapper">
         <h2 class="subtitle">Lista de alumnos</h2>
-        <form action="./" method="post">
+        <form action="./request/attendance.php" method="post">
           <ol class="group-list">
             <?php foreach ($groupList as $groupListItem) { ?>
               <li class="group-list-item">
@@ -126,6 +126,9 @@ $title = $groupInfo['nombreAsignatura'];
               </li>
             <?php } ?>
           </ol>
+
+          <input type="hidden" name="groupID" value="<?php echo $_GET['groupID'] ?>">
+          <input type="hidden" name="subjectID" value="<?php echo $_GET['subjectID'] ?>">
 
           <div class="link-container">
             <input id="save" class="m-link input" type="submit" value="Guardar">

@@ -135,4 +135,57 @@ class Database extends SQLite3
 
     return $groupList;
   }
+
+  public function insertAttendance($groupID, $subjectID, $attendance)
+  {
+    try {
+      $query = "UPDATE listas SET asistencias = asistencias + 1 WHERE grupoID = :groupID AND asignaturaID = :subjectID AND noControl = :noControl";
+
+      $stmt = $this->prepare($query);
+
+      if (!$stmt) {
+        throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
+      }
+
+      $stmt->bindParam(':groupID', $groupID);
+      $stmt->bindParam(':subjectID', $subjectID);
+
+      foreach ($attendance as $noControl) {
+        $stmt->bindParam(':noControl', $noControl);
+        if (!$stmt->execute()) {
+          throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
+        }
+      }
+
+      $query = "INSERT INTO registroAsistencia (rfc, grupoID, asignaturaID, timeStamp) VALUES (:rfc, :groupID, :subjectID, :timeStamp)";
+
+      $stmt = $this->prepare($query);
+
+      if (!$stmt) {
+        throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
+      }
+
+      $timestamp = time();
+
+      $stmt->bindParam(':rfc', $_SESSION['user']['rfc']);
+      $stmt->bindParam(':groupID', $groupID);
+      $stmt->bindParam(':subjectID', $subjectID);
+      $stmt->bindParam(':timeStamp', $timestamp);
+
+      if (!$stmt->execute()) {
+        throw new Exception(ERROR_MESSAGES[ERROR_QUERY], ERROR_QUERY);
+      }
+
+      $_SESSION['success'] = true;
+    } catch (Exception $e) {
+      $_SESSION['success'] = false;
+      $_SESSION['error'] = [
+        'message' => $e->getMessage(),
+        'code' => $e->getCode()
+      ];
+    } finally {
+      header('Location: ./../list.php?groupID=' . urlencode($groupID) . '&subjectID=' . urlencode($subjectID));
+      exit();
+    }
+  }
 }
