@@ -22,7 +22,7 @@ create table if not exists `users` (
 create table if not exists `extra_emails` (
   `email_id` int(11) not null auto_increment primary key,
   `user_id` int(11) not null,
-  `email` varchar(255) not null unique key,
+  `extra_email` varchar(255) not null unique key,
   `created_at` datetime not null,
   `updated_at` datetime not null,
   foreign key (`user_id`) references `users`(`user_id`) on delete cascade
@@ -32,7 +32,7 @@ create table if not exists `extra_emails` (
 create table if not exists `extra_phone_numbers` (
   `phone_number_id` int(11) not null auto_increment primary key,
   `user_id` int(11) not null,
-  `phone_number` varchar(10) not null unique key,
+  `extra_phone_number` varchar(10) not null unique key,
   `created_at` datetime not null,
   `updated_at` datetime not null,
   foreign key (`user_id`) references `users`(`user_id`) on delete cascade
