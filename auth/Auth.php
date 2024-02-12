@@ -1,4 +1,5 @@
 <?php
+// TODO: Validar los datos del usuario antes de solicitar una consulta y agregar try/catch para manejar excepciones.
 require_once __DIR__ . '/../config/Database.php';
 // Clase para la autenticación completa de los usuarios, el objetivo principal de esta es mantener el código limpio y fácil de modificar en caso de que se necesite cambiar el método de autenticación.
 class Auth
@@ -13,8 +14,8 @@ class Auth
 
     // Crea/reanuda la sesión.
     session_start();
-    // Si no existe una sesión, mantiene al usuario a la página de inicio de sesión.
-    if (!isset($_SESSION['user']) && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    // Si no existe una sesión no se esta haciendo una petición post o la url no es el formulario de registro, mantiene al usuario a la página de inicio de sesión.
+    if (!isset($_SESSION['user']) && !$_SERVER['REQUEST_METHOD'] === 'POST' && !$_SERVER['REQUEST_URI'] === '/register.php') {
       header('Location: login.php');
       exit;
     } elseif (isset($_SESSION['user']) && !$_SESSION['user']['admin'] == 0) {
@@ -29,7 +30,6 @@ class Auth
   // Función para registrar un usuario en la base de datos.
   public function register($data = [])
   {
-    // TODO: Validar los datos del usuario antes de solicitar insertarlos en la base de datos.
     /* Datos del usuario que se recuperan del formulario de registro:
       rfc, curp, first_name, last_name, email, phone_number, password
       el formato de los datos es el siguiente:
@@ -66,5 +66,48 @@ class Auth
       // Si el resultado es falso, muestra un mensaje de error.
       echo 'Error al registrar el usuario.';
     }
+  }
+
+  // Función para iniciar sesión.
+  public function login($data = [])
+  {
+    /* Datos del usuario que se recuperan del formulario de inicio de sesión:
+      email, password
+      el formato de los datos es el siguiente:
+      $data = [
+        'email' => 'Correo electrónico',
+        'password' => 'Contraseña'
+      ];
+    */
+
+    $password = $data['password'];
+    unset($data['password']);
+
+    // Prepara la consulta a la base de datos.
+    $query = 'SELECT email, hashed_password, salt, active FROM users WHERE users.email = :email';
+    // Ejecuta la consulta a la base de datos y almacena el resultado.
+    $result = $this->db->executeQuery($query, $data);
+
+    if (!$result) {
+      echo 'Error al iniciar sesión.';
+    }
+
+    if ($result->rowCount() == 0) {
+      echo 'El usuario no existe.';
+    }
+
+    $result = $result->fetch(PDO::FETCH_ASSOC);
+
+    if ($result['active'] == 0) {
+      echo 'El usuario no está activo.';
+    }
+
+    if (password_verify($password . $result['salt'], $result['hashed_password'])) {
+      echo 'Error al iniciar sesión.';
+    }
+
+    $_SESSION['user'] = $result;
+    header('Location: ../profile.php');
+    exit;
   }
 }
