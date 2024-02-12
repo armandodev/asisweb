@@ -48,6 +48,8 @@ Asisweb, es un proyecto web para la agilización del manejo de horarios de docen
 
 - El sistema ha sido desarrollado por [Jorge Armando Ceras Cárdenas](https://armandodev.portfolio.netlify.app/). Si necesitas soporte técnico, puedes contactarme a través de mi [correo electrónico](mailto:jorge.armando.c.cardenas@gmail.com) o por mi número de teléfono, ya sea por llamada o por WhatsApp. +52 33 2829 8224.
 
+- Puedes ver la linea de tiempo del desarrollo en los [commits](https://github.com/armandodev/asisweb/commits/main) del repositorio.
+
 ## Licencia
 
 - El sistema fue desarrollado con el fin de cumplir con el servicio social del alumno Jorge Armando Ceras Cárdenas (Número de control: 21316061210279), quien concede el uso de este sistema a la institución educativa "Centro de Estudios Tecnológicos Industrial y de Servicios No. 121" para su uso exclusivo. El sistema no puede ser vendido, modificado o distribuido sin el consentimiento del autor.
