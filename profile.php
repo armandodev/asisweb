@@ -1,3 +1,6 @@
 <?php
 require_once 'auth/Auth.php';
-print_r($_SESSION);
+
+$auth = new Auth();
+
+print_r($_SESSION['user']);
