@@ -25,10 +25,15 @@ class Auth
         exit;
       }
     }
+
+    // Si el usuario esta ingresado y se ingresa a cualquiera de los formularios de login o registro, lo redirige al profile
+    if (isset($_SESSION['user']) && !(strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
+      header('Location: profile.php');
+    }
   }
 
   // Función para registrar un usuario en la base de datos.
-  public function register($data = [])
+  public function register($data = [], $path = "../index.php")
   {
     /* Datos del usuario que se recuperan del formulario de registro:
       rfc, curp, first_name, last_name, email, phone_number, password
@@ -60,7 +65,7 @@ class Auth
 
     if ($result) {
       // Si el resultado es verdadero, redirige al usuario a la página de inicio de sesión.
-      header('Location: login.php');
+      header('Location: ' . $path);
       exit;
     } else {
       // Si el resultado es falso, muestra un mensaje de error.
@@ -69,7 +74,7 @@ class Auth
   }
 
   // Función para iniciar sesión.
-  public function login($data = [])
+  public function login($data = [], $path = "../index.php")
   {
     /* Datos del usuario que se recuperan del formulario de inicio de sesión:
       email, password
@@ -112,18 +117,18 @@ class Auth
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     $_SESSION['user'] = $result;
-    header('Location: ../profile.php');
+    header('Location: ' . $path);
     exit;
   }
 
   // Función para cerrar sesión.
-  public function logout()
+  public function logout($path = '../index.php')
   {
     unset($_SESSION['user']);
     // Destruye la sesión.
     session_destroy();
     // Redirige al usuario a la página de inicio de sesión.
-    header('Location: ../index.php');
+    header('Location: ' . $path);
     exit;
   }
 }
