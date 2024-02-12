@@ -15,10 +15,10 @@ class Auth
     // Crea/reanuda la sesión.
     session_start();
     // Si no existe una sesión no se esta haciendo una petición post o la url no es el formulario de registro, mantiene al usuario a la página de inicio de sesión.
-    if (!isset($_SESSION['user']) && !$_SERVER['REQUEST_METHOD'] === 'POST' && !$_SERVER['REQUEST_URI'] === '/register.php') {
+    if (!isset($_SESSION['user']) && (strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
       header('Location: login.php');
       exit;
-    } elseif (isset($_SESSION['user']) && !$_SESSION['user']['admin'] == 0) {
+    } elseif (isset($_SESSION['user']) && $_SESSION['user']['admin'] == 0) {
       // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador (0).
       if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
         header('Location: ../index.php');
@@ -84,7 +84,7 @@ class Auth
     unset($data['password']);
 
     // Prepara la consulta a la base de datos.
-    $query = 'SELECT email, hashed_password, salt, active FROM users WHERE users.email = :email';
+    $query = 'SELECT user_id, email, hashed_password, salt, active FROM users WHERE users.email = :email';
     // Ejecuta la consulta a la base de datos y almacena el resultado.
     $result = $this->db->executeQuery($query, $data);
 
@@ -106,8 +106,24 @@ class Auth
       echo 'Error al iniciar sesión.';
     }
 
+    // Recupera todos los datos del usuario.
+    $query = 'SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id';
+    $result = $this->db->executeQuery($query, ['user_id' => $result['user_id']]);
+    $result = $result->fetch(PDO::FETCH_ASSOC);
+
     $_SESSION['user'] = $result;
     header('Location: ../profile.php');
+    exit;
+  }
+
+  // Función para cerrar sesión.
+  public function logout()
+  {
+    unset($_SESSION['user']);
+    // Destruye la sesión.
+    session_destroy();
+    // Redirige al usuario a la página de inicio de sesión.
+    header('Location: ../index.php');
     exit;
   }
 }
