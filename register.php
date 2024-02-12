@@ -7,7 +7,7 @@
     <title>Registro | Docentes CETis 121</title>
     <link rel="shortcut icon" href="favicon.webp" type="image/webp" />
 
-    <link rel="stylesheet" href="./output.css" />
+    <link rel="stylesheet" href="./css/output.css" />
   </head>
 
   <body>
