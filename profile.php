@@ -1,6 +1,2 @@
 <?php
-require_once 'auth/Auth.php';
-
-$auth = new Auth();
-
-print_r($_SESSION['user']);
+require_once 'config/session.php';

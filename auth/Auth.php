@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/Database.php';
 class Auth
 {
   public $db;
+  private $get_user_data_query = "SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
 
   // Constructor de la clase, se ejecuta cada vez que se instancia un objeto de la clase.
   public function __construct()
@@ -18,17 +19,35 @@ class Auth
     if (!isset($_SESSION['user']) && (strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
       header('Location: login.php');
       exit;
-    } elseif (isset($_SESSION['user']) && $_SESSION['user']['admin'] == 0) {
-      // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador (0).
-      if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
-        header('Location: ../index.php');
-        exit;
-      }
     }
 
     // Si el usuario esta ingresado y se ingresa a cualquiera de los formularios de login o registro, lo redirige al profile
-    if (isset($_SESSION['user']) && !(strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
-      header('Location: profile.php');
+    if (isset($_SESSION['user'])) {
+      if (!(strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
+        header('Location: profile.php');
+        exit;
+      }
+
+      if (!(isset($_SESSION['user']['user_id']))) {
+        // TODO: Redirigir a una página de sesión expirada o abrir una modal con esta información
+        $path = strpos($_SERVER['REQUEST_URI'], '/admin/') !== false
+          ? "./../index.php"
+          : "./index.php";
+        $this->logout($path);
+      }
+
+      // Recupera todos los datos del usuario.
+      $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $_SESSION['user']['user_id']]);
+      $result = $result->fetch(PDO::FETCH_ASSOC);
+      $_SESSION['user'] = $result;
+
+      if ($_SESSION['user']['admin'] == 0) {
+        // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador (0).
+        if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
+          header('Location: ../index.php');
+          exit;
+        }
+      }
     }
   }
 
@@ -95,25 +114,28 @@ class Auth
 
     if (!$result) {
       echo 'Error al iniciar sesión.';
+      exit;
     }
 
     if ($result->rowCount() == 0) {
       echo 'El usuario no existe.';
+      exit;
     }
 
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     if ($result['active'] == 0) {
       echo 'El usuario no está activo.';
+      exit;
     }
 
-    if (password_verify($password . $result['salt'], $result['hashed_password'])) {
-      echo 'Error al iniciar sesión.';
+    if (!password_verify($password . $result['salt'], $result['hashed_password'])) {
+      echo 'Contraseña incorrecta.';
+      exit;
     }
 
     // Recupera todos los datos del usuario.
-    $query = 'SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id';
-    $result = $this->db->executeQuery($query, ['user_id' => $result['user_id']]);
+    $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $result['user_id']]);
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     $_SESSION['user'] = $result;
