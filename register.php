@@ -1,4 +1,6 @@
-<?php require_once './config/session.php'; ?>
+<?php
+require_once './config/session.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
