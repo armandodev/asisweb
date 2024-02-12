@@ -1,36 +1,47 @@
-<?php
-require_once './config/session.php';
-?>
+<?php require_once './config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro | Docentes CETis 121</title>
-    <!-- TODO: Conseguir un icono valido -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.webp" type="image/webp" />
+
+    <link rel="stylesheet" href="./output.css" />
   </head>
 
   <body>
-    <main>
-      <article>
-        <section>
-          <h1>
+    <main class="w-full relative text-gray-100">
+      <img
+        class="bg-[#1a1c23] w-full h-full object-cover object-center absolute top-0 left-0 -z-10 filter brightness-50 overflow-hidden"
+        src="./images/banners/banner-2.webp"
+        alt="Banner"
+      />
+      <article
+        class="w-full max-w-5xl m-auto h-full flex flex-col justify-center items-center z-10"
+      >
+        <section class="flex flex-col gap-4 p-8 w-full">
+          <h1 class="text-4xl font-bold text-center mb-4">
             Solicitar Registro
-            <small>Docentes CETis 121</small>
+            <small class="block text-base font-normal text-gray-300"
+              >Docentes CETis 121</small
+            >
           </h1>
+          <form
+            action="./auth/register.php"
+            method="post"
+            class="flex flex-col gap-4 w-full max-w-lg m-auto items-end"
+          >
+            <fieldset class="w-full">
+              <p class="text-lg text-gray-300 mb-2">
+                Campos obligatorios <span class="text-red-600">*</span>
+              </p>
+              <legend class="hidden">Información personal</legend>
 
-          <p>
-            <small> <span>*</span> Campos obligatorios </small>
-          </p>
-
-          <form action="./auth/register.php" method="post">
-            <fieldset>
-              <legend>Información personal</legend>
-
-              <label>
-                Nombre(s) <span>*</span>
+              <label class="flex flex-col gap-3" title="Nombre(s)">
+                <span>Nombre(s) <span class="text-red-600">*</span></span>
                 <input
+                  class="p-2 border border-gray-600 rounded-md"
                   type="text"
                   name="first_name"
                   required
@@ -38,9 +49,10 @@ require_once './config/session.php';
                 />
               </label>
 
-              <label>
-                Apellido(s) <span>*</span>
+              <label class="flex flex-col gap-3" title="Apellido(s)">
+                <span>Apellido(s) <span class="text-red-600">*</span></span>
                 <input
+                  class="p-2 border border-gray-600 rounded-md"
                   type="text"
                   name="last_name"
                   required
@@ -49,12 +61,13 @@ require_once './config/session.php';
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>Información única</legend>
+            <fieldset class="w-full">
+              <legend class="hidden">Información única</legend>
 
-              <label>
-                CURP <span>*</span>
+              <label class="flex flex-col gap-3" title="CURP">
+                <span>CURP <span class="text-red-600">*</span></span>
                 <input
+                  class="p-2 border border-gray-600 rounded-md"
                   type="text"
                   name="curp"
                   required
@@ -62,18 +75,26 @@ require_once './config/session.php';
                 />
               </label>
 
-              <label>
-                RFC <span>*</span>
-                <input type="text" name="rfc" required />
+              <label class="flex flex-col gap-3" title="RFC">
+                <span>RFC <span class="text-red-600">*</span></span>
+                <input
+                  class="p-2 border border-gray-600 rounded-md"
+                  type="text"
+                  name="rfc"
+                  required
+                />
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>Información de contacto</legend>
+            <fieldset class="w-full">
+              <legend class="hidden">Información de contacto</legend>
 
-              <label>
-                Correo electrónico <span>*</span>
+              <label class="flex flex-col gap-3" title="Correo electrónico">
+                <span
+                  >Correo electrónico <span class="text-red-600">*</span></span
+                >
                 <input
+                  class="p-2 border border-gray-600 rounded-md"
                   type="email"
                   name="email"
                   required
@@ -81,9 +102,10 @@ require_once './config/session.php';
                 />
               </label>
 
-              <label>
-                Teléfono <span>*</span>
+              <label class="flex flex-col gap-3" title="Teléfono">
+                <span>Teléfono <span class="text-red-600">*</span></span>
                 <input
+                  class="p-2 border border-gray-600 rounded-md"
                   type="tel"
                   name="phone_number"
                   required
@@ -92,34 +114,36 @@ require_once './config/session.php';
               </label>
             </fieldset>
 
-            <fieldset>
-              <legend>Información de acceso</legend>
+            <fieldset class="w-full">
+              <legend class="hidden">Información de acceso</legend>
 
-              <label>
-                Contraseña <span>*</span>
+              <label class="flex flex-col gap-3" title="Contraseña">
+                <span>Contraseña <span class="text-red-600">*</span></span>
                 <input
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="password"
                   name="password"
                   required
                   pattern=".{8,}"
                 />
               </label>
-
-              <label>
-                Confirmar contraseña <span>*</span>
-                <input
-                  type="password"
-                  name="confirm_password"
-                  required
-                  pattern=".{8,}"
-                />
-              </label>
             </fieldset>
 
-            <input type="submit" value="Solicitar registro" />
+            <input
+              class="p-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700 transition-bg duration-300 ease-in-out"
+              type="submit"
+              value="Solicitar registro"
+            />
           </form>
 
-          <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión</a></p>
+          <p class="text-center text-gray-300">
+            ¿Ya tienes una cuenta?
+            <a
+              class="text-blue-400 hover:underline hover:text-blue-300 transition-colors duration-300 ease-in-out"
+              href="./login.php"
+              >Inicia sesión</a
+            >
+          </p>
         </section>
       </article>
     </main>
