@@ -5,18 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio de sesión | Docentes CETis 121</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.webp" type="image/webp" />
 
     <link rel="stylesheet" href="./css/output.css" />
   </head>
   <body>
     <?php if (isset($_GET['error']) && $_GET['error'] === 'expired') { ?>
-    <div
-      id="session-expired"
+    <dialog
       class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
     >
       <div
-        class="w-full max-w-lg p-8 my-8 bg-[#1a1c24] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
       >
         <h1 class="text-4xl font-bold text-center mb-4">¡Vaya!</h1>
         <p class="text-xl leading-relaxed mb-4 text-gray-300">
@@ -31,14 +30,13 @@
           Iniciar sesión
         </a>
       </div>
-    </div>
+    </dialog>
     <?php } elseif (isset($_GET['success']) && $_GET['success'] === 'logout') { ?>
-    <div
-      id="session-expired"
+    <dialog
       class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
     >
       <div
-        class="w-full max-w-lg p-8 my-8 bg-[#1a1c24] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
       >
         <h1 class="text-4xl font-bold text-center mb-4">¡Hasta pronto!</h1>
         <p class="text-xl leading-relaxed mb-4 text-gray-300">
@@ -53,8 +51,9 @@
           Cerrar
         </a>
       </div>
-    </div>
+    </dialog>
     <?php } ?>
+
     <main
       class="w-full relative text-gray-100 min-h-screen flex flex-col justify-center items-center"
     >
