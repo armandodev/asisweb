@@ -4,6 +4,7 @@ require_once __DIR__ . '/../config/Database.php';
 // Clase para la autenticación completa de los usuarios, el objetivo principal de esta es mantener el código limpio y fácil de modificar en caso de que se necesite cambiar el método de autenticación.
 class Auth
 {
+  // Propiedad para almacenar la instancia de la clase Database.
   public $db;
   private $get_user_data_query = "SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
 
@@ -30,9 +31,10 @@ class Auth
 
       if (!isset($_SESSION['user']['user_id'])) {
         $path = strpos($_SERVER['REQUEST_URI'], '/admin/') !== false
-          ? "./../login.php?error=expired"
-          : "./login.php?error=expired";
-        $this->logout($path);
+          ? "./../auth/logout.php?expired=1"
+          : "./auth/logout.php?expired=1";
+        header("Location: $path");
+        exit;
       }
 
       // Recupera todos los datos del usuario.
@@ -138,17 +140,6 @@ class Auth
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     $_SESSION['user'] = $result;
-    header('Location: ' . $path);
-    exit;
-  }
-
-  // Función para cerrar sesión.
-  public function logout($path = '../index.php')
-  {
-    unset($_SESSION['user']);
-    // Destruye la sesión.
-    session_destroy();
-    // Redirige al usuario a la página de inicio de sesión.
     header('Location: ' . $path);
     exit;
   }
