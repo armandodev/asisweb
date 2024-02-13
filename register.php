@@ -11,15 +11,15 @@
   </head>
 
   <body>
-    <main class="w-full relative text-gray-100">
+    <main
+      class="w-full relative text-gray-100 min-h-screen flex flex-col justify-center items-center"
+    >
       <img
         class="bg-[#1a1c23] w-full h-full object-cover object-center absolute top-0 left-0 -z-10 filter brightness-50 overflow-hidden"
         src="./images/banners/banner-2.webp"
         alt="Banner"
       />
-      <article
-        class="w-full max-w-5xl m-auto h-full flex flex-col justify-center items-center z-10"
-      >
+      <article class="w-full max-w-5xl m-auto z-10">
         <section class="flex flex-col gap-4 p-8 w-full">
           <h1 class="text-4xl font-bold text-center mb-4">
             Solicitar Registro
@@ -36,6 +36,7 @@
               <p class="text-lg text-gray-300 mb-2">
                 Campos obligatorios <span class="text-red-600">*</span>
               </p>
+
               <legend class="hidden">Información personal</legend>
 
               <label class="flex flex-col gap-3" title="Nombre(s)">
