@@ -19,12 +19,12 @@
       >
         <h1 class="text-4xl font-bold text-center mb-4">¡Vaya!</h1>
         <p class="text-xl leading-relaxed mb-4 text-gray-300">
-          Parece que tu sesión ha expirado o tu cuenta a sido deshabilitada. Por
-          favor, inicia sesión de nuevo o contacte con un administrador.
+          Parece que tu sesión ha expirado o tu cuenta ha sido deshabilitada.
+          Por favor, inicia sesión de nuevo o contacte con un administrador.
         </p>
         <a
           href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
         >
           Iniciar sesión
         </a>
@@ -44,7 +44,7 @@
         </p>
         <a
           href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
         >
           Cerrar
         </a>
@@ -67,7 +67,7 @@
         </p>
         <a
           href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
         >
           Cerrar
         </a>
