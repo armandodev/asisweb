@@ -44,6 +44,7 @@ class Auth
       // Recupera todos los datos del usuario.
       $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $_SESSION['user']['user_id']]);
       $result = $result->fetch(PDO::FETCH_ASSOC);
+      // Almacena los datos del usuario en la sesión.
       $_SESSION['user'] = $result;
 
       if (isset($_SESSION['user']['admin']) && $_SESSION['user']['admin'] == 0) {
@@ -74,17 +75,24 @@ class Auth
     */
 
     try {
+      // Valida los datos del formulario de registro.
       $this->validator->validateRegister($data['rfc'], $data['curp'], $data['first_name'], $data['last_name'], $data['email'], $data['phone_number'], $data['password']);
 
+      // Prepara la consulta a la base de datos.
       $query = 'SELECT user_id FROM users WHERE rfc = :rfc OR curp = :curp OR email = :email or phone_number = :phone_number LIMIT 1';
+
+      // Prepara los parámetros.
       $params = [
         ':rfc' => $data['rfc'],
         ':curp' => $data['curp'],
         ':email' => $data['email'],
         ':phone_number' => $data['phone_number']
       ];
+
+      // Ejecuta la consulta a la base de datos y almacena el resultado.
       $result = $this->db->executeQuery($query, $params);
 
+      // Si el resultado es verdadero y el número de filas es mayor a 0, lanza una excepción.
       if ($result->rowCount() > 0) throw new Exception('El RFC, CURP, correo electrónico o número de teléfono ya están registrados. Si usted no los ha registrado, por favor contacte al administrador para eliminar la consulta existente y que pueda registrar sus datos.');
 
       // Crea el salt de una longitud de 32 caracteres.
@@ -99,6 +107,7 @@ class Auth
       // Prepara la consulta a la base de datos.
       $query = 'INSERT INTO users (rfc, curp, first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:rfc, :curp, :first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
 
+      // Prepara los parámetros.
       $params = [
         ':rfc' => $data['rfc'],
         ':curp' => $data['curp'],
@@ -113,15 +122,14 @@ class Auth
       // Ejecuta la consulta a la base de datos y almacena el resultado.
       $result = $this->db->executeQuery($query, $params);
 
-
       if ($result) {
         // Si el resultado es verdadero, redirige al usuario a la página de inicio de sesión.
-        header('Location: ' . $path);
+        header('Location: ' . $path . '?success=register');
         exit;
-      } else throw new Exception('Error al registrar el usuario.');
+      } else throw new Exception('Error al registrar el usuario.'); // Si el resultado es falso, lanza una excepción.
     } catch (Exception $e) {
+      // Si se lanza una excepción, almacena el mensaje en la sesión y redirige al usuario a la página de registro.
       $_SESSION['form-error'] = $e->getMessage();
-      echo $e->getMessage();
       header('Location: ../register.php');
       exit;
     }
@@ -139,32 +147,40 @@ class Auth
       ];
     */
     try {
+      // Valida los datos del formulario de inicio de sesión.
       $this->validator->validateLogin($data['email'], $data['password']);
-
-      $password = $data['password'];
-      unset($data['password']);
 
       // Prepara la consulta a la base de datos.
       $query = 'SELECT user_id, email, hashed_password, salt, active FROM users WHERE users.email = :email';
-      // Ejecuta la consulta a la base de datos y almacena el resultado.
-      $result = $this->db->executeQuery($query, $data);
 
+      $params = [
+        ':email' => $data['email']
+      ];
+
+      // Ejecuta la consulta a la base de datos y almacena el resultado.
+      $result = $this->db->executeQuery($query, $params);
+
+      // Si el resultado es falso o el número de filas es igual a 0, lanza una excepción.
       if (!$result) throw new Exception('Error al iniciar sesión.');
       if ($result->rowCount() == 0) throw new Exception('El usuario no existe.');
 
+      // Almacena el resultado en un array asociativo.
       $result = $result->fetch(PDO::FETCH_ASSOC);
 
+      // Si el usuario no está activo o la contraseña es incorrecta, lanza una excepción.
       if ($result['active'] == 0) throw new Exception('El usuario no está activo.');
-      if (!password_verify($password . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta.');
+      if (!password_verify($data['password'] . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta.');
 
       // Recupera todos los datos del usuario.
       $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $result['user_id']]);
       $result = $result->fetch(PDO::FETCH_ASSOC);
 
+      // Almacena los datos del usuario en la sesión y redirige al usuario a la página de inicio.
       $_SESSION['user'] = $result;
       header('Location: ' . $path);
       exit;
     } catch (Exception $e) {
+      // Si se lanza una excepción, almacena el mensaje en la sesión y redirige al usuario a la página de inicio de sesión.
       $_SESSION['form-error'] = $e->getMessage();
       header('Location: ../login.php');
       exit;
