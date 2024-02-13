@@ -4,19 +4,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      <?php echo $_SESSION['user']['first_name'] ?> | Perfil del Docente
-    </title>
+    <title>Mi perfil - Docentes CETis 121</title>
+    <link rel="stylesheet" href="./css/output.css" />
   </head>
   <body>
-    <header>
-      <div>
-        <h1>LOGO</h1>
-        <!-- TODO: Remplazar el h1 por el logo
-          <a href="index.php">
-            <img src="./logo.png" alt="Logo" />
-          </a>
-        -->
+    <header class="bg-black text-white">
+      <div class="w-full max-w-screen-lg flex gap-4">
+        <a href="index.php">
+          <img class="w-10" src="./images/logo.webp" alt="Logo" />
+        </a>
 
         <nav>
           <ul>
