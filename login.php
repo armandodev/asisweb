@@ -5,18 +5,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio de sesión | Docentes CETis 121</title>
-    <!-- TODO: Conseguir un icono valido -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="./output.css" />
+    <link rel="stylesheet" href="./css/output.css" />
   </head>
   <body>
-    <main class="flex flex-col min-h-screen p-8 bg-gray-100 text-gray-800">
-      <article class="w-full max-w-5xl m-auto">
-        <section class="flex flex-col gap-4 p-8">
-          <h1 class="text-4xl font-bold text-center text-gray-800 mb-4">
+    <main
+      class="w-full relative text-gray-100 min-h-screen flex flex-col justify-center items-center"
+    >
+      <img
+        class="bg-[#1a1c23] w-full h-full object-cover object-center absolute top-0 left-0 -z-10 filter brightness-50 overflow-hidden"
+        src="./images/banners/banner-1.webp"
+        alt="Banner"
+      />
+      <article class="w-full max-w-5xl m-auto z-10">
+        <section class="flex flex-col gap-4 p-8 w-full">
+          <h1 class="text-4xl font-bold text-center mb-4">
             Inicio de sesión
-            <small class="block text-base font-normal text-gray-600"
+            <small class="block text-base font-normal text-gray-300"
               >Docentes CETis 121</small
             >
           </h1>
@@ -26,7 +32,7 @@
             class="flex flex-col gap-4 w-full max-w-lg m-auto items-end"
           >
             <fieldset class="w-full">
-              <p class="text-lg text-gray-600 mb-2">
+              <p class="text-lg text-gray-300 mb-2">
                 Campos obligatorios <span class="text-red-600">*</span>
               </p>
 
@@ -37,7 +43,7 @@
                   >Correo electrónico <span class="text-red-600">*</span></span
                 >
                 <input
-                  class="p-2 border border-gray-300 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md"
                   type="email"
                   name="email"
                   required
@@ -50,7 +56,7 @@
                   >Contraseña <span class="text-red-600">*</span></span
                 >
                 <input
-                  class="p-2 border border-gray-300 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md"
                   type="password"
                   name="password"
                   required
@@ -66,9 +72,13 @@
             />
           </form>
 
-          <p class="text-center text-gray-600 text-base mt-6">
+          <p class="text-center text-gray-300">
             ¿No tienes una cuenta?
-            <a class="text-blue-600" href="register.php">Solicitar registro</a>
+            <a
+              class="text-blue-400 hover:underline hover:text-blue-300 transition-colors duration-300 ease-in-out"
+              href="./register.php"
+              >Solicitar registro</a
+            >
           </p>
         </section>
       </article>
