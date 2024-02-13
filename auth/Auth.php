@@ -29,7 +29,6 @@ class Auth
       }
 
       if (!isset($_SESSION['user']['user_id'])) {
-        // TODO: Redirigir a una página de sesión expirada o abrir una modal con esta información
         $path = strpos($_SERVER['REQUEST_URI'], '/admin/') !== false
           ? "./../login.php?error=expired"
           : "./login.php?error=expired";
