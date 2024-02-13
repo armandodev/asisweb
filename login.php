@@ -96,7 +96,7 @@
                   >Correo electrónico <span class="text-red-600">*</span></span
                 >
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="email"
                   name="email"
                   required

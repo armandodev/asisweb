@@ -50,7 +50,7 @@
               <label class="flex flex-col gap-3" title="Nombre(s)">
                 <span>Nombre(s) <span class="text-red-600">*</span></span>
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="first_name"
                   required
@@ -61,7 +61,7 @@
               <label class="flex flex-col gap-3" title="Apellido(s)">
                 <span>Apellido(s) <span class="text-red-600">*</span></span>
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="last_name"
                   required
@@ -76,7 +76,7 @@
               <label class="flex flex-col gap-3" title="CURP">
                 <span>CURP <span class="text-red-600">*</span></span>
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="curp"
                   required
@@ -87,7 +87,7 @@
               <label class="flex flex-col gap-3" title="RFC">
                 <span>RFC <span class="text-red-600">*</span></span>
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="rfc"
                   required
@@ -103,7 +103,7 @@
                   >Correo electrónico <span class="text-red-600">*</span></span
                 >
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="email"
                   name="email"
                   required
@@ -114,7 +114,7 @@
               <label class="flex flex-col gap-3" title="Teléfono">
                 <span>Teléfono <span class="text-red-600">*</span></span>
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="tel"
                   name="phone_number"
                   required
