@@ -28,11 +28,11 @@ class Auth
         exit;
       }
 
-      if (!(isset($_SESSION['user']['user_id']))) {
+      if (!isset($_SESSION['user']['user_id'])) {
         // TODO: Redirigir a una página de sesión expirada o abrir una modal con esta información
         $path = strpos($_SERVER['REQUEST_URI'], '/admin/') !== false
-          ? "./../index.php"
-          : "./index.php";
+          ? "./../login.php?error=expired"
+          : "./login.php?error=expired";
         $this->logout($path);
       }
 
@@ -41,7 +41,7 @@ class Auth
       $result = $result->fetch(PDO::FETCH_ASSOC);
       $_SESSION['user'] = $result;
 
-      if ($_SESSION['user']['admin'] == 0) {
+      if (isset($_SESSION['user']['admin']) && $_SESSION['user']['admin'] == 0) {
         // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador (0).
         if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
           header('Location: ../index.php');
