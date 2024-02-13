@@ -10,6 +10,30 @@
     <link rel="stylesheet" href="./css/output.css" />
   </head>
   <body>
+    <?php if (isset($_GET['error']) && $_GET['error'] === 'expired') { ?>
+    <div
+      id="session-expired"
+      class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
+    >
+      <div
+        class="w-full max-w-lg p-8 my-8 bg-[#1a1c24] text-gray-50 rounded-lg shadow-lg"
+      >
+        <h1 class="text-4xl font-bold text-center mb-4">¡Vaya!</h1>
+        <p class="text-xl leading-relaxed mb-4 text-gray-300">
+          Parece que tu sesión ha expirado o tu cuenta a sido deshabilitada. Por
+          favor, inicia sesión de nuevo o contacte con un administrador.
+        </p>
+        <a
+          href="./login.php"
+          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          title="Iniciar sesión"
+        >
+          Iniciar sesión
+        </a>
+      </div>
+    </div>
+
+    <?php } ?>
     <main
       class="w-full relative text-gray-100 min-h-screen flex flex-col justify-center items-center"
     >
