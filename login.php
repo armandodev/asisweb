@@ -76,6 +76,14 @@
             method="post"
             class="flex flex-col gap-4 w-full max-w-lg m-auto items-end"
           >
+            <?php if (isset($_SESSION['form-error'])) { ?>
+            <p
+              class="bg-red-300 text-red-800 text-center w-full py-2 px-1 rounded-lg"
+            >
+              <?php echo $_SESSION['form-error']; ?>
+            </p>
+            <?php unset($_SESSION['form-error']); ?>
+            <?php } ?>
             <fieldset class="w-full">
               <p class="text-lg text-gray-300 mb-2">
                 Campos obligatorios <span class="text-red-600">*</span>
@@ -101,7 +109,7 @@
                   >Contraseña <span class="text-red-600">*</span></span
                 >
                 <input
-                  class="p-2 border border-gray-600 rounded-md"
+                  class="p-2 border border-gray-600 rounded-md text-black"
                   type="password"
                   name="password"
                   required
