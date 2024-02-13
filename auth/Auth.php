@@ -58,7 +58,7 @@ class Auth
   }
 
   // Función para registrar un usuario en la base de datos.
-  public function register($data = [], $path = "../index.php")
+  public function register($data = [], $path = "../login.php")
   {
     /* Datos del usuario que se recuperan del formulario de registro:
       rfc, curp, first_name, last_name, email, phone_number, password
@@ -122,11 +122,11 @@ class Auth
       // Ejecuta la consulta a la base de datos y almacena el resultado.
       $result = $this->db->executeQuery($query, $params);
 
-      if ($result) {
-        // Si el resultado es verdadero, redirige al usuario a la página de inicio de sesión.
-        header('Location: ' . $path . '?success=register');
-        exit;
-      } else throw new Exception('Error al registrar el usuario.'); // Si el resultado es falso, lanza una excepción.
+      if (!$result) throw new Exception('Error al registrar el usuario.'); // Si el resultado es falso, lanza una excepción.
+
+      // Redirige al usuario a la página de inicio de sesión.
+      header("Location: $path?success=register");
+      exit;
     } catch (Exception $e) {
       // Si se lanza una excepción, almacena el mensaje en la sesión y redirige al usuario a la página de registro.
       $_SESSION['form-error'] = $e->getMessage();
