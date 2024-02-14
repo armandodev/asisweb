@@ -72,6 +72,7 @@
               <a
                 class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
                 href="#"
+                title="Ir a Asignaturas"
                 >Asignaturas</a
               >
             </li>
@@ -81,6 +82,7 @@
               <a
                 class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
                 href="#"
+                title="Ir a Horario"
                 >Horario</a
               >
             </li>
@@ -90,6 +92,7 @@
               <a
                 class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
                 href="./profile.php"
+                title="Ir a Perfil"
                 >Perfil</a
               >
             </li>
@@ -100,6 +103,7 @@
               <a
                 class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
                 href="./admin/"
+                title="Ir a la Administración"
                 >Administrar</a
               >
             </li>
@@ -110,6 +114,7 @@
               <button
                 class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
                 id="logout-button"
+                title="Cerrar sesión"
               >
                 Cerrar sesión
               </button>
