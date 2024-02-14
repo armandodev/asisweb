@@ -45,7 +45,9 @@
       id="header-nav"
       class="bg-[#212121] text-white py-2 px-4 sticky top-0"
     >
-      <div class="w-full max-w-screen-lg flex items-center gap-8">
+      <div
+        class="w-full m-auto max-w-screen-lg flex items-center justify-between gap-8"
+      >
         <a
           class="flex items-center gap-2"
           href="index.php"
@@ -91,6 +93,7 @@
                 >Perfil</a
               >
             </li>
+            <?php if ($_SESSION['user']['admin'] == 1) { ?>
             <li
               class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
             >
@@ -100,8 +103,16 @@
                 >Administrar</a
               >
             </li>
-            <li>
-              <button id="logout-button">Cerrar sesión</button>
+            <?php } ?>
+            <li
+              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
+            >
+              <button
+                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
+                id="logout-button"
+              >
+                Cerrar sesión
+              </button>
             </li>
           </ul>
         </nav>
