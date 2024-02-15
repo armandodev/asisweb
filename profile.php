@@ -66,7 +66,7 @@
           >
         </a>
 
-        <nav>
+        <nav class="">
           <ul class="flex items-center gap-6">
             <li
               class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
@@ -134,7 +134,7 @@
           alt="Banner"
         />
         <section
-          class="h-[320px] w-full flex flex-col items-center justify-center"
+          class="h-[320px] w-[90%] mx-auto flex flex-col items-center justify-center"
         >
           <h1 class="text-white text-4xl font-bold text-center drop-shadow-2xl">
             <?php echo $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name']; ?>
@@ -145,7 +145,7 @@
             <?php echo $_SESSION['user']['admin'] === 1 ? "Administrador" : "Docente" ?>
           </p>
         </section>
-        <section class="max-w-screen-lg m-auto py-12 px-6 min-h-[80vh]">
+        <section class="max-w-screen-lg m-auto pt-12 pb-16 px-6 min-h-screen">
           <div>
             <div
               class="flex items-center justify-between gap-4 mb-8 border-b-2 border-gray-300 pb-4"
@@ -155,12 +155,12 @@
               </h2>
             </div>
 
-            <div class="flex flex-col justify-between md:flex-row">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <ul
-                class="flex flex-col gap-2 text-gray-800 text-lg font-normal w-full md:w-[60%]"
+                class="flex flex-col gap-2 text-gray-800 sm:text-base font-normal w-full"
               >
                 Emails:
-                <li>
+                <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
                     href="mailto:<?php echo $_SESSION['user']['email']; ?>"
@@ -168,16 +168,18 @@
                     &nbsp;(Principal)</a
                   >
                 </li>
-                <?php if (count($extra_emails) >
-                0) { foreach ($extra_emails as $email) { ?>
-                <li>
+                <?php if (
+                count($extra_emails) >
+                0 ) { foreach ($extra_emails as $email) { ?>
+                <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
                     href="mailto:<?php echo $email; ?>"
                     ><?php echo $email; ?></a
                   >
                 </li>
-                <?php } } ?>
+                <?php }
+              } ?>
                 <li>
                   <form
                     class="flex gap-1"
@@ -201,10 +203,10 @@
               </ul>
 
               <ul
-                class="flex flex-col gap-2 text-gray-800 text-lg font-normal w-full md:w-[30%]"
+                class="flex flex-col gap-2 text-gray-800 sm:text-base font-normal w-full"
               >
                 Teléfonos:
-                <li>
+                <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
                     href="tel:<?php echo $_SESSION['user']['phone_number']; ?>"
@@ -212,16 +214,18 @@
                     &nbsp;(Principal)
                   </a>
                 </li>
-                <?php if (count($extra_phone_numbers) >
-                0) { foreach ($extra_phone_numbers as $phone_number) { ?>
-                <li>
+                <?php if (
+                count($extra_phone_numbers) >
+                0 ) { foreach ($extra_phone_numbers as $phone_number) { ?>
+                <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
                     href="tel:<?php echo $phone_number; ?>"
                     ><?php echo $phone_number; ?></a
                   >
                 </li>
-                <?php } } ?>
+                <?php }
+              } ?>
                 <li>
                   <form
                     class="flex gap-1"
@@ -285,8 +289,8 @@
             document.write(new Date().getFullYear());
           </script>
           <a href="./index.php" class="hover:underline">CETis 121</a>. Todos los
-          derechos reservados.</span
-        >
+          derechos reservados.
+        </span>
       </div>
     </footer>
 
