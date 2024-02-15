@@ -155,8 +155,10 @@
               </h2>
             </div>
 
-            <div class="flex justify-between">
-              <ul class="flex flex-col gap-2 text-gray-800 text-lg font-normal">
+            <div class="flex flex-col justify-between md:flex-row">
+              <ul
+                class="flex flex-col gap-2 text-gray-800 text-lg font-normal w-full md:w-[60%]"
+              >
                 Emails:
                 <li>
                   <a
@@ -198,7 +200,9 @@
                 </li>
               </ul>
 
-              <ul class="flex flex-col gap-2 text-gray-800 text-lg font-normal">
+              <ul
+                class="flex flex-col gap-2 text-gray-800 text-lg font-normal w-full md:w-[30%]"
+              >
                 Teléfonos:
                 <li>
                   <a
