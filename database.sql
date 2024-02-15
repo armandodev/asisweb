@@ -24,7 +24,7 @@ create table if not exists `extra_emails` (
   `user_id` int(11) not null,
   `extra_email` varchar(255) not null unique key,
   `created_at` datetime not null default current_timestamp,
-  `updated_at` datetime not null default current_timestamp on update current_timestamp
+  `updated_at` datetime not null default current_timestamp on update current_timestamp,
   foreign key (`user_id`) references `users`(`user_id`) on delete cascade
 ) engine=InnoDB default charset=utf8;
 
@@ -34,6 +34,6 @@ create table if not exists `extra_phone_numbers` (
   `user_id` int(11) not null,
   `extra_phone_number` varchar(10) not null unique key,
   `created_at` datetime not null default current_timestamp,
-  `updated_at` datetime not null default current_timestamp on update current_timestamp
+  `updated_at` datetime not null default current_timestamp on update current_timestamp,
   foreign key (`user_id`) references `users`(`user_id`) on delete cascade
 ) engine=InnoDB default charset=utf8;
