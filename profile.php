@@ -170,12 +170,12 @@
                 </li>
                 <?php if (
                 count($extra_emails) >
-                0 ) { foreach ($extra_emails as $email) { ?>
+                0 ) { foreach ($extra_emails as $e) { ?>
                 <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
-                    href="mailto:<?php echo $email; ?>"
-                    ><?php echo $email; ?></a
+                    href="mailto:<?php echo $e['extra_email']; ?>"
+                    ><?php echo $e['extra_email']; ?></a
                   >
                 </li>
                 <?php }
@@ -188,8 +188,7 @@
                   >
                     <input
                       type="email"
-                      name="email"
-                      id="email"
+                      name="extra_email"
                       class="w-full p-1 border-2 border-gray-300 rounded"
                       placeholder="Agregar otro email"
                     />
@@ -216,12 +215,12 @@
                 </li>
                 <?php if (
                 count($extra_phone_numbers) >
-                0 ) { foreach ($extra_phone_numbers as $phone_number) { ?>
+                0 ) { foreach ($extra_phone_numbers as $pn) { ?>
                 <li class="list-inside list-disc">
                   <a
                     class="text-blue-500 underline"
-                    href="tel:<?php echo $phone_number; ?>"
-                    ><?php echo $phone_number; ?></a
+                    href="tel:<?php echo $pn['extra_phone_number']; ?>"
+                    ><?php echo $pn['extra_phone_number']; ?></a
                   >
                 </li>
                 <?php }
@@ -234,8 +233,7 @@
                   >
                     <input
                       type="tel"
-                      name="phone_number"
-                      id="phone_number"
+                      name="extra_phone_number"
                       class="w-full p-1 border-2 border-gray-300 rounded"
                       placeholder="Agregar otro teléfono"
                     />
