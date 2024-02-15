@@ -77,4 +77,26 @@ class Validator
     // Retorna verdadero si los datos son válidos.
     return;
   }
+
+  public function validateEmail($email)
+  {
+    // Validación del correo electrónico.
+    if (!preg_match($this->regex['email'], $email)) {
+      throw new Exception('El email es invalido');
+    }
+
+    // Retorna verdadero si los datos son válidos.
+    return;
+  }
+
+  public function validatePhoneNumber($phone_number)
+  {
+    // Validación del correo electrónico.
+    if (!preg_match($this->regex['phone_number'], $phone_number)) {
+      throw new Exception('El número de teléfono es invalido');
+    }
+
+    // Retorna verdadero si los datos son válidos.
+    return;
+  }
 }
