@@ -218,6 +218,59 @@ class Auth
     return $result;
   }
 
+  public function addExtraEmail()
+  {
+    try {
+      // Si no existe una sesión, lanza una excepción.
+      if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
+      if (!$_SERVER['REQUEST_METHOD'] === 'POST') throw new Exception('No se ha recibido ningún dato');
+      if (!isset($_POST['extra_email'])) throw new Exception('No se ha recibido el correo');
+
+      $extra_email = $_POST['extra_email'];
+
+      $this->validator->validateEmail($extra_email);
+
+      $user_id = $_SESSION['user']['user_id'];
+      // Prepara la consulta a la base de datos.
+      $query = "SELECT active FROM users WHERE user_id=:user_id";
+
+      // Prepara los parámetros.
+      $params = [
+        ':user_id' => $user_id
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if ($result->rowCount() === 0) throw new Exception("El usuario al que se quiere agregar un contacto extra no existe.");
+
+      $query = "SELECT extra_email FROM extra_emails WHERE extra_email = :extra_email";
+
+      $params = [
+        ":extra_email" => $extra_email
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if ($result->rowCount() > 0) throw new Exception("Ya se ha registrado este correo");
+
+      $query = "INSERT INTO extra_emails (user_id, extra_email) VALUES (:user_id, :extra_email)";
+
+      $params = [
+        ":user_id" => $user_id,
+        ":extra_email" => $extra_email
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("Ha ocurrido un error registrando el nuevo correo");
+    } catch (Exception $e) {
+      header("Location: ./../index.php");
+      exit;
+    }
+
+    header("Location: ./../index.php");
+  }
+
   // Función para obtener los números de teléfono extra de los usuarios.
   public function getExtraPhoneNumbers()
   {
@@ -247,5 +300,58 @@ class Auth
 
     // Retorna el resultado.
     return $result;
+  }
+
+  public function addExtraPhoneNumber()
+  {
+    try {
+      // Si no existe una sesión, lanza una excepción.
+      if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
+      if (!$_SERVER['REQUEST_METHOD'] === 'POST') throw new Exception('No se ha recibido ningún dato');
+      if (!isset($_POST['extra_phone_number'])) throw new Exception('No se ha recibido el correo');
+
+      $extra_phone_number = $_POST['extra_phone_number'];
+
+      $this->validator->validatePhoneNumber($extra_phone_number);
+
+      $user_id = $_SESSION['user']['user_id'];
+      // Prepara la consulta a la base de datos.
+      $query = "SELECT active FROM users WHERE user_id=:user_id";
+
+      // Prepara los parámetros.
+      $params = [
+        ':user_id' => $user_id
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if ($result->rowCount() === 0) throw new Exception("El usuario al que se quiere agregar un contacto extra no existe.");
+
+      $query = "SELECT extra_phone_number FROM extra_phone_numbers WHERE extra_phone_number = :extra_phone_number";
+
+      $params = [
+        ":extra_phone_number" => $extra_phone_number
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if ($result->rowCount() > 0) throw new Exception("Ya se ha registrado este correo");
+
+      $query = "INSERT INTO extra_phone_numbers (user_id, extra_phone_number) VALUES (:user_id, :extra_phone_number)";
+
+      $params = [
+        ":user_id" => $user_id,
+        ":extra_phone_number" => $extra_phone_number
+      ];
+
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("Ha ocurrido un error registrando el nuevo correo");
+    } catch (Exception $e) {
+      exit($e->getMessage());
+      header("Location: ./../index.php");
+    }
+
+    header("Location: ./../index.php");
   }
 }
