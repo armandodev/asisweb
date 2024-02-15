@@ -217,4 +217,35 @@ class Auth
     // Retorna el resultado.
     return $result;
   }
+
+  // Función para obtener los números de teléfono extra de los usuarios.
+  public function getExtraPhoneNumbers()
+  {
+    try {
+      // Si no existe una sesión, lanza una excepción.
+      if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
+      $user_id = $_SESSION['user']['user_id'];
+      // Prepara la consulta a la base de datos.
+      $query = 'SELECT extra_phone_number FROM extra_phone_numbers WHERE user_id = :user_id';
+
+      // Prepara los parámetros.
+      $params = [
+        ':user_id' => $user_id
+      ];
+
+      // Ejecuta la consulta a la base de datos y almacena el resultado.
+      $result = $this->db->executeQuery($query, $params);
+
+      // Si el resultado es falso, lanza una excepción.
+      if (!$result) throw new Exception('Error al obtener los números de teléfono extra.');
+
+      // Almacena el resultado en un array asociativo.
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+      $result = [];
+    }
+
+    // Retorna el resultado.
+    return $result;
+  }
 }
