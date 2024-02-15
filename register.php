@@ -54,7 +54,8 @@
                   type="text"
                   name="first_name"
                   required
-                  pattern="[A-Za-z ]+"
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+"
+                  placeholder="Jhon Doe"
                 />
               </label>
 
@@ -65,7 +66,8 @@
                   type="text"
                   name="last_name"
                   required
-                  pattern="[A-Za-z ]+"
+                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+"
+                  placeholder="Doe Smith"
                 />
               </label>
             </fieldset>
@@ -81,6 +83,7 @@
                   name="curp"
                   required
                   pattern="[A-Z]{4}[0-9]{6}[A-Z]{7}[0-9]{1}"
+                  placeholder="AAAA000000AAAAAAA0"
                 />
               </label>
 
@@ -91,6 +94,8 @@
                   type="text"
                   name="rfc"
                   required
+                  pattern="[A-Z]{4}[0-9]{6}[A-Z0-9]{3}"
+                  placeholder="AAAA000000AAA"
                 />
               </label>
             </fieldset>
@@ -108,6 +113,7 @@
                   name="email"
                   required
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
+                  placeholder="jhondoe@gmail.com"
                 />
               </label>
 
@@ -119,6 +125,7 @@
                   name="phone_number"
                   required
                   pattern="[0-9]{10}"
+                  placeholder="1234567890"
                 />
               </label>
             </fieldset>
@@ -134,6 +141,7 @@
                   name="password"
                   required
                   pattern=".{8,}"
+                  placeholder="Contraseña"
                 />
               </label>
             </fieldset>
