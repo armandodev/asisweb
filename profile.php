@@ -180,12 +180,12 @@
                   <span class="block pl-6">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/phone-number-to-main.php?id=<?php echo $e['email_id']; ?>"
+                      href="./auth/email-to-main.php?id=<?php echo $e['email_id']; ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/delete-phone-number.php?id=<?php echo $e['email_id']; ?>"
+                      href="./auth/delete-email.php?id=<?php echo $e['email_id']; ?>"
                       >Eliminar</a
                     >
                   </span>
