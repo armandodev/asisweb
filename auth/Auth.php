@@ -191,8 +191,6 @@ class Auth
   public function getExtraEmails()
   {
     try {
-      // Si no existe una sesión, lanza una excepción.
-      if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
       $user_id = $_SESSION['user']['user_id'];
       // Prepara la consulta a la base de datos.
       $query = 'SELECT email_id, extra_email FROM extra_emails WHERE user_id = :user_id';
@@ -210,7 +208,7 @@ class Auth
 
       // Almacena el resultado en un array asociativo.
       $result = $result->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
+    } catch (Exception) {
       $result = [];
     }
 
@@ -221,8 +219,6 @@ class Auth
   public function addExtraEmail()
   {
     try {
-      // Si no existe una sesión, lanza una excepción.
-      if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
       if (!$_SERVER['REQUEST_METHOD'] === 'POST') throw new Exception('No se ha recibido ningún dato');
       if (!isset($_POST['extra_email'])) throw new Exception('No se ha recibido el correo');
 
@@ -263,9 +259,60 @@ class Auth
       $result = $this->db->executeQuery($query, $params);
 
       if (!$result) throw new Exception("Ha ocurrido un error registrando el nuevo correo");
-    } catch (Exception $e) {
+    } catch (Exception) {
       header("Location: ./../index.php");
       exit;
+    }
+
+    header("Location: ./../index.php");
+  }
+
+  public function emailToMain()
+  {
+    try {
+      if (!isset($_GET['id'])) throw new Exception('No se ha recibido el id del email');
+
+      $email_id = $_GET['id'];
+      $user_id = $_SESSION['user']['user_id'];
+
+      $query = "SELECT email FROM users WHERE user_id = :user_id LIMIT 1";
+      $params = [
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+      $old_email = $result[0]['email'];
+
+      $query = "SELECT extra_email FROM extra_emails WHERE email_id = :email_id AND user_id = :user_id LIMIT 1";
+      $params = [
+        ':email_id' => $email_id,
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+      $new_email = $result[0]['extra_email'];
+
+      $query = "UPDATE users SET email = :email WHERE user_id = :user_id";
+      $params = [
+        ':email' => $new_email,
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("No se ha podido ingresar el nuevo email principal");
+
+      $query = "UPDATE extra_emails SET extra_email = :extra_email WHERE user_id = :user_id AND email_id = :email_id";
+      $params = [
+        'extra_email' => $old_email,
+        ':user_id' => $user_id,
+        ':email_id' => $email_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("No se ha podido ingresar el anterior email principal a extras");
+    } catch (Exception) {
+      header("Location: ./../index.php");
+      exit();
     }
 
     header("Location: ./../index.php");
@@ -294,7 +341,7 @@ class Auth
 
       // Almacena el resultado en un array asociativo.
       $result = $result->fetchAll(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
+    } catch (Exception) {
       $result = [];
     }
 
@@ -348,8 +395,59 @@ class Auth
 
       if (!$result) throw new Exception("Ha ocurrido un error registrando el nuevo correo");
     } catch (Exception $e) {
-      exit($e->getMessage());
       header("Location: ./../index.php");
+      exit();
+    }
+
+    header("Location: ./../index.php");
+  }
+
+  public function phoneNumberToMain()
+  {
+    try {
+      if (!isset($_GET['id'])) throw new Exception('No se ha recibido el id del email');
+
+      $phone_number_id = $_GET['id'];
+      $user_id = $_SESSION['user']['user_id'];
+
+      $query = "SELECT phone_number FROM users WHERE user_id = :user_id LIMIT 1";
+      $params = [
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+      $old_phone_number = $result[0]['phone_number'];
+
+      $query = "SELECT extra_phone_number FROM extra_phone_numbers WHERE phone_number_id = :phone_number_id AND user_id = :user_id LIMIT 1";
+      $params = [
+        ':phone_number_id' => $phone_number_id,
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+      $new_phone_number = $result[0]['extra_phone_number'];
+
+      $query = "UPDATE users SET phone_number = :phone_number WHERE user_id = :user_id";
+      $params = [
+        ':phone_number' => $new_phone_number,
+        ':user_id' => $user_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("No se ha podido ingresar el nuevo número de teléfono principal");
+
+      $query = "UPDATE extra_phone_numbers SET extra_phone_number = :extra_phone_number WHERE user_id = :user_id AND phone_number_id = :phone_number_id";
+      $params = [
+        'extra_phone_number' => $old_phone_number,
+        ':user_id' => $user_id,
+        ':phone_number_id' => $phone_number_id
+      ];
+      $result = $this->db->executeQuery($query, $params);
+
+      if (!$result) throw new Exception("No se ha podido ingresar el anterior número de teléfono principal a extras");
+    } catch (Exception $e) {
+      header("Location: ./../index.php");
+      exit();
     }
 
     header("Location: ./../index.php");
