@@ -4,7 +4,6 @@ require_once __DIR__ . '/../config/Validator.php';
 // Clase para la autenticación completa de los usuarios, el objetivo principal de esta es mantener el código limpio y fácil de modificar en caso de que se necesite cambiar el método de autenticación.
 class Auth
 {
-  // Propiedad para almacenar la instancia de la clase Database.
   private $db;
   private $validator;
   private $get_user_data_query = "SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
@@ -12,10 +11,8 @@ class Auth
   // Constructor de la clase, se ejecuta cada vez que se instancia un objeto de la clase.
   public function __construct()
   {
-    // Crea una instancia de la clase Database.
+    // Crea una instancia de la clase Database y Validator.
     $this->db = new Database();
-
-    // Crea una instancia de la clase Validator.
     $this->validator = new Validator();
 
     // Crea/reanuda la sesión.
@@ -26,8 +23,8 @@ class Auth
       exit;
     }
 
-    // Si el usuario esta ingresado y se ingresa a cualquiera de los formularios de login o registro, lo redirige al profile
     if (isset($_SESSION['user'])) {
+      //  y se ingresa a cualquiera de los formularios de login o registro, lo redirige al profile
       if (!(strpos($_SERVER['REQUEST_URI'], '/login.php') === false && strpos($_SERVER['REQUEST_URI'], '/register.php') === false)) {
         header('Location: profile.php');
         exit;
