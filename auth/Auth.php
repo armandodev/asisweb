@@ -315,6 +315,28 @@ class Auth
     header("Location: ./../index.php");
   }
 
+  public function deleteEmail()
+  {
+    try {
+      if (!isset($_GET['id'])) throw new Exception('No se ha recibido el id del email');
+
+      $user_id = $_SESSION['user']['user_id'];
+      $email_id = $_GET['id'];
+
+      $query = "DELETE FROM extra_emails WHERE email_id = :email_id AND user_id = :user_id";
+      $params = [
+        ":email_id" => $email_id,
+        ":user_id" => $user_id
+      ];
+      $this->db->executeQuery($query, $params);
+    } catch (Exception $e) {
+      exit($e->getMessage());
+      header("Location: ./../index.php");
+    }
+
+    header("Location: ./../index.php");
+  }
+
   // Función para obtener los números de teléfono extra de los usuarios.
   public function getExtraPhoneNumbers()
   {
@@ -445,6 +467,28 @@ class Auth
     } catch (Exception $e) {
       header("Location: ./../index.php");
       exit();
+    }
+
+    header("Location: ./../index.php");
+  }
+
+  public function deletePhoneNumber()
+  {
+    try {
+      if (!isset($_GET['id'])) throw new Exception('No se ha recibido el id del email');
+
+      $user_id = $_SESSION['user']['user_id'];
+      $phone_number_id = $_GET['id'];
+
+      $query = "DELETE FROM extra_phone_numbers WHERE phone_number_id = :phone_number_id AND user_id = :user_id";
+      $params = [
+        ":phone_number_id" => $phone_number_id,
+        ":user_id" => $user_id
+      ];
+      $this->db->executeQuery($query, $params);
+    } catch (Exception $e) {
+      exit($e->getMessage());
+      header("Location: ./../index.php");
     }
 
     header("Location: ./../index.php");
