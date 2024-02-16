@@ -195,7 +195,7 @@ class Auth
       if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
       $user_id = $_SESSION['user']['user_id'];
       // Prepara la consulta a la base de datos.
-      $query = 'SELECT extra_email FROM extra_emails WHERE user_id = :user_id';
+      $query = 'SELECT email_id, extra_email FROM extra_emails WHERE user_id = :user_id';
 
       // Prepara los parámetros.
       $params = [
@@ -279,7 +279,7 @@ class Auth
       if (!isset($_SESSION['user'])) throw new Exception('No hay una sesión activa.');
       $user_id = $_SESSION['user']['user_id'];
       // Prepara la consulta a la base de datos.
-      $query = 'SELECT extra_phone_number FROM extra_phone_numbers WHERE user_id = :user_id';
+      $query = 'SELECT phone_number_id, extra_phone_number FROM extra_phone_numbers WHERE user_id = :user_id';
 
       // Prepara los parámetros.
       $params = [

@@ -177,6 +177,18 @@
                     href="mailto:<?php echo $e['extra_email']; ?>"
                     ><?php echo $e['extra_email']; ?></a
                   >
+                  <span class="block pl-6">
+                    <a
+                      class="text-blue-500 underline"
+                      href="./auth/phone-number-to-main.php?id=<?php echo $e['email_id']; ?>"
+                      >Hacer principal</a
+                    >
+                    <a
+                      class="text-blue-500 underline"
+                      href="./auth/delete-phone-number.php?id=<?php echo $e['email_id']; ?>"
+                      >Eliminar</a
+                    >
+                  </span>
                 </li>
                 <?php }
               } ?>
@@ -222,6 +234,18 @@
                     href="tel:<?php echo $pn['extra_phone_number']; ?>"
                     ><?php echo $pn['extra_phone_number']; ?></a
                   >
+                  <span class="block pl-6">
+                    <a
+                      class="text-blue-500 underline"
+                      href="./auth/phone-number-to-main.php?id=<?php echo $pn['phone_number_id']; ?>"
+                      >Hacer principal</a
+                    >
+                    <a
+                      class="text-blue-500 underline"
+                      href="./auth/delete-phone-number.php?id=<?php echo $pn['phone_number_id']; ?>"
+                      >Eliminar</a
+                    >
+                  </span>
                 </li>
                 <?php }
               } ?>
