@@ -15,7 +15,7 @@
   <body>
     <dialog
       id="logout-modal"
-      class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 hidden items-center justify-center z-50"
+      class="fixed w-full min-h-screen bg-black bg-opacity-30 hidden items-center justify-center z-50"
     >
       <div
         class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
