@@ -59,9 +59,9 @@
           <a
             href="./login.php"
             class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
-            title="Iniciar sesión"
+            title="Cerrar modal"
           >
-            Iniciar sesión
+            Cerrar
           </a>
         </div>
       </div>
@@ -143,7 +143,7 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="email"
                   name="email"
-                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{5,255}$"
+                  pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"
                   minlength="5"
                   maxlength="255"
                   required
