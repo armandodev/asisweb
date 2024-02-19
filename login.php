@@ -12,65 +12,81 @@
   <body>
     <?php if (isset($_GET['error']) && $_GET['error'] === 'expired') { ?>
     <dialog
-      class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
+      id="logout-modal"
+      class="fixed w-full h-screen bg-black bg-opacity-90 flex items-center justify-center z-[100]"
     >
       <div
-        class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-4xl font-bold text-center mb-4">¡Vaya!</h1>
-        <p class="text-xl leading-relaxed mb-4 text-gray-300">
+        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">¡Vaya!</h1>
+        <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
           Parece que tu sesión ha expirado o tu cuenta ha sido deshabilitada.
           Por favor, inicia sesión de nuevo o contacte con un administrador.
         </p>
-        <a
-          href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
-        >
-          Iniciar sesión
-        </a>
+        <div class="flex gap-1 justify-end mt-4">
+          <a
+            href="./login.php"
+            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
+            title="Iniciar sesión"
+          >
+            Iniciar sesión
+          </a>
+        </div>
       </div>
     </dialog>
     <?php } elseif (isset($_GET['success']) && $_GET['success'] === 'logout') { ?>
     <dialog
-      class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
+      id="logout-modal"
+      class="fixed w-full h-screen bg-black bg-opacity-90 flex items-center justify-center z-[100]"
     >
       <div
-        class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-4xl font-bold text-center mb-4">¡Hasta pronto!</h1>
-        <p class="text-xl leading-relaxed mb-4 text-gray-300">
-          Has cerrado tu sesión correctamente, recuerda que no podrás recibir
-          tus notificaciones mientras tu sesión este cerrada.
+        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+          ¡Hasta pronto!
+        </h1>
+        <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
+          Has cerrado sesión correctamente, recuerda que mientras no inicies
+          sesión no recibirás notificaciones ni podrás acceder a tu perfil.
         </p>
-        <a
-          href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
-        >
-          Cerrar
-        </a>
+        <div class="flex gap-1 justify-end mt-4">
+          <a
+            href="./login.php"
+            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
+            title="Iniciar sesión"
+          >
+            Iniciar sesión
+          </a>
+        </div>
       </div>
     </dialog>
     <?php } elseif (isset($_GET['success']) && $_GET['success'] === 'register') { ?>
     <dialog
-      class="fixed w-full min-h-screen overflow-auto bg-black bg-opacity-30 flex items-center justify-center z-50"
+      id="logout-modal"
+      class="fixed w-full h-screen bg-black bg-opacity-90 hidden items-center justify-center z-[100]"
     >
       <div
-        class="w-[90%] max-w-lg p-8 my-8 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-4xl font-bold text-center mb-4">¡Registro exitoso!</h1>
-        <p class="text-xl leading-relaxed mb-4 text-gray-300">
+        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+          ¡Registro exitoso!
+        </h1>
+        <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
           Tu solicitud de registro ha sido enviada, espera a que un
           administrador apruebe tu solicitud para poder iniciar sesión. Se te
           notificará el estado de tu solicitud por medio de alguno de los
           métodos de contacto que proporcionaste o directamente se te notificará
           personalmente.
         </p>
-        <a
-          href="./login.php"
-          class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
-        >
-          Cerrar
-        </a>
+        <div class="flex gap-1 justify-end mt-4">
+          <a
+            href="./login.php"
+            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
+            title="Cerrar modal"
+          >
+            Cerrar
+          </a>
+        </div>
       </div>
     </dialog>
     <?php } ?>
