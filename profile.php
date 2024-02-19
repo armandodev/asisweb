@@ -44,88 +44,7 @@
       </div>
     </dialog>
 
-    <header
-      id="header-nav"
-      class="text-white py-2 px-4 fixed top-0 w-full z-50 h-[80px] flex items-center"
-    >
-      <div
-        class="w-full m-auto max-w-screen-lg flex items-center justify-between gap-8"
-      >
-        <a
-          class="flex items-center gap-2"
-          href="index.php"
-          title="Ir a tu perfil"
-        >
-          <img
-            class="max-h-[56px] max-w-[225px] align-middle"
-            src="./images/logo.webp"
-            alt="Logo"
-          />
-          <span
-            class="max-w-[300px] outline-none overflow-hidden text-ellipsis text-xl font-semibold"
-            >CETis 121</span
-          >
-        </a>
-
-        <nav class="">
-          <ul class="flex items-center gap-6">
-            <li
-              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
-            >
-              <a
-                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
-                href="#"
-                title="Ir a Asignaturas"
-                >Asignaturas</a
-              >
-            </li>
-            <li
-              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
-            >
-              <a
-                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
-                href="#"
-                title="Ir a Horario"
-                >Horario</a
-              >
-            </li>
-            <li
-              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
-            >
-              <a
-                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
-                href="./profile.php"
-                title="Ir a Perfil"
-                >Perfil</a
-              >
-            </li>
-            <?php if ($_SESSION['user']['admin'] == 1) { ?>
-            <li
-              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
-            >
-              <a
-                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
-                href="./admin/"
-                title="Ir a la Administración"
-                >Administrar</a
-              >
-            </li>
-            <?php } ?>
-            <li
-              class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
-            >
-              <button
-                class="text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out"
-                id="logout-button"
-                title="Cerrar sesión"
-              >
-                Cerrar sesión
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <?php require_once './components/header.php'; ?>
 
     <main class="min-h-screen">
       <article>
@@ -276,46 +195,7 @@
       </article>
     </main>
 
-    <footer class="bg-[#212121]">
-      <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-          <a
-            href="./index.php"
-            class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-          >
-            <img src="./images/logo.webp" class="h-8" alt="DGTi Logo" />
-            <span class="text-xl font-semibold text-white">CETis 121</span>
-          </a>
-          <ul
-            class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-300 sm:mb-0"
-          >
-            <li>
-              <a href="#" class="hover:underline me-4 md:me-6">About</a>
-            </li>
-            <li>
-              <a href="#" class="hover:underline me-4 md:me-6"
-                >Privacy Policy</a
-              >
-            </li>
-            <li>
-              <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-            </li>
-            <li>
-              <a href="#" class="hover:underline">Contact</a>
-            </li>
-          </ul>
-        </div>
-        <hr class="my-6 border-gray-500 sm:mx-auto lg:my-8" />
-        <span class="block text-sm text-gray-500 sm:text-center"
-          >©
-          <script>
-            document.write(new Date().getFullYear());
-          </script>
-          <a href="./index.php" class="hover:underline">CETis 121</a>. Todos los
-          derechos reservados.
-        </span>
-      </div>
-    </footer>
+    <?php require_once './components/footer.php'; ?>
 
     <script src="./scripts/modals.js"></script>
   </body>
