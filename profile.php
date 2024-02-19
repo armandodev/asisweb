@@ -181,12 +181,12 @@
                   <span class="block pl-6">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info_to_main.php?info=0&id=<?php echo $e['email_id']; ?>"
+                      href="./auth/extra_info.php?action=main&info=email&id=<?php echo $e['email_id']; ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/delete_extra_info.php?info=0&id=<?php echo $e['email_id']; ?>"
+                      href="./auth/extra_info.php?action=delete&info=email&id=<?php echo $e['email_id']; ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -196,12 +196,12 @@
                 <li>
                   <form
                     class="flex gap-1"
-                    action="./auth/add_extra_info.php?info=0"
+                    action="./auth/extra_info.php?action=add&info=email"
                     method="post"
                   >
                     <input
                       type="email"
-                      name="extra_email"
+                      name="email"
                       class="w-full p-1 border-2 border-gray-300 rounded"
                       placeholder="Agregar otro email"
                     />
@@ -238,12 +238,12 @@
                   <span class="block pl-6">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info_to_main.php?info=1&id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/extra_info.php?action=main&info=phone_number&id=<?php echo $pn['phone_number_id']; ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/delete_extra_info.php?info=1&id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/extra_info.php?action=delete&info=phone_number&id=<?php echo $pn['phone_number_id']; ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -253,12 +253,12 @@
                 <li>
                   <form
                     class="flex gap-1"
-                    action="./auth/add_extra_info.php?info=1"
+                    action="./auth/extra_info.php?action=add&info=phone_number"
                     method="post"
                   >
                     <input
                       type="tel"
-                      name="extra_phone_number"
+                      name="phone_number"
                       class="w-full p-1 border-2 border-gray-300 rounded"
                       placeholder="Agregar otro teléfono"
                     />
