@@ -53,9 +53,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="first_name"
+                  pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,100}$"
+                  minlength="3"
+                  maxlength="100"
+                  placeholder="John Doe"
                   required
-                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+"
-                  placeholder="Jhon Doe"
                 />
               </label>
 
@@ -65,9 +67,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="last_name"
-                  required
-                  pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+"
+                  pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,100}$"
+                  minlength="3"
+                  maxlength="100"
                   placeholder="Doe Smith"
+                  required
                 />
               </label>
             </fieldset>
@@ -81,9 +85,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="curp"
-                  required
-                  pattern="[A-Z]{4}[0-9]{6}[A-Z]{7}[0-9]{1}"
+                  pattern="^[A-Z]{4}[0-9]{6}[HM][A-Z]{6}[0-9]{1}$"
+                  minlength="18"
+                  maxlength="18"
                   placeholder="AAAA000000AAAAAAA0"
+                  required
                 />
               </label>
 
@@ -93,9 +99,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="text"
                   name="rfc"
-                  required
-                  pattern="[A-Z]{4}[0-9]{6}[A-Z0-9]{3}"
+                  pattern="^[A-Z]{4}[0-9]{6}[A-Z0-9]{3}$"
+                  minlength="13"
+                  maxlength="13"
                   placeholder="AAAA000000AAA"
+                  required
                 />
               </label>
             </fieldset>
@@ -111,9 +119,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="email"
                   name="email"
-                  required
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{5,255}$"
+                  minlength="5"
+                  maxlength="255"
                   placeholder="jhondoe@gmail.com"
+                  required
                 />
               </label>
 
@@ -123,9 +133,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="tel"
                   name="phone_number"
-                  required
-                  pattern="[0-9]{10}"
+                  pattern="^[0-9]{10}$"
+                  minlength="10"
+                  maxlength="10"
                   placeholder="1234567890"
+                  required
                 />
               </label>
             </fieldset>
@@ -139,9 +151,11 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="password"
                   name="password"
-                  required
-                  pattern=".{8,}"
+                  pattern="^.{6,100}$"
+                  minlength="6"
+                  maxlength="100"
                   placeholder="Contraseña"
+                  required
                 />
               </label>
             </fieldset>

@@ -143,8 +143,10 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="email"
                   name="email"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{5,255}$"
+                  minlength="5"
+                  maxlength="255"
                   required
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
                 />
               </label>
 
@@ -156,8 +158,10 @@
                   class="p-2 border border-gray-600 rounded-md text-black"
                   type="password"
                   name="password"
+                  pattern="^.{6,100}$"
+                  minlength="6"
+                  maxlength="100"
                   required
-                  pattern=".{8,}"
                 />
               </label>
             </fieldset>

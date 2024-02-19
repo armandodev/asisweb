@@ -35,7 +35,7 @@ class Validator
   // Método para validar el correo electrónico.
   public function validateEmail($email)
   {
-    if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,255}$/', $email)) {
+    if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{5,255}$/', $email)) {
       throw new Exception('El email es invalido');
       return false;
     }
