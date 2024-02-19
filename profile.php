@@ -1,6 +1,7 @@
 <?php require_once './config/session.php'; ?>
-<?php $extra_emails = $auth->getExtraEmails(); ?>
-<?php $extra_phone_numbers = $auth->getExtraPhoneNumbers(); ?>
+<?php $extra_info = $auth->getExtraInfo(); ?>
+<?php $extra_emails = $extra_info['emails']; ?>
+<?php $extra_phone_numbers = $extra_info['phone_numbers']; ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -180,12 +181,12 @@
                   <span class="block pl-6">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/email-to-main.php?id=<?php echo $e['email_id']; ?>"
+                      href="./auth/extra_info_to_main.php?info=0&id=<?php echo $e['email_id']; ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/delete-email.php?id=<?php echo $e['email_id']; ?>"
+                      href="./auth/delete_extra_info.php?info=0&id=<?php echo $e['email_id']; ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -195,7 +196,7 @@
                 <li>
                   <form
                     class="flex gap-1"
-                    action="./auth/add-email.php"
+                    action="./auth/add_extra_info.php?info=0"
                     method="post"
                   >
                     <input
@@ -237,12 +238,12 @@
                   <span class="block pl-6">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/phone-number-to-main.php?id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/extra_info_to_main.php?info=1&id=<?php echo $pn['phone_number_id']; ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/delete-phone-number.php?id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/delete_extra_info.php?info=1&id=<?php echo $pn['phone_number_id']; ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -252,7 +253,7 @@
                 <li>
                   <form
                     class="flex gap-1"
-                    action="./auth/add-phone-number.php"
+                    action="./auth/add_extra_info.php?info=1"
                     method="post"
                   >
                     <input

@@ -157,7 +157,7 @@ class Auth
     try {
       $user_id = $_SESSION['user']['user_id'];
 
-      if ($info === 2) {
+      if ($info == 2) {
         $query = 'SELECT email_id, extra_email FROM extra_emails WHERE user_id = :user_id';
         $result_emails = $this->db->executeQuery($query, [':user_id' => $user_id]);
         $result_emails = $result_emails->fetchAll(PDO::FETCH_ASSOC);
@@ -171,7 +171,7 @@ class Auth
         return $result;
       }
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'SELECT email_id, extra_email FROM extra_emails WHERE user_id = :user_id'
         : 'SELECT phone_number_id, extra_phone_number FROM extra_phone_numbers WHERE user_id = :user_id';
       $params = [':user_id' => $user_id];
@@ -194,21 +194,21 @@ class Auth
     try {
       $user_id = $_SESSION['user']['user_id'];
 
-      $info === 0
+      $info == 0
         ? $this->validator->validateEmail($data)
         : $this->validator->validatePhoneNumber($data);
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'SELECT extra_email FROM extra_emails WHERE extra_email = :extra_email'
         : 'SELECT extra_phone_number FROM extra_phone_numbers WHERE extra_phone_number = :extra_phone_number';
-      $result = $this->db->executeQuery($query, [":extra_" . ($info === 0 ? "email" : "phone_number") => $data]);
+      $result = $this->db->executeQuery($query, [":extra_" . ($info == 0 ? "email" : "phone_number") => $data]);
 
       if ($result->rowCount() > 0 || !$result) throw new Exception;
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'INSERT INTO extra_emails (user_id, extra_email) VALUES (:user_id, :extra_email)'
         : 'INSERT INTO extra_phone_numbers (user_id, extra_phone_number) VALUES (:user_id, :extra_phone_number)';
-      $result = $this->db->executeQuery($query, [":user_id" => $user_id, ":extra_" . ($info === 0 ? "email" : "phone_number") => $data]);
+      $result = $this->db->executeQuery($query, [":user_id" => $user_id, ":extra_" . ($info == 0 ? "email" : "phone_number") => $data]);
 
       if (!$result) throw new Exception;
       header('Location: ../index.php');
@@ -224,30 +224,30 @@ class Auth
     try {
       $user_id = $_SESSION['user']['user_id'];
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'SELECT email FROM users WHERE user_id = :user_id LIMIT 1'
         : 'SELECT phone_number FROM users WHERE user_id = :user_id LIMIT 1';
       $result = $this->db->executeQuery($query, [":user_id" => $user_id]);
 
       if (!$result) throw new Exception;
-      if ($result->rowCount() === 0) throw new Exception;
+      if ($result->rowCount() == 0) throw new Exception;
 
       $result = $result->fetchAll(PDO::FETCH_ASSOC);
-      $old_info = $result[0][$info === 0 ? "email" : "phone_number"];
+      $old_info = $result[0][$info == 0 ? "email" : "phone_number"];
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'SELECT extra_email FROM extra_emails WHERE email_id = :id AND user_id = :user_id LIMIT 1'
         : 'SELECT extra_phone_number FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id LIMIT 1';
       $params = [":id" => $id, ":user_id" => $user_id];
       $result = $this->db->executeQuery($query, $params);
 
       if (!$result) throw new Exception;
-      if ($result->rowCount() === 0) throw new Exception;
+      if ($result->rowCount() == 0) throw new Exception;
 
       $result = $result->fetchAll(PDO::FETCH_ASSOC);
-      $new_info = $result[0]["extra_" . $info === 0 ? "email" : "phone_number"];
+      $new_info = $result[0][$info == 0 ? "extra_email" : "extra_phone_number"];
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'UPDATE users SET email = :new_info WHERE user_id = :user_id'
         : 'UPDATE users SET phone_number = :new_info WHERE user_id = :user_id';
       $params = ["new_info" => $new_info, ":user_id" => $user_id];
@@ -255,7 +255,7 @@ class Auth
 
       if (!$result) throw new Exception;
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'UPDATE extra_emails SET extra_email = :old_info WHERE user_id = :user_id AND email_id = :id'
         : 'UPDATE extra_phone_numbers SET extra_phone_number = :old_info WHERE user_id = :user_id AND phone_number_id = :id';
       $params = [":old_info" => $old_info, ":user_id" => $user_id, ":id" => $id];
@@ -280,7 +280,7 @@ class Auth
     try {
       $user_id = $_SESSION['user']['user_id'];
 
-      $query = $info === 0
+      $query = $info == 0
         ? 'DELETE FROM extra_emails WHERE email_id = :id AND user_id = :user_id'
         : 'DELETE FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id';
       $params = [":id" => $id, ":user_id" => $user_id];
