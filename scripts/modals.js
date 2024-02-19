@@ -1,10 +1,10 @@
 const openModal = (modalId) => {
   document.getElementById(modalId).classList.remove("hidden");
-  document.getElementById(modalId).classList.add("flex");
+  document.getElementById(modalId).classList.add("flex", "fade-in");
 };
 
 const closeModal = (modalId) => {
-  document.getElementById(modalId).classList.remove("flex");
+  document.getElementById(modalId).classList.remove("flex", "fade-in");
   document.getElementById(modalId).classList.add("hidden");
 };
 
