@@ -21,9 +21,12 @@
       <div
         class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+        <h1
+          class="text-2xl sm:text-3xl font-bold mb-4 border-b-2 border-gray-500 pb-4"
+        >
           ¿Cerrar sesión?
         </h1>
+
         <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
           ¿Estás seguro de que deseas cerrar tu sesión? Recuerda que no podrás
           recibir tus notificaciones mientras tu sesión este cerrada.
@@ -73,9 +76,7 @@
         </section>
         <section class="max-w-screen-lg m-auto pt-12 pb-16 px-6 min-h-screen">
           <div>
-            <div
-              class="flex items-center justify-between gap-4 mb-8 border-b-2 border-gray-300 pb-4"
-            >
+            <div class="mb-8 border-b-2 border-gray-300 pb-4">
               <h2 class="text-xl font-bold text-gray-800 sm:text-2xl">
                 Información de contacto
               </h2>

@@ -18,7 +18,11 @@
       <div
         class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">¡Vaya!</h1>
+        <h1
+          class="text-2xl sm:text-3xl font-bold mb-4 border-b-2 border-gray-500 pb-4"
+        >
+          ¡Vaya!
+        </h1>
         <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
           Parece que tu sesión ha expirado o tu cuenta ha sido deshabilitada.
           Por favor, inicia sesión de nuevo o contacte con un administrador.
@@ -42,7 +46,9 @@
       <div
         class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+        <h1
+          class="text-2xl sm:text-3xl font-bold mb-4 border-b-2 border-gray-500 pb-4"
+        >
           ¡Hasta pronto!
         </h1>
         <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
@@ -68,7 +74,9 @@
       <div
         class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+        <h1
+          class="text-2xl sm:text-3xl font-bold mb-4 border-b-2 border-gray-500 pb-4"
+        >
           ¡Registro exitoso!
         </h1>
         <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">

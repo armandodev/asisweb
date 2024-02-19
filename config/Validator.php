@@ -75,7 +75,8 @@ class Validator
   {
     $this->validateRFC($data['rfc']);
     $this->validateCURP($data['curp']);
-    $this->validateName($data['name']);
+    $this->validateName($data['first_name']);
+    $this->validateName($data['last_name']);
     $this->validateEmail($data['email']);
     $this->validatePhoneNumber($data['phone_number']);
     $this->validatePassword($data['password']);
