@@ -36,8 +36,8 @@ body {
 }
 
 .fade-in {
-  animation: fade-in 0.5s ease-in-out;
-  -webkit-animation: fade-in 0.5s ease-in-out;
+  animation: fade-in 300ms ease-in-out;
+  -webkit-animation: fade-in 300ms ease-in-out;
 }
 
 .email {
