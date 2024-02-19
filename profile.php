@@ -16,26 +16,28 @@
   <body>
     <dialog
       id="logout-modal"
-      class="fixed w-full h-screen bg-black bg-opacity-90 hidden items-center justify-center z-[100]"
+      class="fixed w-full h-screen bg-black bg-opacity-90 flex items-center justify-center z-[100]"
     >
       <div
-        class="w-[90%] max-w-lg p-4 bg-[#212121] text-gray-50 rounded-lg shadow-lg"
+        class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
       >
-        <h1 class="text-2xl font-bold text-center mb-4">¿Cerrar sesión?</h1>
-        <p class="text-base leading-relaxed mb-4 text-gray-300">
+        <h1 class="text-2xl font-bold text-center mb-4 sm:text-3xl">
+          ¿Cerrar sesión?
+        </h1>
+        <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
           ¿Estás seguro de que deseas cerrar tu sesión? Recuerda que no podrás
           recibir tus notificaciones mientras tu sesión este cerrada.
         </p>
         <div class="flex gap-1 justify-end mt-4">
           <a
             href="./auth/logout.php"
-            class="bg-blue-500 hover:bg-red-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit"
+            class="bg-blue-500 hover:bg-red-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
             title="Cerrar sesión"
             >Cerrar sesión</a
           >
           <button
-            id="logout-modal-close-button"
-            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit"
+            id="logout-close-button"
+            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
             title="Cancelar"
           >
             Cancelar
@@ -57,13 +59,13 @@
           class="h-[320px] w-[90%] mx-auto flex flex-col items-center justify-center"
         >
           <h1
-            class="text-white text-3xl font-bold text-center"
+            class="text-white text-3xl font-bold text-center sm:text-4xl"
             style="text-shadow: 0 0 10px black"
           >
             <?php echo $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name']; ?>
           </h1>
           <p
-            class="text-gray-100 text-base font-normal text-center"
+            class="text-gray-100 text-base font-normal text-center sm:text-lg"
             style="text-shadow: 0 0 10px black"
           >
             <?php echo $_SESSION['user']['admin'] === 1 ? "Administrador" : "Docente" ?>
@@ -74,13 +76,15 @@
             <div
               class="flex items-center justify-between gap-4 mb-8 border-b-2 border-gray-300 pb-4"
             >
-              <h2 class="text-xl font-bold text-gray-800">
+              <h2 class="text-xl font-bold text-gray-800 sm:text-2xl">
                 Información de contacto
               </h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <ul class="flex flex-col gap-2 text-gray-800 text-sm w-full">
+              <ul
+                class="flex flex-col gap-2 text-gray-800 text-sm w-full lg:text-base"
+              >
                 Emails:
                 <li>
                   <a
@@ -135,7 +139,9 @@
                 </li>
               </ul>
 
-              <ul class="flex flex-col gap-2 text-gray-800 text-sm w-full">
+              <ul
+                class="flex flex-col gap-2 text-gray-800 text-sm w-full lg:text-base"
+              >
                 Teléfonos:
                 <li>
                   <a

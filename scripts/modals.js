@@ -10,13 +10,12 @@ const closeModal = (modalId) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const logoutButton = document.getElementById("logout-button");
-  const logoutModal = document.getElementById("logout-modal");
+  const logoutCloseButton = document.getElementById("logout-close-button");
 
-  if (logoutButton && logoutModal) {
+  if (logoutButton && logoutCloseButton) {
     logoutButton.addEventListener("click", () => openModal("logout-modal"));
-    logoutModal.addEventListener("click", () => closeModal("logout-modal"));
+    logoutCloseButton.addEventListener("click", () =>
+      closeModal("logout-modal")
+    );
   }
-
-  const editButton = document.getElementById("edit-button");
-  const editModal = document.getElementById("edit-modal");
 });

@@ -17,7 +17,7 @@
       class="bg-black bg-opacity-90 fixed top-0 left-0 w-full h-screen hidden items-center justify-center z-50 sm:static sm:opacity-1 sm:w-fit sm:bg-transparent sm:flex sm:h-fit"
     >
       <ul
-        class="flex flex-col items-center gap-4 text-lg font-normal text-gray-300 hover:text-gray-100 transition-colors duration-300 ease-in-out sm:flex-row"
+        class="flex flex-col items-center gap-4 text-lg font-semibold text-gray-100 sm:flex-row"
       >
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
