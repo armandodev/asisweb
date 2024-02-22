@@ -88,7 +88,8 @@ create table if not exists `tutors` (
   `email` varchar(255) null unique key,
   `phone_number` varchar(10) not null unique key,
   `created_at` datetime not null default current_timestamp,
-  `updated_at` datetime not null default current_timestamp on update current_timestamp
+  `updated_at` datetime not null default current_timestamp on update current_timestamp,
+  foreign key (`control_number`) references `students`(`control_number`) on delete cascade
 ) engine=InnoDB default charset=utf8;
 
 -- Table: `tutor_extra_emails` (Correos extra de los tutores)
@@ -133,16 +134,16 @@ create table if not exists `schedule` (
   `end_time` time not null,
   `created_at` datetime not null default current_timestamp,
   `updated_at` datetime not null default current_timestamp on update current_timestamp,
+  foreign key (`user_id`) references `users`(`user_id`) on delete cascade,
   foreign key (`group_id`) references `groups`(`group_id`) on delete cascade,
-  foreign key (`subject_id`) references `subjects`(`subject_id`) on delete cascade,
-  foreign key (`user_id`) references `users`(`user_id`) on delete cascade
+  foreign key (`subject_id`) references `subjects`(`subject_id`) on delete cascade
 ) engine=InnoDB default charset=utf8;
 
 -- Table: `attendance` (Asistencias)
 create table if not exists `attendance` (
   `attendance_id` int(11) not null auto_increment primary key,
   `schedule_id` int(11) not null,
-  `control_number` int(11) not null,
+  `control_number` varchar(14) not null,
   `datetime` datetime not null,
   `status` enum('Presente', 'Ausente', 'Retardo', 'Justificado') not null,
   `created_at` datetime not null default current_timestamp,
