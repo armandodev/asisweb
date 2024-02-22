@@ -8,7 +8,7 @@ class Auth
   // Variables de la clase.
   private $db;
   private $validator;
-  private $get_user_data_query = "SELECT user_id, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
+  private $get_user_data_query = "SELECT user_id, first_name, last_name, email, phone_number, status, role FROM users WHERE users.user_id = :user_id AND status = 'Activo' LIMIT 1";
 
   // Constructor de la clase.
   public function __construct()
@@ -58,8 +58,8 @@ class Auth
       $result = $result->fetch(PDO::FETCH_ASSOC);
       $_SESSION['user'] = $result;
 
-      if ($_SESSION['user']['admin'] == 0) {
-        // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador (0).
+      if ($_SESSION['user']['role'] === 'Docente') {
+        // Bloquea el acceso a cualquier archivo en /admin en caso de que el docente no sea administrador.
         if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
           header('Location: ../index.php');
           exit;
@@ -118,7 +118,7 @@ class Auth
     try {
       $this->validator->validateLogin($data);
 
-      $query = 'SELECT user_id, email, hashed_password, salt, active FROM users WHERE users.email = :email';
+      $query = 'SELECT user_id, email, hashed_password, salt, status FROM users WHERE users.email = :email';
       $result = $this->db->executeQuery($query, [':email' => $data['email']]);
 
       if (!$result) throw new Exception('Error al iniciar sesión.');
@@ -126,7 +126,7 @@ class Auth
 
       $result = $result->fetch(PDO::FETCH_ASSOC);
 
-      if ($result['active'] === 0) throw new Exception('El usuario no está activo.');
+      if ($result['status'] === 'Inactivo') throw new Exception('El usuario no está activo.');
       if (!password_verify($data['password'] . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta.');
 
       $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $result['user_id']]);

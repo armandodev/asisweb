@@ -34,7 +34,7 @@
         >
           <a href="./profile.php" title="Ir a Perfil">Perfil</a>
         </li>
-        <?php if ($_SESSION['user']['admin'] == 1) { ?>
+        <?php if ($_SESSION['user']['role'] === 'Administrador') { ?>
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
         >

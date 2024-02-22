@@ -71,7 +71,7 @@
             class="text-gray-100 text-base font-normal text-center sm:text-lg"
             style="text-shadow: 0 0 10px black"
           >
-            <?php echo $_SESSION['user']['admin'] === 1 ? "Administrador" : "Docente" ?>
+            <?php echo $_SESSION['user']['role'] ?>
           </p>
         </section>
         <section class="max-w-screen-lg m-auto pt-12 pb-16 px-6 min-h-screen">
