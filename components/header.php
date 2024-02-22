@@ -22,12 +22,12 @@
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
         >
-          <a href="#" title="Ir a Asignaturas">Asignaturas</a>
+          <a href="./subjects.php" title="Ir a Asignaturas">Asignaturas</a>
         </li>
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
         >
-          <a href="#" title="Ir a Horario">Horario</a>
+          <a href="./schedule.php" title="Ir a Horario">Horario</a>
         </li>
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
