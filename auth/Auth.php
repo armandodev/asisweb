@@ -8,7 +8,7 @@ class Auth
   // Variables de la clase.
   private $db;
   private $validator;
-  private $get_user_data_query = "SELECT user_id, rfc, curp, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
+  private $get_user_data_query = "SELECT user_id, first_name, last_name, email, phone_number, active, admin FROM users WHERE users.user_id = :user_id AND active = 1 LIMIT 1";
 
   // Constructor de la clase.
   public function __construct()
@@ -75,16 +75,14 @@ class Auth
       $this->validator->validateRegister($data);
 
       // Prepara la consulta a la base de datos.
-      $query = 'SELECT user_id FROM users WHERE rfc = :rfc OR curp = :curp OR email = :email or phone_number = :phone_number LIMIT 1';
+      $query = 'SELECT user_id FROM users WHERE email = :email OR phone_number = :phone_number LIMIT 1';
       $params = [
-        ':rfc' => $data['rfc'],
-        ':curp' => $data['curp'],
         ':email' => $data['email'],
         ':phone_number' => $data['phone_number']
       ];
       $result = $this->db->executeQuery($query, $params);
 
-      if ($result->rowCount() > 0) throw new Exception('El RFC, CURP, correo electrónico o número de teléfono ya están registrados. Si usted no los ha registrado, por favor contacte al administrador para eliminar la consulta existente y que pueda registrar sus datos.');
+      if ($result->rowCount() > 0) throw new Exception('El correo electrónico o número de teléfono ya están registrados. Si usted no los ha registrado, por favor contacte al administrador para eliminar la consulta existente y que pueda registrar sus datos.');
 
       $salt = bin2hex(random_bytes(16));
       $password = password_hash($data['password'] . $salt, PASSWORD_DEFAULT);
@@ -92,10 +90,8 @@ class Auth
       $data['hashed_password'] = $password;
       $data['salt'] = $salt;
 
-      $query = 'INSERT INTO users (rfc, curp, first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:rfc, :curp, :first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
+      $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
       $params = [
-        ':rfc' => $data['rfc'],
-        ':curp' => $data['curp'],
         ':first_name' => $data['first_name'],
         ':last_name' => $data['last_name'],
         ':email' => $data['email'],

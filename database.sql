@@ -4,8 +4,6 @@ use `asisweb`;
 -- Table: `users`
 create table if not exists `users` (
   `user_id` int(11) not null auto_increment primary key,
-  `rfc` varchar(13) not null unique key,
-  `curp` varchar(18) not null unique key,
   `first_name` varchar(100) not null,
   `last_name` varchar(100) not null,
   `email` varchar(255) not null unique key,

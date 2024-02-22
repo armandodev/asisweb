@@ -77,38 +77,6 @@
             </fieldset>
 
             <fieldset class="w-full">
-              <legend class="hidden">Información única</legend>
-
-              <label class="flex flex-col gap-3" title="CURP">
-                <span>CURP <span class="text-red-600">*</span></span>
-                <input
-                  class="p-2 border border-gray-600 rounded-md text-black"
-                  type="text"
-                  name="curp"
-                  pattern="^[A-Z]{4}[0-9]{6}[HM][A-Z]{6}[0-9]{1}$"
-                  minlength="18"
-                  maxlength="18"
-                  placeholder="AAAA000000AAAAAAA0"
-                  required
-                />
-              </label>
-
-              <label class="flex flex-col gap-3" title="RFC">
-                <span>RFC <span class="text-red-600">*</span></span>
-                <input
-                  class="p-2 border border-gray-600 rounded-md text-black"
-                  type="text"
-                  name="rfc"
-                  pattern="^[A-Z]{4}[0-9]{6}[A-Z0-9]{3}$"
-                  minlength="13"
-                  maxlength="13"
-                  placeholder="AAAA000000AAA"
-                  required
-                />
-              </label>
-            </fieldset>
-
-            <fieldset class="w-full">
               <legend class="hidden">Información de contacto</legend>
 
               <label class="flex flex-col gap-3" title="Correo electrónico">
