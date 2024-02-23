@@ -155,11 +155,42 @@ create table
 -- Table: `params` (Parámetros generales)
 create table
   if not exists `params` (
-    `school_name` varchar(150) not null,
-    `short_school_name` varchar(20) null,
-    `period` varchar(6) not null,
-    `director_name` varchar(100) not null,
-    `cct` varchar(15) not null,
-    `state` varchar(100) not null,
-    `city` varchar(100) not null
+    `school_name` varchar(150) not null default 'Nombre completo de la escuela',
+    `short_school_name` varchar(20) null default 'Escuela',
+    `period` varchar(6) not null default 'aaaa-n',
+    `director_name` varchar(100) not null default 'Nombre del director',
+    `cct` varchar(15) not null default 'CCT',
+    `address` varchar(150) null default 'Dirección de la escuela',
+    `state` varchar(100) not null default 'Estado de la escuela',
+    `city` varchar(100) not null default 'Ciudad de la escuela',
+    `postal_code` varchar(5) not null default '01234',
+    `phone_number` varchar(15) not null default '0123456789'
   ) engine = InnoDB default charset = utf8;
+
+-- Insert: `params` (Parámetros generales)
+insert into
+  `params` (
+    `school_name`,
+    `short_school_name`,
+    `period`,
+    `director_name`,
+    `cct`,
+    `address`,
+    `state`,
+    `city`,
+    `postal_code`,
+    `phone_number`
+  )
+values
+  (
+    'Centro De Estudios Tecnológicos Industrial Y De Servicios Num.121',
+    'CETis 121',
+    '2024-1',
+    'Doctora María del Consuelo Sánchez Gálvez',
+    '16DCT0004E',
+    'Guadalajara-Jiquilpan 50, Guadalajara',
+    'Michoacán de Ocampo',
+    'Sahuayo de Morelos',
+    '59058',
+    '3536881097'
+  );
