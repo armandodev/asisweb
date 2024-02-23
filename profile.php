@@ -14,41 +14,6 @@
   </head>
 
   <body>
-    <dialog
-      id="logout-modal"
-      class="fixed w-full h-screen bg-black bg-opacity-90 hidden items-center justify-center z-[100]"
-    >
-      <div
-        class="w-[90%] max-w-md p-4 bg-[#212121] text-gray-50 rounded-sm shadow-lg"
-      >
-        <h1
-          class="text-2xl sm:text-3xl font-bold mb-4 border-b-2 border-gray-500 pb-4"
-        >
-          ¿Cerrar sesión?
-        </h1>
-
-        <p class="text-base leading-relaxed mb-4 text-gray-300 sm:text-lg">
-          ¿Estás seguro de que deseas cerrar tu sesión? Recuerda que no podrás
-          recibir tus notificaciones mientras tu sesión este cerrada.
-        </p>
-        <div class="flex gap-1 justify-end mt-4">
-          <a
-            href="./auth/logout.php"
-            class="bg-blue-500 hover:bg-red-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
-            title="Cerrar sesión"
-            >Cerrar sesión</a
-          >
-          <button
-            id="logout-close-button"
-            class="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 ease-in-out text-white text-sm py-1 px-2 rounded h-fit sm:text-base"
-            title="Cancelar"
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </dialog>
-
     <?php require_once './components/header.php'; ?>
 
     <main class="min-h-screen">
