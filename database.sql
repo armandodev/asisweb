@@ -1,4 +1,3 @@
--- !TODO: Probar todas las funciones nuevas en la base de datos
 create database if not exists `asisweb` default character set utf8 collate utf8_general_ci;
 use `asisweb`;
 
