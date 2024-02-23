@@ -49,10 +49,10 @@
     </a>
 
     <nav
-      class="bg-black bg-opacity-90 fixed top-0 left-0 w-full h-screen hidden items-center justify-center z-50 sm:static sm:opacity-1 sm:w-fit sm:bg-transparent sm:flex sm:h-fit"
+      class="bg-black bg-opacity-90 fixed top-0 left-0 w-full h-screen hidden items-center justify-center z-50 md:static md:opacity-1 md:w-fit md:bg-transparent md:flex md:h-fit"
     >
       <ul
-        class="flex flex-col items-center gap-4 text-lg font-semibold text-gray-100 sm:flex-row"
+        class="flex flex-col items-center gap-4 text-lg font-semibold text-gray-100 md:flex-row"
       >
         <li
           class="border-b-2 border-transparent hover:border-gray-100 transition-colors duration-300 ease-in-out"
@@ -92,7 +92,7 @@
 
       <button
         id="close-menu-button"
-        class="w-8 h-8 text-white absolute top-6 right-4 sm:hidden"
+        class="w-8 h-8 text-white absolute top-6 right-4 md:hidden"
         title="Cerrar menú"
       >
         <svg
@@ -114,7 +114,7 @@
 
     <button
       id="menu-button"
-      class="w-8 h-8 text-white sm:hidden"
+      class="w-8 h-8 text-white md:hidden"
       title="Abrir menú"
     >
       <svg
