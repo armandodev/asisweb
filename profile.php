@@ -1,20 +1,20 @@
-<?php require_once './config/session.php'; ?>
-<?php $extra_info = $auth->getExtraInfo(); ?>
-<?php $extra_emails = $extra_info['emails']; ?>
-<?php $extra_phone_numbers = $extra_info['phone_numbers']; ?>
+<?php require_once './config/session.php' ?>
+<?php $extra_info = $auth->getExtraInfo() ?>
+<?php $extra_emails = $extra_info['emails'] ?>
+<?php $extra_phone_numbers = $extra_info['phone_numbers'] ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi perfil - Docentes CETis 121</title>
+    <title>Mi perfil - Docentes <?php echo SHORT_SCHOOL_NAME ?></title>
     <link rel="icon" href="./favicon.webp" type="image/webp" />
 
     <link rel="stylesheet" href="./css/output.css" />
   </head>
 
   <body>
-    <?php require_once './components/header.php'; ?>
+    <?php require_once './components/header.php' ?>
 
     <main class="min-h-screen">
       <article>
@@ -30,7 +30,7 @@
             class="text-white text-3xl font-bold text-center sm:text-4xl"
             style="text-shadow: 0 0 10px black"
           >
-            <?php echo $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name']; ?>
+            <?php echo $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name'] ?>
           </h1>
           <p
             class="text-gray-100 text-base font-normal text-center sm:text-lg"
@@ -55,8 +55,8 @@
                 <li>
                   <a
                     class="text-blue-500 underline email"
-                    href="mailto:<?php echo $_SESSION['user']['email']; ?>"
-                    ><?php echo $_SESSION['user']['email']; ?>
+                    href="mailto:<?php echo $_SESSION['user']['email'] ?>"
+                    ><?php echo $_SESSION['user']['email'] ?>
                     &nbsp;(Principal)</a
                   >
                 </li>
@@ -66,18 +66,18 @@
                 <li>
                   <a
                     class="text-blue-500 underline email"
-                    href="mailto:<?php echo $e['extra_email']; ?>"
-                    ><?php echo $e['extra_email']; ?></a
+                    href="mailto:<?php echo $e['extra_email'] ?>"
+                    ><?php echo $e['extra_email'] ?></a
                   >
                   <span class="block">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info.php?action=main&info=email&id=<?php echo $e['email_id']; ?>"
+                      href="./auth/extra_info.php?action=main&info=email&id=<?php echo $e['email_id'] ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info.php?action=delete&info=email&id=<?php echo $e['email_id']; ?>"
+                      href="./auth/extra_info.php?action=delete&info=email&id=<?php echo $e['email_id'] ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -112,8 +112,8 @@
                 <li>
                   <a
                     class="text-blue-500 underline"
-                    href="tel:<?php echo $_SESSION['user']['phone_number']; ?>"
-                    ><?php echo $_SESSION['user']['phone_number']; ?>
+                    href="tel:<?php echo $_SESSION['user']['phone_number'] ?>"
+                    ><?php echo $_SESSION['user']['phone_number'] ?>
                     &nbsp;(Principal)
                   </a>
                 </li>
@@ -123,18 +123,18 @@
                 <li>
                   <a
                     class="text-blue-500 underline"
-                    href="tel:<?php echo $pn['extra_phone_number']; ?>"
-                    ><?php echo $pn['extra_phone_number']; ?></a
+                    href="tel:<?php echo $pn['extra_phone_number'] ?>"
+                    ><?php echo $pn['extra_phone_number'] ?></a
                   >
                   <span class="block">
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info.php?action=main&info=phone_number&id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/extra_info.php?action=main&info=phone_number&id=<?php echo $pn['phone_number_id'] ?>"
                       >Hacer principal</a
                     >
                     <a
                       class="text-blue-500 underline"
-                      href="./auth/extra_info.php?action=delete&info=phone_number&id=<?php echo $pn['phone_number_id']; ?>"
+                      href="./auth/extra_info.php?action=delete&info=phone_number&id=<?php echo $pn['phone_number_id'] ?>"
                       >Eliminar</a
                     >
                   </span>
@@ -167,7 +167,7 @@
       </article>
     </main>
 
-    <?php require_once './components/footer.php'; ?>
+    <?php require_once './components/footer.php' ?>
 
     <script src="./scripts/modals.js"></script>
     <script src="./scripts/header.js"></script>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro | Docentes CETis 121</title>
+    <title>Registro | Docentes <?php echo SHORT_SCHOOL_NAME ?></title>
     <link rel="shortcut icon" href="favicon.webp" type="image/webp" />
 
     <link rel="stylesheet" href="./css/output.css" />
@@ -24,7 +24,8 @@
           <h1 class="text-4xl font-bold text-center mb-4">
             Solicitar Registro
             <small class="block text-base font-normal text-gray-300"
-              >Docentes CETis 121</small
+              >Docentes
+              <?php echo SHORT_SCHOOL_NAME ?></small
             >
           </h1>
           <form

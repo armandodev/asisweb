@@ -48,4 +48,18 @@ class Database
     // Retorna el resultado de la consulta.
     return $stmt;
   }
+
+  public function getParams()
+  {
+    // Obtiene la conexión a la base de datos.
+    $this->getConnection();
+    // Prepara la consulta a la base de datos.
+    $stmt = $this->conn->prepare('SELECT * FROM params LIMIT 1');
+    // Ejecuta la consulta a la base de datos.
+    $stmt->execute();
+    // Cierra la conexión a la base de datos.
+    $this->closeConnection();
+    // Retorna el resultado de la consulta.
+    return $stmt;
+  }
 }

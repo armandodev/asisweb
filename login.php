@@ -1,10 +1,10 @@
-<?php require_once './config/session.php'; ?>
+<?php require_once './config/session.php' ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio de sesión | Docentes CETis 121</title>
+    <title>Inicio de sesión | Docentes <?php echo SHORT_SCHOOL_NAME ?></title>
     <link rel="shortcut icon" href="favicon.webp" type="image/webp" />
 
     <link rel="stylesheet" href="./css/output.css" />
@@ -112,7 +112,8 @@
           <h1 class="text-4xl font-bold text-center mb-4">
             Inicio de sesión
             <small class="block text-base font-normal text-gray-300"
-              >Docentes CETis 121</small
+              >Docentes
+              <?php echo SHORT_SCHOOL_NAME ?></small
             >
           </h1>
           <form
@@ -124,9 +125,9 @@
             <p
               class="bg-red-300 text-red-800 text-center w-full py-2 px-1 rounded-lg"
             >
-              <?php echo $_SESSION['form-error']; ?>
+              <?php echo $_SESSION['form-error'] ?>
             </p>
-            <?php unset($_SESSION['form-error']); ?>
+            <?php unset($_SESSION['form-error']) ?>
             <?php } ?>
             <fieldset class="w-full">
               <p class="text-lg text-gray-300 mb-2">

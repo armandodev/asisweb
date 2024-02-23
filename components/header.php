@@ -44,7 +44,7 @@
       <img class="w-14 align-middle" src="./images/logo.webp" alt="Logo" />
       <span
         class="max-w-[300px] outline-none overflow-hidden text-ellipsis text-lg font-semibold"
-        >CETis 121</span
+        ><?php echo SHORT_SCHOOL_NAME; ?></span
       >
     </a>
 

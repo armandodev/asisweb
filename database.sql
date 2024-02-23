@@ -156,7 +156,7 @@ create table
 create table
   if not exists `params` (
     `school_name` varchar(150) not null default 'Nombre completo de la escuela',
-    `short_school_name` varchar(20) null default 'Escuela',
+    `short_school_name` varchar(20) null,
     `period` varchar(6) not null default 'aaaa-n',
     `director_name` varchar(100) not null default 'Nombre del director',
     `cct` varchar(15) not null default 'CCT',
