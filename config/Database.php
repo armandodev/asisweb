@@ -62,4 +62,18 @@ class Database
     // Retorna el resultado de la consulta.
     return $stmt;
   }
+
+  public function getSubjects()
+  {
+    // Obtiene la conexión a la base de datos.
+    $this->getConnection();
+    // Prepara la consulta a la base de datos.
+    $stmt = $this->conn->prepare('SELECT * FROM subjects');
+    // Ejecuta la consulta a la base de datos.
+    $stmt->execute();
+    // Cierra la conexión a la base de datos.
+    $this->closeConnection();
+    // Retorna el resultado de la consulta.
+    return $stmt;
+  }
 }
