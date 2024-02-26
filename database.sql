@@ -194,3 +194,51 @@ values
     '59058',
     '3536881097'
   );
+
+-- Insert: `subjects` (Materias)
+insert into
+  `subjects` (`subject_name`)
+values
+  ('Tutorías 1'),
+  ('Tutorías 2'),
+  ('Tutorías 3'),
+  ('Tutorías 4'),
+  ('Tutorías 5'),
+  ('Tutorías 6'),
+  ('Física 1'),
+  ('Física 2'),
+  ('Temas de Física'),
+  ('Biología'),
+  ('Ecología'),
+  ('Algebra'),
+  ('Geometría Analítica'),
+  ('Trigonometría'),
+  ('Calculo Integral'),
+  ('Calculo Diferencial'),
+  ('Probabilidad y Estadística'),
+  ('Dibujo Técnico'),
+  ('Temas de Filosofía'),
+  ('Ingles 1'),
+  ('Ingles 2'),
+  ('Ingles 3'),
+  ('Ingles 4'),
+  ('Ingles 5'),
+  ('Química 1'),
+  ('Química 2'),
+  ('Ética'),
+  ('Lógica'),
+  ('Ciencias Sociales'),
+  ('Lectura Oral y Escrita 1'),
+  ('Lectura Oral y Escrita 2');
+
+-- Insert: `careers` (Carreras)
+insert into
+  `careers` (`career_name`)
+values
+  ('Ofimática'),
+  ('Programación'),
+  ('Contabilidad'),
+  ('Electricidad'),
+  ('Soporte y Mantenimiento de Equipo de Cómputo'),
+  ('Administración de Recursos Humanos'),
+  ('Trabajo Social');
