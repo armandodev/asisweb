@@ -15,7 +15,7 @@
       class="w-full relative text-gray-100 min-h-screen flex flex-col justify-center items-center"
     >
       <img
-        class="bg-[#1a1c23] w-full h-full object-cover object-center absolute top-0 left-0 -z-10 filter brightness-50 overflow-hidden"
+        class="bg-[#1a1c23] w-full h-full object-cover object-center absolute top-0 left-0 -z-10 brightness-30 overflow-hidden"
         src="./images/banners/banner-2.webp"
         alt="Banner"
       />

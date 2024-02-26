@@ -44,3 +44,8 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
+
+.brightness-30 {
+  filter: brightness(0.3);
+  -webkit-filter: brightness(0.3);
+}
