@@ -242,3 +242,16 @@ values
   ('Soporte y Mantenimiento de Equipo de Cómputo'),
   ('Administración de Recursos Humanos'),
   ('Trabajo Social');
+
+-- Insert: `groups` (Grupos)
+insert into
+  `groups` (
+    `tutor_id`,
+    `classroom`,
+    `career_id`,
+    `group_semester`,
+    `group_letter`,
+    `period`
+  )
+values
+  (1, '1', 1, 1, 'A', '2024-1');
