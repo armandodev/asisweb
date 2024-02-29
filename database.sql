@@ -167,34 +167,6 @@ create table
     `phone_number` varchar(15) not null default '0123456789'
   ) engine = InnoDB default charset = utf8;
 
--- Insert: `params` (Parámetros generales)
-insert into
-  `params` (
-    `school_name`,
-    `short_school_name`,
-    `period`,
-    `director_name`,
-    `cct`,
-    `address`,
-    `state`,
-    `city`,
-    `postal_code`,
-    `phone_number`
-  )
-values
-  (
-    'Centro De Estudios Tecnológicos Industrial Y De Servicios no.121',
-    'CETis 121',
-    '2024-1',
-    'Doctora María del Consuelo Sánchez Gálvez',
-    '16DCT0004E',
-    'Guadalajara-Jiquilpan 50, Guadalajara',
-    'Michoacán de Ocampo',
-    'Sahuayo de Morelos',
-    '59058',
-    '3536881097'
-  );
-
 -- Insert: `careers` (Carreras)
 insert into
   `careers` (`career_name`)

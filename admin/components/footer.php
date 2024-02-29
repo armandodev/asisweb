@@ -5,7 +5,7 @@
         href="./index.php"
         class="flex items-center mb-4 md:mb-0 space-x-3 rtl:space-x-reverse"
       >
-        <img src="./images/logo.webp" class="h-8" alt="DGTi Logo" />
+        <img src="./../images/logo.webp" class="h-8" alt="DGTi Logo" />
         <span class="text-xl font-semibold text-white"
           ><?php echo SHORT_SCHOOL_NAME; ?></span
         >
