@@ -15,3 +15,11 @@ define('SCHOOL_NAME', $params['school_name']);
 if ($params['short_school_name'] !== null) define('SHORT_SCHOOL_NAME', $params['short_school_name']);
 else define('SHORT_SCHOOL_NAME', '');
 define('STATE', $params['state']);
+
+define('DAYS', [
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+]);

@@ -76,4 +76,42 @@ class Database
     // Retorna el resultado de la consulta.
     return $stmt;
   }
+
+  public function getSchedule($day = null)
+  {
+    $user_id = $_SESSION['user']['user_id'];
+
+    if ($day === null) {
+      $query = "SELECT start_time, end_time, subject_name, day, classroom, career_name, group_semester, group_letter
+        FROM schedule
+        INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
+        INNER JOIN groups ON schedule.group_id = groups.group_id
+        INNER JOIN careers ON groups.career_id = careers.career_id
+        WHERE user_id = :user_id";
+    } else {
+      $query = "SELECT start_time, end_time, subject_name, day, classroom, career_name, group_semester, group_letter
+        FROM schedule
+        INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
+        INNER JOIN groups ON schedule.group_id = groups.group_id
+        INNER JOIN careers ON groups.career_id = careers.career_id
+        WHERE user_id = :user_id AND day = :day";
+    }
+
+    $params = [':user_id' => $user_id];
+    if ($day !== null) {
+      $params[':day'] = $day;
+    }
+
+    $this->getConnection();
+    $result = $this->executeQuery($query, $params);
+    $this->closeConnection();
+
+    if ($result->rowCount() > 0) {
+      $result = $result->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+      $result = [];
+    }
+
+    return $result;
+  }
 }

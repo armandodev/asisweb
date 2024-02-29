@@ -1,7 +1,11 @@
-<?php require_once './config/session.php' ?>
-<?php require_once './config/Database.php' ?>
-<?php $db = new Database() ?>
-<?php $subjects = $db->getSubjects() ?>
+<?php
+require_once './config/session.php';
+require_once './config/Database.php';
+$db = new Database();
+$schedule = [];
+foreach (DAYS as $day) $schedule[$day] = $db->getSchedule($day); $i = 0; foreach
+($schedule as $day) if (count($day) === 0) $i++; if ($i >= 5) $empty = true;
+else $empty = false; $i = 0; ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -33,19 +37,67 @@
           </h1>
         </section>
 
-        <section class="max-w-screen-lg m-auto pt-12 pb-16 px-6 min-h-screen">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php foreach ($subjects as $subject): ?>
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-              <div class="p-4">
-                <h1 class="text-gray-900 font-bold text-2xl">
-                  <?php echo $subject['subject_name'] ?>
-                </h1>
-              </div>
+        <?php if (!$empty) { ?>
+        <?php foreach($schedule as $day) { 
+            if (count($day) === 0) {
+              $i++;
+              continue;
+            } ?>
+        <section class="max-w-screen-lg m-auto px-6 py-8">
+          <h2
+            class="text-xl font-bold text-gray-800 sm:text-2xl border-b-2 border-gray-300 pb-4 mb-8"
+          >
+            <?php echo DAYS[$i] ?>
+          </h2>
+
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <?php foreach($day as $class) { ?>
+            <div
+              class="bg-white p-6 rounded shadow-lg mb-8 flex flex-col gap-2"
+            >
+              <h3 class="text-lg font-bold text-gray-800">
+                <?php echo $class['subject_name'] ?>
+              </h3>
+              <p class="text-gray-600">
+                <span class="font-bold">Grupo:</span>
+                <?php echo $class['group_semester'] ?>
+                -
+                <?php echo $class['group_letter'] ?>
+              </p>
+              <p class="text-gray-600">
+                <span class="font-bold">Especialidad:</span>
+                <?php echo $class['career_name'] ?>
+              </p>
+              <p class="text-gray-600">
+                <span class="font-bold">Aula:</span>
+                <?php echo $class['classroom'] ?>
+              </p>
+              <p class="text-gray-600">
+                <span class="font-bold">Hora:</span>
+                <?php echo $class['start_time'] ?>
+                -
+                <?php echo $class['end_time'] ?>
+              </p>
+              <a
+                href="./attendance.php"
+                class="block text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
+              >
+                Tomar Asistencia
+              </a>
             </div>
-            <?php endforeach ?>
+            <?php } ?>
           </div>
         </section>
+        <?php $i++; } ?>
+        <?php } else { ?>
+        <section class="max-w-screen-lg m-auto px-6 py-8 min-h-[80vh]">
+          <h2
+            class="text-xl font-bold text-gray-800 sm:text-2xl border-b-2 border-gray-300 pb-4 mb-8"
+          >
+            No hay clases programadas
+          </h2>
+        </section>
+        <?php } ?>
       </article>
     </main>
 

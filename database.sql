@@ -183,7 +183,7 @@ insert into
   )
 values
   (
-    'Centro De Estudios Tecnológicos Industrial Y De Servicios Num.121',
+    'Centro De Estudios Tecnológicos Industrial Y De Servicios no.121',
     'CETis 121',
     '2024-1',
     'Doctora María del Consuelo Sánchez Gálvez',
@@ -195,63 +195,15 @@ values
     '3536881097'
   );
 
--- Insert: `subjects` (Materias)
-insert into
-  `subjects` (`subject_name`)
-values
-  ('Tutorías 1'),
-  ('Tutorías 2'),
-  ('Tutorías 3'),
-  ('Tutorías 4'),
-  ('Tutorías 5'),
-  ('Tutorías 6'),
-  ('Física 1'),
-  ('Física 2'),
-  ('Temas de Física'),
-  ('Biología'),
-  ('Ecología'),
-  ('Algebra'),
-  ('Geometría Analítica'),
-  ('Trigonometría'),
-  ('Calculo Integral'),
-  ('Calculo Diferencial'),
-  ('Probabilidad y Estadística'),
-  ('Dibujo Técnico'),
-  ('Temas de Filosofía'),
-  ('Ingles 1'),
-  ('Ingles 2'),
-  ('Ingles 3'),
-  ('Ingles 4'),
-  ('Ingles 5'),
-  ('Química 1'),
-  ('Química 2'),
-  ('Ética'),
-  ('Lógica'),
-  ('Ciencias Sociales'),
-  ('Lectura Oral y Escrita 1'),
-  ('Lectura Oral y Escrita 2');
-
 -- Insert: `careers` (Carreras)
 insert into
   `careers` (`career_name`)
 values
-  ('Ofimática'),
-  ('Programación'),
-  ('Contabilidad'),
-  ('Electricidad'),
-  ('Soporte y Mantenimiento de Equipo de Cómputo'),
-  ('Administración de Recursos Humanos'),
-  ('Trabajo Social');
-
--- Insert: `groups` (Grupos)
-insert into
-  `groups` (
-    `tutor_id`,
-    `classroom`,
-    `career_id`,
-    `group_semester`,
-    `group_letter`,
-    `period`
-  )
-values
-  (1, '1', 1, 1, 'A', '2024-1');
+  ('ADMINISTRACIÓN DE RECURSOS HUMANOS'),
+  ('COMPONENTE BÁSICO Y PROPEDEUTICO'),
+  ('CONTABILIDAD'),
+  ('ELECTRICIDAD'),
+  ('OFIMÁTICA'),
+  ('PROGRAMACIÓN'),
+  ('SOPORTE Y MANTENIMIENTO DE EQUIPO DE CÓMPUTO'),
+  ('TRABAJO SOCIAL');
