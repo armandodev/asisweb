@@ -1,5 +1,5 @@
 <?php if (isset($_SESSION['message'])) { ?>
-  <div class="flex justify-center absolute top-0 left-0 w-full h-screen z-10">
+  <div class="flex justify-center absolute top-0 left-0 w-full h-screen z-0">
     <?php if ($_SESSION['message']['type'] === 'error') {
       echo '<div class="bg-red-300 text-red-900 w-[90%] max-w-xl border border-red-900 rounded-lg m-auto p-3 absolute bottom-3 flex items-center justify-between gap-2 border-b-0" id="message" open>';
       echo '
