@@ -115,7 +115,7 @@ class Auth
   }
 
   // Función para iniciar sesión.
-  public function login($data = [], $path = "../index.php")
+  public function login($data = [], $path = "../")
   {
     try {
       $this->validator->validateLogin($data);
@@ -123,13 +123,13 @@ class Auth
       $query = 'SELECT user_id, email, hashed_password, salt, status FROM users WHERE users.email = :email';
       $result = $this->db->executeQuery($query, [':email' => $data['email']]);
 
-      if (!$result) throw new Exception('Error al iniciar sesión.');
-      if ($result->rowCount() == 0) throw new Exception('El usuario no existe.');
+      if (!$result) throw new Exception('Error al iniciar sesión');
+      if ($result->rowCount() == 0) throw new Exception('El usuario no existe');
 
       $result = $result->fetch(PDO::FETCH_ASSOC);
 
-      if ($result['status'] === 'Inactivo') throw new Exception('El usuario no está activo.');
-      if (!password_verify($data['password'] . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta.');
+      if ($result['status'] === 'Inactivo') throw new Exception('El usuario no está activo');
+      if (!password_verify($data['password'] . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta');
 
       $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $result['user_id']]);
       $result = $result->fetch(PDO::FETCH_ASSOC);
@@ -138,8 +138,8 @@ class Auth
       header('Location: ' . $path);
       exit;
     } catch (Exception $e) {
-      $_SESSION['form-error'] = $e->getMessage();
-      header('Location: ../login.php');
+      $_SESSION['error'] = $e->getMessage();
+      header("Location $path");
       exit;
     }
   }
