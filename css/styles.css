@@ -40,6 +40,21 @@ html {
   scrollbar-gutter: stable;
 }
 
+.progress {
+  animation: progress 10s linear backwards;
+  -webkit-animation: progress 10s linear both;
+}
+
+.fade-out {
+  animation: fade-out 500ms linear both;
+  -webkit-animation: fade-out 500ms linear both;
+}
+
+.bg-blur {
+  background: rgb(var(--primary-color) / 80%);
+  backdrop-filter: blur(10px);
+}
+
 svg.icon {
   fill: currentColor;
   width: 1.25em;
@@ -55,14 +70,4 @@ body {
   animation: blur linear both;
   animation-timeline: scroll();
   animation-range: 0 80px;
-}
-
-.progress {
-  animation: progress 10s linear backwards;
-  -webkit-animation: progress 10s linear both;
-}
-
-.fade-out {
-  animation: fade-out 500ms linear both;
-  -webkit-animation: fade-out 500ms linear both;
 }

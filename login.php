@@ -12,26 +12,27 @@
 </head>
 
 <body>
-  <main>
-    <article>
-      <h1>Inicio de sesión <small>Docentes <?php echo SHORT_SCHOOL_NAME ?></small></h1>
-      <form action="./auth/login.php" method="post">
-        <fieldset>
-          <p>Campos obligatorios <span>*</span></p>
-          <legend>Información de acceso</legend>
+  <main class="min-h-screen relative flex items-center justify-center">
+    <img class="absolute top-0 left-0 w-full h-full object-cover -z-50 filter brightness-50" src="./images/banners/banner-1.webp" alt="Banner">
+    <article class="bg-blur text-white w-[90%] max-w-xl p-8 flex flex-col gap-4 rounded-3xl rounded-bl-lg col-span-3 sm:col-span-2 z-50">
+      <h1 class="text-3xl">Inicio de sesión <small class="block text-lg">Docentes <?php echo SHORT_SCHOOL_NAME ?></small></h1>
+      <form class="flex flex-col items-end gap-4" action="./auth/login.php" method="post">
+        <fieldset class="flex flex-col gap-4 w-full">
+          <legend class="hidden">Información de acceso</legend>
+          <p class="text-sm text-gray-300">Campos obligatorios <span class="text-red-500">*</span></p>
 
           <label title="Correo electrónico">
-            <span>Correo electrónico <span>*</span></span>
-            <input type="email" name="email" placeholder="ejemplo@gmail.com" pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" minlength="5" maxlength="255" required />
+            <span class="block text-lg">Correo electrónico <span class="text-red-500">*</span></span>
+            <input class="w-full p-2 text-sm rounded-md text-black" type="email" name="email" placeholder="ejemplo@gmail.com" pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" minlength="5" maxlength="255" required />
           </label>
           <label title="Contraseña">
-            <span>Contraseña <span>*</span></span>
-            <input type="password" name="password" placeholder="Contraseña" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
+            <span class="block text-lg">Contraseña <span class="text-red-500">*</span></span>
+            <input class="w-full p-2 text-sm rounded-md text-black" type="password" name="password" placeholder="Contraseña" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
           </label>
         </fieldset>
-        <input type="submit" value="Iniciar sesión" />
+        <input class="bg-blue-500 p-2 text-sm rounded-md cursor-pointer hover:bg-blue-700 transition-colors duration-300 ease-in-out" type="submit" value="Iniciar sesión" />
       </form>
-      <p>¿No tienes una cuenta? <a href="./register.php">Solicitar registro</a></p>
+      <p class="text-center">¿No tienes una cuenta? <a class="underline text-blue-400" href="./register.php">Solicitar registro</a></p>
     </article>
   </main>
 
