@@ -22,11 +22,11 @@
 
           <label title="Correo electrónico">
             <span>Correo electrónico <span>*</span></span>
-            <input type="email" name="email" pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" minlength="5" maxlength="255" required />
+            <input type="email" name="email" placeholder="ejemplo@gmail.com" pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" minlength="5" maxlength="255" required />
           </label>
           <label title="Contraseña">
             <span>Contraseña <span>*</span></span>
-            <input type="password" name="password" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
+            <input type="password" name="password" placeholder="Contraseña" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
           </label>
         </fieldset>
         <input type="submit" value="Iniciar sesión" />
