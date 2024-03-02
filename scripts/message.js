@@ -2,19 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("message");
   const closeMessage = document.getElementById("close");
 
-  closeMessage.addEventListener("click", () => {
-    message.classList.add("fade-out");
+  if (message) {
+    closeMessage.addEventListener("click", () => {
+      message.classList.add("fade-out");
+
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 500);
+    });
 
     setTimeout(() => {
-      message.style.display = "none";
-    }, 500);
-  });
+      message.classList.add("fade-out");
 
-  setTimeout(() => {
-    message.classList.add("fade-out");
-
-    setTimeout(() => {
-      message.style.display = "none";
-    }, 500);
-  }, 10000);
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 500);
+    }, 10000);
+  }
 });
