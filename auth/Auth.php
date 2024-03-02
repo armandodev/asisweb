@@ -23,7 +23,9 @@ class Auth
       (strpos($_SERVER['REQUEST_URI'], '/login.php') === false && // No esta en el login
         strpos($_SERVER['REQUEST_URI'], '/register.php') === false) // No esta en el registro
     ) {
-      header('Location: login.php');
+      if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) header('Location: ./../login.php');
+      else header('Location: login.php');
+
       exit;
     }
 
