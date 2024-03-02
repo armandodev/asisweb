@@ -14,7 +14,10 @@ try {
 
   $auth->login($data);
 } catch (Exception $e) {
-  $_SESSION['error'] = $e->getMessage();
+  $_SESSION['message'] = [
+    'type' => 'error',
+    'content' => $e->getMessage()
+  ];
   header('Location: ./../login.php');
   exit;
 }

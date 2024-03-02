@@ -35,8 +35,8 @@
     </article>
   </main>
 
-  <?php require_once './components/error.php' ?>
-  <?php require_once './components/success.php' ?>
+  <?php require_once './components/message.php' ?>
+  <script src="./scripts/message.js"></script>
 </body>
 
 </html>
