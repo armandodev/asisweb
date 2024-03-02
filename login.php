@@ -34,6 +34,9 @@
       <p>¿No tienes una cuenta? <a href="./register.php">Solicitar registro</a></p>
     </article>
   </main>
+
+  <?php require_once './components/error.php' ?>
+  <?php require_once './components/success.php' ?>
 </body>
 
 </html>
