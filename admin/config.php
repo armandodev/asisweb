@@ -12,9 +12,6 @@
 </head>
 
 <body>
-  <?php require_once './../components/success.php' ?>
-  <?php require_once './../components/warning.php' ?>
-  <?php require_once './../components/error.php' ?>
   <?php require_once './components/header.php' ?>
 
   <main class="min-h-screen">
@@ -84,6 +81,7 @@
   </main>
 
   <?php require_once './components/footer.php' ?>
+  <?php require_once './../components/message.php' ?>
 
   <script src="./../scripts/header.js"></script>
   <script src="./../scripts/message.js"></script>
