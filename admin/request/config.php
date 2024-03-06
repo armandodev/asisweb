@@ -49,7 +49,10 @@ try {
     $db_params['address'] === $params[':address'] &&
     $db_params['postal_code'] === $params[':postal_code']
   ) {
-    $_SESSION['warning'] = 'Los datos son iguales a los que ya se encuentran guardados';
+    $_SESSION['message'] = [
+      "type" => "warning",
+      "content" => 'Los datos son iguales a los que ya se encuentran guardados'
+    ];
     header('Location: ./../config.php');
     exit;
   }
@@ -60,9 +63,16 @@ try {
 
   $result = $db->executeQuery($query, $params);
   if (!$result) throw new Exception("No se han podido guardar los datos");
-  $_SESSION['success'] = 'Los datos se han guardado correctamente';
+
+  $_SESSION['message'] = [
+    "type" => "success",
+    "content" => "Los datos se han guardado correctamente"
+  ];
 } catch (Exception $e) {
-  $_SESSION['error'] = $e->getMessage();
+  $_SESSION['message'] = [
+    "type" => "error",
+    "content" => $e->getMessage()
+  ];
 } finally {
   header('Location: ./../config.php');
   exit;
