@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
       message.classList.add("fade-out");
 
       setTimeout(() => {
-        message.style.display = "none";
+        message.classList.add("hidden");
       }, 500);
     });
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       message.classList.add("fade-out");
 
       setTimeout(() => {
-        message.style.display = "none";
+        message.classList.add("hidden");
       }, 500);
     }, 10000);
   }

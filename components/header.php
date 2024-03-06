@@ -34,7 +34,7 @@
 </dialog>
 
 <header
-  id="header-nav"
+  id="header"
   class="text-white py-2 px-4 fixed top-0 w-full z-50 h-[80px] flex items-center"
 >
   <div

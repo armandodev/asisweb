@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <main class="min-h-screen relative flex items-center justify-center">
+  <main class="min-h-screen relative flex items-center justify-center py-8">
     <img class="absolute top-0 left-0 w-full h-full object-cover -z-50 filter brightness-50" src="./images/banners/banner-2.webp" alt="Banner">
     <article class="bg-blur text-white w-[90%] max-w-xl p-8 flex flex-col gap-4 rounded-3xl rounded-bl-lg col-span-3 sm:col-span-2 z-50">
       <h1 class="text-3xl">Solicitar Registro<small class="block text-lg">Docentes <?php echo SHORT_SCHOOL_NAME ?></small></h1>
@@ -61,6 +61,9 @@
       <p class="text-center">¿Ya tienes una cuenta? <a class="text-blue-400" href="./login.php">Inicia sesión</a></p>
     </article>
   </main>
+
+  <?php require_once './components/message.php' ?>
+  <script src="./scripts/message.js"></script>
 </body>
 
 </html>

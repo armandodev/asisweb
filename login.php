@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <main class="min-h-screen relative flex items-center justify-center">
+  <main class="min-h-screen relative flex items-center justify-center py-8">
     <img class="absolute top-0 left-0 w-full h-full object-cover -z-50 filter brightness-50" src="./images/banners/banner-1.webp" alt="Banner">
     <article class="bg-blur text-white w-[90%] max-w-xl p-8 flex flex-col gap-4 rounded-3xl rounded-bl-lg col-span-3 sm:col-span-2 z-50">
       <h1 class="text-3xl">Inicio de sesión <small class="block text-lg">Docentes <?php echo SHORT_SCHOOL_NAME ?></small></h1>

@@ -71,47 +71,37 @@ class Auth
   }
 
   // Función para registrar un usuario en la base de datos.
-  public function register($data, $path = "../login.php")
+  public function register($data = [])
   {
-    try {
-      $this->validator->validateRegister($data);
+    $this->validator->validateRegister($data);
 
-      // Prepara la consulta a la base de datos.
-      $query = 'SELECT user_id FROM users WHERE email = :email OR phone_number = :phone_number LIMIT 1';
-      $params = [
-        ':email' => $data['email'],
-        ':phone_number' => $data['phone_number']
-      ];
-      $result = $this->db->executeQuery($query, $params);
+    $query = 'SELECT user_id FROM users WHERE email = :email OR phone_number = :phone_number LIMIT 1';
+    $params = [
+      ':email' => $data['email'],
+      ':phone_number' => $data['phone_number']
+    ];
+    $result = $this->db->executeQuery($query, $params);
 
-      if ($result->rowCount() > 0) throw new Exception('El correo electrónico o número de teléfono ya están registrados. Si usted no los ha registrado, por favor contacte al administrador para eliminar la consulta existente y que pueda registrar sus datos.');
+    if ($result->rowCount() > 0) throw new Exception('El correo electrónico o número de teléfono ya están registrados.');
 
-      $salt = bin2hex(random_bytes(16));
-      $password = password_hash($data['password'] . $salt, PASSWORD_DEFAULT);
-      unset($data['password']);
-      $data['hashed_password'] = $password;
-      $data['salt'] = $salt;
+    $salt = bin2hex(random_bytes(16));
+    $password = password_hash($data['password'] . $salt, PASSWORD_DEFAULT);
+    unset($data['password']);
+    $data['hashed_password'] = $password;
+    $data['salt'] = $salt;
 
-      $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
-      $params = [
-        ':first_name' => $data['first_name'],
-        ':last_name' => $data['last_name'],
-        ':email' => $data['email'],
-        ':phone_number' => $data['phone_number'],
-        ':hashed_password' => $data['hashed_password'],
-        ':salt' => $data['salt']
-      ];
-      $result = $this->db->executeQuery($query, $params);
+    $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
+    $params = [
+      ':first_name' => $data['first_name'],
+      ':last_name' => $data['last_name'],
+      ':email' => $data['email'],
+      ':phone_number' => $data['phone_number'],
+      ':hashed_password' => $data['hashed_password'],
+      ':salt' => $data['salt']
+    ];
+    $result = $this->db->executeQuery($query, $params);
 
-      if (!$result) throw new Exception('Error al registrar el usuario.');
-
-      header("Location: $path?success=register");
-      exit;
-    } catch (Exception $e) {
-      $_SESSION['form-error'] = $e->getMessage();
-      header('Location: ../register.php');
-      exit;
-    }
+    if (!$result) throw new Exception('Error al registrar el usuario.');
   }
 
   // Función para iniciar sesión.
@@ -134,6 +124,10 @@ class Auth
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     $_SESSION['user'] = $result;
+    $_SESSION['message'] =  [
+      'type' => 'success',
+      'content' => 'Bienvenido(a) de nuevo ' . $_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name']
+    ];
   }
 
   /*
