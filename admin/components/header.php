@@ -10,7 +10,7 @@
     <ul class="bg-[#dfdfdf] flex items-center justify-center gap-2 p-2 text-base">
       <li><a href="./../index.php">Inicio</a></li>
       <li><a href="./config.php">Parámetros</a></li>
-      <li><a href="./">Actualizar</a></li>
+      <li><button id="update">Actualizar</button></li>
     </ul>
 
     <ul class="bg-white p-4 text-gray-800 text-base font-semibold flex flex-col items-center md:items-start gap-2 h-full">
