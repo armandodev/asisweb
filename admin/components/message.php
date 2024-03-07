@@ -1,25 +1,25 @@
 <?php if (isset($_SESSION['message'])) { ?>
-  <div class="flex justify-center fixed bottom-3 left-3 right-3 w-fit z-50" id="message">
+  <div class="flex justify-center fixed bottom-3 left-0 w-full z-50" id="message">
     <?php if ($_SESSION['message']['type'] === 'error') {
-      echo '<div class="bg-red-300 text-red-900 w-[90%] max-w-xl border border-red-900 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
+      echo '<div class="bg-red-300 text-red-900 w-[90%] border border-red-900 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
       echo '
       <div class="h-1 w-full absolute bottom-0 left-0 bg-red-200 rounded-b-lg overflow-hidden">
         <div class="h-full w-full bg-red-900 rounded-b-lg progress"></div>
       </div>';
     } elseif ($_SESSION['message']['type'] === 'success') {
-      echo '<div class="bg-green-400 text-green-950 w-[90%] max-w-xl border border-green-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
+      echo '<div class="bg-green-400 text-green-950 w-[90%] border border-green-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
       echo '
       <div class="h-1 w-full absolute bottom-0 left-0 bg-green-200 rounded-b-lg overflow-hidden">
         <div class="h-full w-full bg-green-950 rounded-b-lg progress"></div>
       </div>';
     } elseif ($_SESSION['message']['type'] === 'warning') {
-      echo '<div class="bg-yellow-300 text-yellow-950 w-[90%] max-w-xl border border-yellow-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
+      echo '<div class="bg-yellow-300 text-yellow-950 w-[90%] border border-yellow-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
       echo '
       <div class="h-1 w-full absolute bottom-0 left-0 bg-yellow-200 rounded-b-lg overflow-hidden">
         <div class="h-full w-full bg-yellow-950 rounded-b-lg progress"></div>
       </div>';
     } else {
-      echo '<div class="bg-blue-300 text-blue-950 w-[90%] max-w-xl border border-blue-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
+      echo '<div class="bg-blue-300 text-blue-950 w-[90%] border border-blue-950 rounded-lg m-auto p-3 flex items-center justify-between gap-2 border-b-0 relative">';
       echo '
       <div class="h-1 w-full absolute bottom-0 left-0 bg-blue-200 rounded-b-lg overflow-hidden">
         <div class="h-full w-full bg-blue-950 rounded-b-lg progress"></div>
