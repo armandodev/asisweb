@@ -66,7 +66,7 @@
     </article>
   </main>
 
-  <?php require_once './../components/message.php' ?>
+  <?php require_once './components/message.php' ?>
   <script src="./scripts/header.js"></script>
   <script src="./../scripts/message.js"></script>
 </body>
