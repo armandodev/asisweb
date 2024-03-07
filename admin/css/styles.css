@@ -1,0 +1,40 @@
+@keyframes nav-in {
+  from {
+    top: -100%;
+  }
+  to {
+    top: 2.5rem;
+  }
+}
+
+@keyframes nav-out {
+  from {
+    top: 2.5rem;
+  }
+  to {
+    top: -100%;
+  }
+}
+
+body {
+  margin-left: 0 !important;
+  margin-top: 2.5rem !important;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  body {
+    margin-left: 15rem !important;
+    margin-top: 0 !important;
+  }
+}
+
+.nav-in {
+  animation: nav-in 200ms linear both;
+  -webkit-animation: nav-in 200ms linear both;
+}
+
+.nav-out {
+  animation: nav-out 200ms linear both;
+  -webkit-animation: nav-out 200ms linear both;
+}

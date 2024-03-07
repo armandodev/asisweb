@@ -8,6 +8,7 @@
   <title>Parámetros - Docentes <?php echo SHORT_SCHOOL_NAME ?></title>
   <link rel="icon" href="./../favicon.webp" type="image/webp" />
 
+  <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./../css/output.css" />
 </head>
 
@@ -66,7 +67,7 @@
   </main>
 
   <?php require_once './../components/message.php' ?>
-  <script src="./../scripts/header.js"></script>
+  <script src="./scripts/header.js"></script>
   <script src="./../scripts/message.js"></script>
 </body>
 
