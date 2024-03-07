@@ -13,7 +13,7 @@
       <li><button id="update">Actualizar</button></li>
     </ul>
 
-    <ul class="bg-white p-4 text-gray-800 text-base font-semibold flex flex-col items-center md:items-start gap-2 h-full">
+    <ul class="bg-white p-2 text-gray-800 text-base font-semibold flex flex-col items-center md:items-start gap-2 h-full">
       <li><a href="./users.php" title="Ir a Usuarios">Usuarios</a></li>
       <li><a href="./students.php" title="Ir a Estudiantes">Estudiantes</a></li>
       <li><a href="./groups.php" title="Ir a Grupos">Grupos</a></li>
