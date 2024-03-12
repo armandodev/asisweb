@@ -172,32 +172,37 @@ class Auth
   */
   public function addExtraInfo($info, $data)
   {
-    try {
-      $user_id = $_SESSION['user']['user_id'];
+    $user_id = $_SESSION['user']['user_id'];
 
-      $info === 'email'
-        ? $this->validator->validateEmail($data)
-        : $this->validator->validatePhoneNumber($data);
+    $info === 'email'
+      ? $this->validator->validateEmail($data)
+      : $this->validator->validatePhoneNumber($data);
 
-      $query = $info === 'email'
-        ? 'SELECT extra_email FROM extra_emails WHERE extra_email = :extra_email'
-        : 'SELECT extra_phone_number FROM extra_phone_numbers WHERE extra_phone_number = :extra_phone_number';
-      $result = $this->db->executeQuery($query, [":extra_" . $info => $data]);
+    $query = $info === 'email'
+      ? 'SELECT email FROM users WHERE email = :extra_email'
+      : 'SELECT phone_number FROM users WHERE phone_number = :extra_phone_number';
+    $result = $this->db->executeQuery($query, [":extra_" . $info => $data]);
 
-      if ($result->rowCount() > 0 || !$result) throw new Exception;
+    if ($result->rowCount() > 0 || !$result) throw new Exception('La información extra ya está registrada como información principal.');
 
-      $query = $info === 'email'
-        ? 'INSERT INTO extra_emails (user_id, extra_email) VALUES (:user_id, :extra_email)'
-        : 'INSERT INTO extra_phone_numbers (user_id, extra_phone_number) VALUES (:user_id, :extra_phone_number)';
-      $result = $this->db->executeQuery($query, [":user_id" => $user_id, ":extra_" . $info => $data]);
+    $query = $info === 'email'
+      ? 'SELECT extra_email FROM extra_emails INNER JOIN users ON extra_emails.user_id = users.user_id WHERE extra_email = :extra_email OR email = :extra_email'
+      : 'SELECT extra_phone_number, phone_number FROM extra_phone_numbers INNER JOIN users ON extra_phone_numbers.user_id = users.user_id WHERE extra_phone_number = :extra_phone_number OR phone_number = :extra_phone_number';
+    $result = $this->db->executeQuery($query, [":extra_" . $info => $data]);
 
-      if (!$result) throw new Exception;
-      header('Location: ../index.php');
-      exit;
-    } catch (Exception) {
-      header('Location: ../index.php');
-      exit;
-    }
+    if ($result->rowCount() > 0 || !$result) throw new Exception('La información extra ya está registrada.');
+
+    $query = $info === 'email'
+      ? 'INSERT INTO extra_emails (user_id, extra_email) VALUES (:user_id, :extra_email)'
+      : 'INSERT INTO extra_phone_numbers (user_id, extra_phone_number) VALUES (:user_id, :extra_phone_number)';
+    $result = $this->db->executeQuery($query, [":user_id" => $user_id, ":extra_" . $info => $data]);
+
+    if (!$result) throw new Exception('Error al registrar la información extra.');
+
+    $_SESSION['message'] = [
+      'type' => 'success',
+      'content' => 'Información extra registrada correctamente.'
+    ];
   }
 
   /*
@@ -206,53 +211,51 @@ class Auth
   */
   public function extraInfoToMain($info, $id)
   {
-    try {
-      $user_id = $_SESSION['user']['user_id'];
+    $user_id = $_SESSION['user']['user_id'];
 
-      $query = $info === 'email'
-        ? 'SELECT email FROM users WHERE user_id = :user_id LIMIT 1'
-        : 'SELECT phone_number FROM users WHERE user_id = :user_id LIMIT 1';
-      $result = $this->db->executeQuery($query, [":user_id" => $user_id]);
+    $query = $info === 'email'
+      ? 'SELECT email FROM users WHERE user_id = :user_id LIMIT 1'
+      : 'SELECT phone_number FROM users WHERE user_id = :user_id LIMIT 1';
+    $result = $this->db->executeQuery($query, [":user_id" => $user_id]);
 
-      if (!$result) throw new Exception;
-      if ($result->rowCount() === 0) throw new Exception;
+    if (!$result) throw new Exception('Error al cambiar la información extra a la información principal.');
+    if ($result->rowCount() === 0) throw new Exception('Error al cambiar la información extra a la información principal.');
 
-      $result = $result->fetchAll(PDO::FETCH_ASSOC);
-      $old_info = $result[0][$info];
+    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+    $old_info = $result[0][$info];
 
-      $query = $info === 'email'
-        ? 'SELECT extra_email FROM extra_emails WHERE email_id = :id AND user_id = :user_id LIMIT 1'
-        : 'SELECT extra_phone_number FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id LIMIT 1';
-      $params = [":id" => $id, ":user_id" => $user_id];
-      $result = $this->db->executeQuery($query, $params);
+    $query = $info === 'email'
+      ? 'SELECT extra_email FROM extra_emails WHERE email_id = :id AND user_id = :user_id LIMIT 1'
+      : 'SELECT extra_phone_number FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id LIMIT 1';
+    $params = [":id" => $id, ":user_id" => $user_id];
+    $result = $this->db->executeQuery($query, $params);
 
-      if (!$result) throw new Exception;
-      if ($result->rowCount() === 0) throw new Exception;
+    if (!$result) throw new Exception('Error al cambiar la información extra a la información principal.');
+    if ($result->rowCount() === 0) throw new Exception('Error al cambiar la información extra a la información principal.');
 
-      $result = $result->fetchAll(PDO::FETCH_ASSOC);
-      $new_info = $result[0]["extra_" . $info];
+    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+    $new_info = $result[0]["extra_" . $info];
 
-      $query = $info === 'email'
-        ? 'UPDATE users SET email = :new_info WHERE user_id = :user_id'
-        : 'UPDATE users SET phone_number = :new_info WHERE user_id = :user_id';
-      $params = ["new_info" => $new_info, ":user_id" => $user_id];
-      $result = $this->db->executeQuery($query, $params);
+    $query = $info === 'email'
+      ? 'UPDATE users SET email = :new_info WHERE user_id = :user_id'
+      : 'UPDATE users SET phone_number = :new_info WHERE user_id = :user_id';
+    $params = ["new_info" => $new_info, ":user_id" => $user_id];
+    $result = $this->db->executeQuery($query, $params);
 
-      if (!$result) throw new Exception;
+    if (!$result) throw new Exception('Error al cambiar la información extra a la información principal.');
 
-      $query = $info === 'email'
-        ? 'UPDATE extra_emails SET extra_email = :old_info WHERE user_id = :user_id AND email_id = :id'
-        : 'UPDATE extra_phone_numbers SET extra_phone_number = :old_info WHERE user_id = :user_id AND phone_number_id = :id';
-      $params = [":old_info" => $old_info, ":user_id" => $user_id, ":id" => $id];
-      $result = $this->db->executeQuery($query, $params);
+    $query = $info === 'email'
+      ? 'UPDATE extra_emails SET extra_email = :old_info WHERE user_id = :user_id AND email_id = :id'
+      : 'UPDATE extra_phone_numbers SET extra_phone_number = :old_info WHERE user_id = :user_id AND phone_number_id = :id';
+    $params = [":old_info" => $old_info, ":user_id" => $user_id, ":id" => $id];
+    $result = $this->db->executeQuery($query, $params);
 
-      if (!$result) throw new Exception;
-      header('Location: ../index.php');
-      exit;
-    } catch (Exception) {
-      header('Location: ../index.php');
-      exit;
-    }
+    if (!$result) throw new Exception('Error al cambiar la información extra a la información principal.');
+
+    $_SESSION['message'] = [
+      'type' => 'success',
+      'content' => 'Información extra cambiada a información principal correctamente.'
+    ];
   }
 
   /*
@@ -261,21 +264,19 @@ class Auth
   */
   public function deleteExtraInfo($info, $id)
   {
-    try {
-      $user_id = $_SESSION['user']['user_id'];
+    $user_id = $_SESSION['user']['user_id'];
 
-      $query = $info === 'email'
-        ? 'DELETE FROM extra_emails WHERE email_id = :id AND user_id = :user_id'
-        : 'DELETE FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id';
-      $params = [":id" => $id, ":user_id" => $user_id];
-      $result = $this->db->executeQuery($query, $params);
+    $query = $info === 'email'
+      ? 'DELETE FROM extra_emails WHERE email_id = :id AND user_id = :user_id'
+      : 'DELETE FROM extra_phone_numbers WHERE phone_number_id = :id AND user_id = :user_id';
+    $params = [":id" => $id, ":user_id" => $user_id];
+    $result = $this->db->executeQuery($query, $params);
 
-      if (!$result) throw new Exception;
-      header('Location: ../index.php');
-      exit;
-    } catch (Exception) {
-      header('Location: ../index.php');
-      exit;
-    }
+    if (!$result) throw new Exception('Error al eliminar la información extra.');
+
+    $_SESSION['message'] = [
+      'type' => 'success',
+      'content' => 'Información extra eliminada correctamente.'
+    ];
   }
 }
