@@ -3,13 +3,13 @@
     top: -100%;
   }
   to {
-    top: 2.5rem;
+    top: 60px;
   }
 }
 
 @keyframes nav-out {
   from {
-    top: 2.5rem;
+    top: 60px;
   }
   to {
     top: -100%;
@@ -18,7 +18,7 @@
 
 body {
   margin-left: 0 !important;
-  margin-top: 2.5rem !important;
+  margin-top: 60px !important;
 }
 
 @media (min-width: 768px) {
