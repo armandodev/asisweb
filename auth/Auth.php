@@ -71,7 +71,7 @@ class Auth
   }
 
   // Función para registrar un usuario en la base de datos.
-  public function register($data = [])
+  public function register($data = [], $role = 'Docente', $status = 'Inactivo')
   {
     $this->validator->validateRegister($data);
 
@@ -89,19 +89,28 @@ class Auth
     unset($data['password']);
     $data['hashed_password'] = $password;
     $data['salt'] = $salt;
+    $data['role'] = $role;
+    $data['status'] = $status;
 
-    $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt)';
+    $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt, role, status) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt, :role, :status)';
     $params = [
       ':first_name' => $data['first_name'],
       ':last_name' => $data['last_name'],
       ':email' => $data['email'],
       ':phone_number' => $data['phone_number'],
       ':hashed_password' => $data['hashed_password'],
-      ':salt' => $data['salt']
+      ':salt' => $data['salt'],
+      ':role' => $data['role'],
+      ':status' => $data['status']
     ];
     $result = $this->db->executeQuery($query, $params);
 
     if (!$result) throw new Exception('Error al registrar el usuario.');
+
+    $_SESSION['message'] = [
+      'type' => 'success',
+      'content' => 'Usuario registrado correctamente.'
+    ];
   }
 
   // Función para iniciar sesión.

@@ -17,7 +17,7 @@
   <?php require_once './components/header.php' ?>
   <?php require_once './components/message.php' ?>
 
-  <dialog class="w-full h-screen flex items-center justify-center bg-black bg-opacity-50" id="add-user" open="">
+  <dialog class="w-full h-screen items-center justify-center bg-black bg-opacity-50 hidden" id="add-user">
     <button id="add-user-close">
 
     </button>
@@ -56,6 +56,26 @@
         <label title="Contraseña">
           <span class="block text-lg">Contraseña <span class="text-red-500">*</span></span>
           <input class="w-full p-2 text-sm rounded-md text-black" type="password" name="password" pattern="^.{6,100}$" minlength="6" maxlength="100" placeholder="Contraseña" required />
+        </label>
+      </fieldset>
+
+      <fieldset class="w-full grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <legend class="hidden">Parámetros extra</legend>
+
+        <label title="Rol">
+          <span class="block text-lg">Rol <span class="text-red-500">*</span></span>
+          <select class="w-full p-2 text-sm rounded-md text-black" name="role" required>
+            <option value="Docente">Docente</option>
+            <option value="Administrador">Administrador</option>
+          </select>
+        </label>
+
+        <label title="Estado">
+          <span class="block text-lg">Estado <span class="text-red-500">*</span></span>
+          <select class="w-full p-2 text-sm rounded-md text-black" name="status" required>
+            <option value="Inactivo">Inactivo</option>
+            <option value="Activo">Activo</option>
+          </select>
         </label>
       </fieldset>
 
