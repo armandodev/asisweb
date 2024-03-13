@@ -21,7 +21,7 @@
     <button id="add-user-close">
 
     </button>
-    <form class="w-[90%] max-w-lg bg-[#202020] text-white text-base sm:text-lg p-8 flex flex-col gap-2 rounded-md" action="./../auth/register.php" method="post">
+    <form class="w-[90%] max-w-lg bg-[#202020] text-white text-base sm:text-lg p-8 flex flex-col gap-2 rounded-md" action="./request/users.php?action=add" method="post">
       <fieldset class="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <legend class="hidden">Nombre completo</legend>
 
