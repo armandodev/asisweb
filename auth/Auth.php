@@ -21,18 +21,19 @@ class Auth
     if (
       !isset($_SESSION['user']) && // No hay una sesión activa
       (strpos($_SERVER['REQUEST_URI'], '/login.php') === false && // No esta en el login
-        strpos($_SERVER['REQUEST_URI'], '/register.php') === false) // No esta en el registro
+        strpos($_SERVER['REQUEST_URI'], '/register.php') === false) && // No esta en el registro
+      strpos($_SERVER['REQUEST_URI'], '/forgot_password.php') === false // No esta en el forgot_password
     ) {
       if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) header('Location: ./../login.php');
       else header('Location: login.php');
-
       exit;
     }
 
     if (isset($_SESSION['user'])) {
       if (
         strpos($_SERVER['REQUEST_URI'], '/login.php') !== false || // Si está en el login
-        strpos($_SERVER['REQUEST_URI'], '/register.php') !== false // Si está en el registro
+        strpos($_SERVER['REQUEST_URI'], '/register.php') !== false || // Si está en el registro
+        strpos($_SERVER['REQUEST_URI'], '/forgot_password.php') !== false // Si está en el forgot_password
       ) {
         header('Location: profile.php');
         exit;
@@ -286,6 +287,69 @@ class Auth
     $_SESSION['message'] = [
       'type' => 'success',
       'content' => 'Información extra eliminada correctamente.'
+    ];
+  }
+
+  public function sendEmailVerificationCode($email)
+  {
+    $query = 'SELECT user_id FROM users WHERE email = :email AND status = "Activo" LIMIT 1';
+    $user = $this->db->executeQuery($query, [':email' => $email]);
+    if (!$user || $user->rowCount() === 0) throw new Exception('No se encontró ningún usuario con el correo electrónico proporcionado');
+    $user_id = $user->fetch(PDO::FETCH_ASSOC)['user_id'];
+
+    $token = bin2hex(random_bytes(32));
+    $code = rand(1000, 9999);
+
+    $query = 'INSERT INTO password_resets (user_id, token, code) VALUES (:user_id, :token, :code)';
+    $result = $this->db->executeQuery($query, [':user_id' => $user_id, ':token' => $token, ':code' => $code]);
+
+    if (!$result) throw new Exception('No se pudo generar el código de verificación');
+
+    $to = $email;
+    $title = 'Restablecer contraseña | Docentes ' . SHORT_SCHOOL_NAME;
+
+    $message = "
+    <html>
+      <head>
+        <title>Restablecer contraseña | Docentes " . SHORT_SCHOOL_NAME . "</title>
+      </head>
+      <body>
+        <main
+          style='
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+          '
+        >
+          <h1>Docentes <small>" . SHORT_SCHOOL_NAME . "</small></h1>
+          <p>Tu código de verificación es: <strong>$code</strong></p>
+          <p>No compartas este código con nadie.</p>
+          <p>También puedes hacer clic en el siguiente enlace para restablecer tu contraseña:</p>
+          <a href='" . DOMAIN . "/change_password.php?token=$token&code=$code'>Restablecer contraseña</a>
+          <p><small>Si tienes problemas para hacer clic en el enlace, copia y pega la siguiente URL en tu navegador:</small></p>
+          <p><small>" . DOMAIN . "/change_password.php?token=$token&code=$code</small></p>
+          <p><small>Si no solicitaste restablecer tu contraseña, ignora este mensaje.</small></p>
+          <p>Atentamente,</p>
+          <p>Docentes <small>" . SHORT_SCHOOL_NAME . "</small></p>
+        </main>
+      </body>
+    </html>
+    ";
+
+    $headers = [
+      'MIME-Version: 1.0',
+      'Content-type: text/html; charset=utf-8',
+      'From: ' . MAIL_FROM,
+      'Reply-To: ' . MAIL_FROM,
+      'X-Mailer: PHP/' . phpversion()
+    ];
+
+    mail($to, $title, $message, implode("\r\n", $headers));
+
+    $_SESSION['message'] = [
+      'type' => 'success',
+      'content' => 'Código de verificación enviado correctamente.'
     ];
   }
 }
