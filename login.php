@@ -33,7 +33,7 @@
         <input class="w-full bg-blue-500 p-2 text-sm rounded-md cursor-pointer hover:bg-blue-700 transition-colors duration-300 ease-in-out" type="submit" value="Iniciar sesión" />
       </form>
       <p class="text-center">
-        <span class="block"><a class="text-blue-400" href="./reset_password.php">¿Olvidaste tu contraseña?</a></span>
+        <span class="block"><a class="text-blue-400" href="./forgot_password.php">¿Olvidaste tu contraseña?</a></span>
         <span class="block">¿No tienes una cuenta? <a class="text-blue-400" href="./register.php">Solicitar registro</a></span>
       </p>
     </article>
