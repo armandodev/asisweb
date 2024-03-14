@@ -35,3 +35,6 @@ define('DAYS', [
   'Jueves',
   'Viernes',
 ]);
+
+define('MAIL_FROM', 'no-reply@cetis.edu.mx');
+define('DOMAIN', 'http://localhost/asisweb');
