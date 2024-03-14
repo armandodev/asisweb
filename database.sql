@@ -42,6 +42,19 @@ create table
     foreign key (`user_id`) references `users` (`user_id`) on delete cascade
   ) engine = InnoDB default charset = utf8;
 
+-- Table: `password_resets` (Restablecimiento de contraseña)
+create table
+  if not exists `password_resets` (
+    `reset_id` int (11) not null auto_increment primary key,
+    `user_id` int (11) not null,
+    `token` varchar(255) not null unique key,
+    `code` int (4) not null,
+    `used` tinyint (1) not null default 0,
+    `created_at` datetime not null default current_timestamp,
+    `used_at` datetime null on update current_timestamp,
+    foreign key (`user_id`) references `users` (`user_id`) on delete cascade
+  ) engine = InnoDB default charset = utf8;
+
 -- Table: `subjects` (Materias)
 create table
   if not exists `subjects` (
@@ -168,14 +181,14 @@ create table
   ) engine = InnoDB default charset = utf8;
 
 -- Insert: `careers` (Carreras)
-insert into
-  `careers` (`career_name`)
+/* insert into
+`careers` (`career_name`)
 values
-  ('ADMINISTRACIÓN DE RECURSOS HUMANOS'),
-  ('COMPONENTE BÁSICO Y PROPEDEUTICO'),
-  ('CONTABILIDAD'),
-  ('ELECTRICIDAD'),
-  ('OFIMÁTICA'),
-  ('PROGRAMACIÓN'),
-  ('SOPORTE Y MANTENIMIENTO DE EQUIPO DE CÓMPUTO'),
-  ('TRABAJO SOCIAL');
+('ADMINISTRACIÓN DE RECURSOS HUMANOS'),
+('COMPONENTE BÁSICO Y PROPEDEUTICO'),
+('CONTABILIDAD'),
+('ELECTRICIDAD'),
+('OFIMÁTICA'),
+('PROGRAMACIÓN'),
+('SOPORTE Y MANTENIMIENTO DE EQUIPO DE CÓMPUTO'),
+('TRABAJO SOCIAL'); */
