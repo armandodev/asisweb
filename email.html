@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Restablecer contraseña | Docentes " . SHORT_SCHOOL_NAME . "</title>
+  </head>
+  <body style="background-color: #202020; color: #fff">
+    <main
+      style="
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 20px;
+      "
+    >
+      <h1 style="text-align: center">
+        Docentes <small style="display: block">" . SHORT_SCHOOL_NAME . "</small>
+      </h1>
+      <p>
+        <strong>Si no solicitaste este enlace, ignora este mensaje.</strong>
+      </p>
+      <p>
+        Debes hacer clic en el siguiente enlace para restablecer tu contraseña:
+      </p>
+      <a
+        style="
+          background: #09f;
+          color: #fff;
+          text-decoration: none;
+          text-align: center;
+          padding: 0.75rem;
+          border-radius: 0.5rem;
+        "
+        href='" . DOMAIN . "/change_password.php?token=$token'
+        >Restablecer contraseña</a
+      >
+      <p>
+        Si tienes problemas para hacer clic en el enlace, copia y pega la
+        siguiente URL en tu navegador:
+        <span style="color: #09f; text-decoration: underline"
+          >" . DOMAIN . "/change_password.php?token=$token</span
+        >
+      </p>
+
+      <p>
+        <small>Att: Docentes " . SHORT_SCHOOL_NAME . "</small>
+      </p>
+    </main>
+  </body>
+</html>
