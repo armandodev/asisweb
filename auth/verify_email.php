@@ -19,19 +19,30 @@ try {
   if (isset($_POST['token'])) {
     $token = $_POST['token'];
 
-    $query = "SELECT reset_id FROM password_resets WHERE token = :token AND used = :used AND user_id = :user_id";
+    $query = "SELECT reset_id, expiration_time FROM password_resets WHERE token = :token AND used = :used AND user_id = :user_id";
     $result = $db->executeQuery($query, [':token' => $token, ':used' => 0, ':user_id' => $user_id]);
 
     if (!$result || $result->rowCount() === 0) throw new Exception("No se ha encontrado ningún usuario con el token indicado");
-    if ($result->rowCount() !== 1) throw new Exception("Hay un problema con tu token, solicita otro para poder seguir");
+
+    $reset_info = $result->fetch(PDO::FETCH_ASSOC);
+    $reset_id = $reset_info['reset_id'];
+    $expiration_time = strtotime($reset_info['expiration_time']);
+
+    if ($expiration_time < time()) throw new Exception("El token ha expirado");
+
+    // Marcar el token como usado y registrar la fecha y hora de uso
+    $query = "UPDATE password_resets SET used = 1 WHERE reset_id = :reset_id";
+    $db->executeQuery($query, [':reset_id' => $reset_id]);
   } else {
     $token = bin2hex(random_bytes(32));
-    $query = "INSERT INTO password_resets (user_id, token) VALUES (:user_id, :token)";
-    $result = $db->executeQuery($query, [':user_id' => $user_id, ':token' => $token]);
+    $expiration_time = date('Y-m-d H:i:s', strtotime('+5 minutes')); // 5 minutos de expiración
+
+    $query = "INSERT INTO password_resets (user_id, token, expiration_time) VALUES (:user_id, :token, :expiration_time)";
+    $result = $db->executeQuery($query, [':user_id' => $user_id, ':token' => $token, ':expiration_time' => $expiration_time]);
     if (!$result) throw new Exception("Error al realizar la solicitud");
   }
 
-  $auth->sendEmailVerificationCode($email, $token);
+  $auth->sendEmailVerificationCode($email, $token);  // La variable auth es una instancia de la clase Auth que se crea en el archivo ./config/session.php
 } catch (Exception $e) {
   $_SESSION['message'] = [
     'type' => 'error',
