@@ -50,6 +50,7 @@ create table
     `used` tinyint (1) not null default 0,
     `created_at` datetime not null default current_timestamp,
     `used_at` datetime null on update current_timestamp,
+    `expiration_time` datetime not null,
     foreign key (`user_id`) references `users` (`user_id`) on delete cascade
   ) engine = InnoDB default charset = utf8;
 
