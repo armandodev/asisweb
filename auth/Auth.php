@@ -23,7 +23,8 @@ class Auth
       (strpos($_SERVER['REQUEST_URI'], '/login.php') === false && // No esta en el login
         strpos($_SERVER['REQUEST_URI'], '/register.php') === false) && // No esta en el registro
       strpos($_SERVER['REQUEST_URI'], '/forgot_password.php') === false && // No esta en el forgot_password
-      strpos($_SERVER['REQUEST_URI'], '/verify_email.php') === false // No esta en el forgot_password
+      strpos($_SERVER['REQUEST_URI'], '/verify_email.php') === false && // No esta en el verify_email
+      strpos($_SERVER['REQUEST_URI'], '/change_password.php') === false // No esta en el change_password
     ) {
       if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) header('Location: ./../login.php');
       else header('Location: login.php');
@@ -35,7 +36,8 @@ class Auth
         strpos($_SERVER['REQUEST_URI'], '/login.php') !== false || // Si está en el login
         strpos($_SERVER['REQUEST_URI'], '/register.php') !== false || // Si está en el registro
         strpos($_SERVER['REQUEST_URI'], '/forgot_password.php') !== false || // Si está en el forgot_password
-        strpos($_SERVER['REQUEST_URI'], '/verify_email.php') !== false // Si está en el verify_email
+        strpos($_SERVER['REQUEST_URI'], '/verify_email.php') !== false || // Si está en el verify_email
+        strpos($_SERVER['REQUEST_URI'], '/change_password.php') !== false // Si esta en el change_password
       ) {
         header('Location: profile.php');
         exit;
@@ -87,22 +89,19 @@ class Auth
 
     if ($result->rowCount() > 0) throw new Exception('El correo electrónico o número de teléfono ya están registrados.');
 
-    $salt = bin2hex(random_bytes(16));
-    $password = password_hash($data['password'] . $salt, PASSWORD_DEFAULT);
+    $password = password_hash($data['password'], PASSWORD_DEFAULT);
     unset($data['password']);
     $data['hashed_password'] = $password;
-    $data['salt'] = $salt;
     $data['role'] = $role;
     $data['status'] = $status;
 
-    $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, salt, role, status) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :salt, :role, :status)';
+    $query = 'INSERT INTO users (first_name, last_name, email, phone_number, hashed_password, role, status) VALUES (:first_name, :last_name, :email, :phone_number, :hashed_password, :role, :status)';
     $params = [
       ':first_name' => $data['first_name'],
       ':last_name' => $data['last_name'],
       ':email' => $data['email'],
       ':phone_number' => $data['phone_number'],
       ':hashed_password' => $data['hashed_password'],
-      ':salt' => $data['salt'],
       ':role' => $data['role'],
       ':status' => $data['status']
     ];
@@ -121,7 +120,7 @@ class Auth
   {
     $this->validator->validateLogin($data);
 
-    $query = 'SELECT user_id, email, hashed_password, salt, status FROM users WHERE users.email = :email';
+    $query = 'SELECT user_id, email, hashed_password, status FROM users WHERE users.email = :email';
     $result = $this->db->executeQuery($query, [':email' => $data['email']]);
 
     if (!$result) throw new Exception('Error al iniciar sesión');
@@ -130,7 +129,7 @@ class Auth
     $result = $result->fetch(PDO::FETCH_ASSOC);
 
     if ($result['status'] === 'Inactivo') throw new Exception('El usuario no está activo');
-    if (!password_verify($data['password'] . $result['salt'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta');
+    if (!password_verify($data['password'], $result['hashed_password'])) throw new Exception('La contraseña es incorrecta');
 
     $result = $this->db->executeQuery($this->get_user_data_query, ['user_id' => $result['user_id']]);
     $result = $result->fetch(PDO::FETCH_ASSOC);
@@ -360,10 +359,5 @@ class Auth
     ];
 
     mail($to, $title, $message, implode("\r\n", $headers));
-
-    $_SESSION['message'] = [
-      'type' => 'success',
-      'content' => 'Código de verificación enviado correctamente.'
-    ];
   }
 }
