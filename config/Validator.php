@@ -1,171 +1,67 @@
 <?php
-// Clase para la validación de los datos, el objetivo principal de esta es mantener el código limpio y fácil de modificar en caso de que se necesite cambiar el método de validación.
 class Validator
 {
-  // Método para validar el nombre/apellido.
-  public function validateName($name)
+  public $regex = [
+    "name" => "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,100}$/",
+    "email" => "/^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/",
+    "password" => "/^.{6,100}$/",
+    "cct" => "/[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z]{1}/",
+    "period" => "/[0-9]{4}-[1-2]{1}/",
+    "phone_number" => "/[0-9 ]{10,15}/",
+    "address" => "/^.{3,150}$/",
+    "postal_code" => "/[0-9]{5}/",
+  ];
+
+  public function validate($value, $regex, $message)
   {
-    if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,100}$/', $name)) {
-      throw new Exception('El nombre/apellido es invalido');
+    if (!preg_match($regex, $value)) {
+      throw new Exception($message);
       return false;
     }
     return;
   }
 
-  // Método para validar el correo electrónico.
-  public function validateEmail($email)
-  {
-    if (!preg_match('/^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/', $email)) {
-      throw new Exception('El email es invalido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar la contraseña.
-  public function validatePassword($password)
-  {
-    if (!preg_match('/^.{6,100}$/', $password)) {
-      throw new Exception('La contraseña es invalida');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el nombre de la escuela.
-  public function validateSchoolName($schoolName)
-  {
-    if (!preg_match('/^.{3,150}$/', $schoolName)) {
-      throw new Exception('El nombre de la escuela es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el CCT.
-  public function validateCCT($cct)
-  {
-    if (!preg_match('/[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z]{1}/', $cct)) {
-      throw new Exception('El CCT es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el nombre corto de la escuela.
-  public function validateShortSchoolName($shortSchoolName)
-  {
-    if (!preg_match('/^.{3,20}$/', $shortSchoolName)) {
-      throw new Exception('El nombre corto de la escuela es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el periodo.
-  public function validatePeriod($period)
-  {
-    if (!preg_match('/[0-9]{4}-[1-2]{1}/', $period)) {
-      throw new Exception('El periodo es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el nombre del director(a) del plantel.
-  public function validateDirectorName($directorName)
-  {
-    if (!preg_match('/^.{5,100}$/', $directorName)) {
-      throw new Exception('El nombre del director(a) del plantel es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el teléfono.
-  public function validatePhoneNumber($phoneNumber)
-  {
-    if (!preg_match('/[0-9 ]{10,15}/', $phoneNumber)) {
-      throw new Exception('El número de teléfono es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el estado.
-  public function validateState($state)
-  {
-    if (!preg_match('/^.{3,100}$/', $state)) {
-      throw new Exception('El estado es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar la ciudad.
-  public function validateCity($city)
-  {
-    if (!preg_match('/^.{3,100}$/', $city)) {
-      throw new Exception('La ciudad es inválida');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar la dirección.
-  public function validateAddress($address)
-  {
-    if (!preg_match('/^.{3,150}$/', $address)) {
-      throw new Exception('La dirección es inválida');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar el código postal.
-  public function validatePostalCode($postalCode)
-  {
-    if (!preg_match('/[0-9]{5}/', $postalCode)) {
-      throw new Exception('El código postal es inválido');
-      return false;
-    }
-    return;
-  }
-
-  // Método para validar los datos del formulario de inicio de sesión.
   public function validateLogin($data)
   {
-    $this->validateEmail($data['email']);
-    $this->validatePassword($data['password']);
+    $this->validate($data['email'], $this->regex['email'], 'El correo electrónico no es válido.');
+    $this->validate($data['password'], $this->regex['password'], 'La contraseña no es válida.');
     return;
   }
 
-  // Método para validar los datos del formulario de registro.
   public function validateRegister($data)
   {
-    $this->validateName($data['first_name']);
-    $this->validateName($data['last_name']);
-    $this->validateEmail($data['email']);
-    $this->validatePhoneNumber($data['phone_number']);
-    $this->validatePassword($data['password']);
+    $this->validate($data['first_name'], $this->regex['name'], 'El nombre no es válido.');
+    $this->validate($data['last_name'], $this->regex['name'], 'El apellido no es válido.');
+    $this->validate($data['email'], $this->regex['email'], 'El correo electrónico no es válido.');
+    $this->validate($data['phone_number'], $this->regex['phone_number'], 'El número de teléfono no es válido.');
+    $this->validate($data['password'], $this->regex['password'], 'La contraseña no es válida.');
     return;
   }
 
-  // Método para validar los datos del formulario del plantel.
   public function validateParamsForm($data)
   {
-    $this->validateSchoolName($data['school_name']);
-    $this->validateCCT($data['cct']);
-    if (isset($data['short_school_name']) && $data['short_school_name'] !== '') {
-      $this->validateShortSchoolName($data['short_school_name']);
-    }
-    $this->validatePeriod($data['period']);
-    $this->validateDirectorName($data['director_name']);
-    $this->validatePhoneNumber($data['phone_number']);
-    $this->validateState($data['state']);
-    $this->validateCity($data['city']);
-    $this->validateAddress($data['address']);
-    $this->validatePostalCode($data['postal_code']);
+    $this->validate($data['school_name'], $this->regex['name'], 'El nombre de la escuela no es válido.');
+    $this->validate($data['cct'], $this->regex['cct'], 'El CCT no es válido.');
+    if (isset($data['short_school_name']) && $data['short_school_name'] !== '')
+      $this->validate($data['short_school_name'], $this->regex['name'], 'El nombre corto de la escuela no es válido.');
+    $this->validate($data['period'], $this->regex['period'], 'El periodo no es válido.');
+    $this->validate($data['director_name'], $this->regex['name'], 'El nombre del director no es válido.');
+    $this->validate($data['phone_number'], $this->regex['phone_number'], 'El número de teléfono no es válido.');
+    $this->validate($data['state'], $this->regex['name'], 'El estado no es válido.');
+    $this->validate($data['city'], $this->regex['name'], 'La ciudad no es válida.');
+    $this->validate($data['address'], $this->regex['address'], 'La dirección no es válida.');
+    $this->validate($data['postal_code'], $this->regex['postal_code'], 'El código postal no es válido.');
     return;
+  }
+
+  public function validateExtraDataForm($data, $info)
+  {
+    if ($info === 'email') {
+      $this->validate($data['email'], $this->regex['email'], 'El correo electrónico no es válido.');
+    } elseif ($info === 'phone_number') {
+      $this->validate($data['phone_number'], $this->regex['phone_number'], 'El número de teléfono no es válido.');
+    } else {
+      throw new Exception("La información extra a agregar es invalida");
+    }
   }
 }

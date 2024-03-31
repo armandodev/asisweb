@@ -1,8 +1,14 @@
 <?php
+// Llamamos a la clase Database y creamos una instancia de la misma
 require_once __DIR__ . '/Database.php';
 $db = new Database();
-$result = $db->getParams();
+
+// Obtenemos los parámetros de la base de datos
+$query = "SELECT * FROM params LIMIT 1";
+$result = $db->executeQuery($query);
 $params = $result->fetch(PDO::FETCH_ASSOC);
+
+// De haber resultados, definimos las constantes con los valores obtenidos
 if ($result->rowCount() > 0) {
   define('ADDRESS', $params['address']);
   define('CCT', $params['cct']);
@@ -16,6 +22,7 @@ if ($result->rowCount() > 0) {
   else define('SHORT_SCHOOL_NAME', '');
   define('STATE', $params['state']);
 } else {
+  // De no haber resultados, definimos las constantes con valores vacíos
   define('ADDRESS', '');
   define('CCT', '');
   define('CITY', '');
@@ -28,6 +35,7 @@ if ($result->rowCount() > 0) {
   define('STATE', '');
 }
 
+// Definimos los días hábiles de la semana
 define('DAYS', [
   'Lunes',
   'Martes',
@@ -36,5 +44,8 @@ define('DAYS', [
   'Viernes',
 ]);
 
+// Definimos de donde se enviarán los correos
 define('MAIL_FROM', 'no-reply@cetis.edu.mx');
-define('DOMAIN', 'http://localhost/asisweb');
+
+// Definimos el dominio de la aplicación, este nos servirá para hacer redirecciones o enlaces
+define('DOMAIN', 'http://localhost/asisweb/');

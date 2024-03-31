@@ -1,4 +1,10 @@
-<?php require_once './config/session.php' ?>
+<?php
+require_once './config/session.php';
+if (isset($_SESSION['user'])) {
+  header('Location: ./profile.php');
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
