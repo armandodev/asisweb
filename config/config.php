@@ -49,3 +49,15 @@ define('MAIL_FROM', 'no-reply@cetis.edu.mx');
 
 // Definimos el dominio de la aplicación, este nos servirá para hacer redirecciones o enlaces
 define('DOMAIN', 'http://localhost/asisweb/');
+
+// Definimos los regex que se utilizarán para validar los datos
+define("REGEX", [
+  "name" => "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,100}$/",
+  "email" => "/^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/",
+  "password" => "/^.{6,100}$/",
+  "cct" => "/[0-9]{2}[A-Z]{3}[0-9]{4}[A-Z]{1}/",
+  "period" => "/[0-9]{4}-[1-2]{1}/",
+  "phone_number" => "/[0-9 ]{10,15}/",
+  "address" => "/^.{3,150}$/",
+  "postal_code" => "/[0-9]{5}/",
+]);
