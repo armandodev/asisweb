@@ -1,5 +1,12 @@
 <?php
-require_once 'Auth.php';
+require_once './config/session.php';
+
+if (isset($_SESSION['user'])) {
+  header('Location: ./../profile.php');
+  exit;
+}
+
+require_once './Auth.php';
 $auth = new Auth();
 
 try {
@@ -18,9 +25,7 @@ try {
     'type' => 'error',
     'content' => $e->getMessage()
   ];
-  header('Location: ./../login.php');
+} finally {
+  header('Location: ./../index.php');
   exit;
 }
-
-header('Location: ./../index.php');
-exit;
