@@ -26,7 +26,7 @@ unset($_SESSION['user']);
       </section>
       <section>
         <p>Has cerrado sesión exitosamente.</p>
-        <p><a href="./">Iniciar sesión</a></p>
+        <p><a href="./index.php">Iniciar sesión</a></p>
       </section>
     </article>
   </main>
