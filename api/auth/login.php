@@ -23,6 +23,6 @@ try {
   $result = $result->fetch(PDO::FETCH_ASSOC);
   print_r($result);
 } catch (Exception $e) {
-  header('HTTP/1.1 405 Method Not Allowed');
+  header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
   echo $e->getMessage();
 }
