@@ -66,6 +66,10 @@ try {
         <p>Teléfono: <?= $user['tel'] ?></p>
         <p>Rol: <?= $user['role'] ?></p>
       </section>
+      <section>
+        <p><a href="./../../">Inicio</a></p>
+        <p><a href="./../../logout.php">Cerrar sesión</a></p>
+      </section>
     </article>
   </main>
 </body>
