@@ -12,7 +12,7 @@ create table
     `last_name` varchar(100) not null,
     `email` varchar(255) not null unique key,
     `tel` varchar(15) not null unique key,
-    `hashed_password` varchar(255) not null,
+    `password` varchar(255) not null,
     `role` enum ('Docente', 'Administrador') not null default 'Docente',
     `status` enum ('Activo', 'Inactivo') not null default 'Inactivo',
     `created_at` datetime not null default current_timestamp,
