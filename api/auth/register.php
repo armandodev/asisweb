@@ -1,5 +1,5 @@
 <?php
-require_once './../db/utils.php';
+require_once './../../config.php';
 
 try {
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
@@ -15,6 +15,7 @@ try {
 
   if (!isset($_POST['tel']) || $_POST['tel'] === '') throw new Exception('El teléfono es requerido', 400);
   else $tel = $_POST['tel'];
+  if (!preg_match('/^[0-9]{10}$/', preg_replace('/\s+/', '', $tel))) throw new Exception('El teléfono no es válido', 400);
 
   if (!isset($_POST['password']) || $_POST['password'] === '') throw new Exception('La contraseña es requerida', 400);
   else $password = $_POST['password'];
