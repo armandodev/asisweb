@@ -34,3 +34,21 @@ class Database
     return $stmt;
   }
 }
+
+function validateApiKey()
+{
+  try {
+    if (!isset($_GET['api_key'])) throw new Exception('No se ha proporcionado una API key');
+    $api_key = $_GET['api_key'];
+
+    $db = new Database();
+    $sql = "SELECT * FROM api_keys WHERE api_key = :api_key";
+    $params = [':api_key' => $api_key];
+    $result = $db->execute($sql, $params);
+    if (!$result || count($result) === 0) throw new Exception('API key inválido');
+  } catch (Exception $e) {
+    header('HTTP/1.1 401 Unauthorized');
+    echo json_encode(['error' => $e->getMessage()]);
+    exit();
+  }
+}
