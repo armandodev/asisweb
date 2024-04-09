@@ -45,7 +45,7 @@ function validateApiKey()
     $sql = "SELECT * FROM api_keys WHERE api_key = :api_key";
     $params = [':api_key' => $api_key];
     $result = $db->execute($sql, $params);
-    if (!$result || count($result) === 0) throw new Exception('API key inválido');
+    if (!$result || $result->rowCount() === 0) throw new Exception('API key inválida');
   } catch (Exception $e) {
     header('HTTP/1.1 401 Unauthorized');
     echo json_encode(['error' => $e->getMessage()]);
