@@ -1,5 +1,10 @@
 <?php
-require_once './../db/utils.php';
+require_once './../../config.php';
+
+if (isset($_SESSION['user'])) {
+  header('Location: ./../../');
+  exit();
+}
 
 try {
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
@@ -21,8 +26,48 @@ try {
   if (!$result || $result->rowCount() === 0) throw new Exception('El correo electrónico no está registrado', 404);
 
   $result = $result->fetch(PDO::FETCH_ASSOC);
-  print_r($result);
+
+  if ($result['status'] === 'Inactivo') throw new Exception('El usuario está inactivo', 400);
+  if (!password_verify($password, $result['password'])) throw new Exception('La contraseña es incorrecta', 400);
+
+  $sql = 'SELECT user_id, first_name, last_name, email, tel, role FROM users WHERE email = :email';
+  $result = $db->execute($sql, ['email' => $email]);
+
+  if (!$result || $result->rowCount() === 0) throw new Exception('No se pudo obtener la información del usuario', 500);
+
+  $user = $result->fetch(PDO::FETCH_ASSOC);
+
+  $_SESSION['user'] = $user;
+
+  header('HTTP/1.1 200 OK');
 } catch (Exception $e) {
   header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
   echo $e->getMessage();
 }
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio de sesión exitoso | Docentes CETis 121</title>
+  <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+  <main>
+    <article>
+      <section>
+        <h1>Bienvenido(a), <?= $user['first_name'] ?> <?= $user['last_name'] ?>.</h1>
+      </section>
+      <section>
+        <p>Correo electrónico: <?= $user['email'] ?></p>
+        <p>Teléfono: <?= $user['tel'] ?></p>
+        <p>Rol: <?= $user['role'] ?></p>
+      </section>
+    </article>
+  </main>
+</body>
+
+</html>
