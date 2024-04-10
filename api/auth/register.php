@@ -61,6 +61,10 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro exitoso | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="./../../css/normalize.css">
+  <link rel="stylesheet" href="./../../css/styles.css">
+  <link rel="stylesheet" href="./../../css/header.css">
 </head>
 
 <body>
