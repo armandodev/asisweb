@@ -15,28 +15,32 @@ if (!isset($_SESSION['user'])) {
   <title>Mi perfil | Docentes CETis 121</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
+  <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/header.css">
 </head>
 
 <body>
   <header>
-    <a href="./profile.php">
-      <img src="./images/logo.webp" alt="Logo de DGTi">
-    </a>
+    <div class="content-wrapper">
+      <a href="./profile.php">
+        <img class="h-logo" src="./images/logo.webp" alt="Logo de DGTi">
+      </a>
 
-    <nav>
-      <ul>
-        <li><a href="./profile.php">Perfil</a></li>
-        <li><a href="./schedule.php">Horario</a></li>
-        <li><a href="./attendance-reports">Reportes de asistencia</a></li>
-        <li><a href="./tutoring.php">Tutorías</a></li>
-        <li><a href="./dashboard/index.php">Panel</a></li>
-        <li><a href=" ./logout.php">Cerrar sesión</a></li>
-      </ul>
-      <!-- TODO: Agregar iconos del menú -->
-      <button id="close-menu">✖</button>
-    </nav>
-    <button id="show-menu">☰</button>
+      <nav>
+        <ul>
+          <li><a href="./profile.php">Perfil</a></li>
+          <li><a href="./schedule.php">Horario</a></li>
+          <li><a href="./attendance-reports">Reportes de asistencia</a></li>
+          <li><a href="./tutoring.php">Tutorías</a></li>
+          <li><a href="./dashboard/index.php">Panel</a></li>
+          <li><a href=" ./logout.php">Cerrar sesión</a></li>
+        </ul>
+        <!-- TODO: Agregar iconos del menú -->
+        <button id="close-menu">✖</button>
+      </nav>
+      <button id="show-menu">☰</button>
+    </div>
   </header>
 
   <main>

@@ -1,0 +1,6 @@
+.h-logo {
+  width: 4em;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: center;
+}
