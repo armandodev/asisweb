@@ -28,7 +28,7 @@ create table
     `used` tinyint (1) not null default 0,
     `created_at` datetime not null default current_timestamp,
     `used_at` datetime null on update current_timestamp,
-    `expiration_time` datetime not null,
+    `expires_at` datetime null,
     foreign key (`user_id`) references `users` (`user_id`) on delete cascade
   ) engine = InnoDB default charset = utf8;
 
@@ -36,7 +36,7 @@ create table
 create trigger `password_reset_expiration`
   before insert on `password_resets`
   for each row
-  set new.expiration_time = date_add(new.created_at, interval 5 minute);
+  set new.expires_at = date_add(new.created_at, interval 5 minute);
 
 -- Table: `extra_emails` (Correos electrónicos extra de los docentes)
 create table

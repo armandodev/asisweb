@@ -10,10 +10,10 @@ $db = new Database();
 
 if (isset($_GET['token'])) {
   $token = $_GET['token'];
-  $sql = 'SELECT * FROM password_resets WHERE token = :token AND expires_at > NOW() AND used_at IS NULL';
+  $sql = 'SELECT * FROM password_resets WHERE token = :token AND expires_at > NOW() AND used = 0';
   $result = $db->execute($sql, ['token' => $token]);
 
-  if ($result->num_rows === 0) {
+  if ($result->rowCount() === 0) {
     echo 'El token de recuperación de contraseña no es válido o ha expirado.';
     exit();
   }

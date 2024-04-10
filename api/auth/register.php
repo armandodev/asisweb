@@ -1,6 +1,11 @@
 <?php
 require_once './../../config.php';
 
+if (isset($_SESSION['user'])) {
+  header('Location: ./profile.php');
+  exit();
+}
+
 try {
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
 
@@ -45,12 +50,6 @@ try {
 } catch (Exception $e) {
   header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
   echo $e->getMessage();
-  exit();
-}
-?>
-<?php
-if (isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
   exit();
 }
 ?>
