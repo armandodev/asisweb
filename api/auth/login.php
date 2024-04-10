@@ -23,7 +23,7 @@ try {
   $sql = 'SELECT password, status FROM users WHERE email = :email';
   $result = $db->execute($sql, ['email' => $email]);
 
-  if (!$result || $result->rowCount() === 0) throw new Exception('El correo electrónico no está registrado', 404);
+  if (!$result || $result->rowCount() === 0) throw new Exception('El usuario no existe', 400);
 
   $result = $result->fetch(PDO::FETCH_ASSOC);
 
@@ -36,13 +36,13 @@ try {
   if (!$result || $result->rowCount() === 0) throw new Exception('No se pudo obtener la información del usuario', 500);
 
   $user = $result->fetch(PDO::FETCH_ASSOC);
-
   $_SESSION['user'] = $user;
 
   header('HTTP/1.1 200 OK');
 } catch (Exception $e) {
   header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
   echo $e->getMessage();
+  exit();
 }
 ?>
 <!DOCTYPE html>
@@ -67,7 +67,7 @@ try {
         <p>Rol: <?= $user['role'] ?></p>
       </section>
       <section>
-        <p><a href="./../../">Inicio</a></p>
+        <p><a href="./../../index.php">Inicio</a></p>
         <p><a href="./../../logout.php">Cerrar sesión</a></p>
       </section>
     </article>

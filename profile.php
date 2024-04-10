@@ -1,7 +1,8 @@
 <?php
 require_once './config.php';
+
 if (!isset($_SESSION['user'])) {
-  header('Location: ./index.php');
+  header('Location: ./profile.php');
   exit();
 }
 ?>
@@ -21,12 +22,20 @@ if (!isset($_SESSION['user'])) {
     <main>
       <article>
         <section>
-          <h1>Bienvenido(a), <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>.</h1>
+          <h1>
+            <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>.
+            <small>
+              <?= $_SESSION['user']['role'] ?>
+            </small>
         </section>
         <section>
           <p>Correo electrónico: <?= $_SESSION['user']['email'] ?></p>
           <p>Teléfono: <?= $_SESSION['user']['tel'] ?></p>
           <p>Rol: <?= $_SESSION['user']['role'] ?></p>
+        </section>
+        <section>
+          <p><a href="./edit-profile.php">Editar perfil</a></p>
+          <p><a href="./edit-password.php">Editar contraseña</a></p>
         </section>
         <section>
           <p><a href="./logout.php">Cerrar sesión</a></p>

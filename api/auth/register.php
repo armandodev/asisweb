@@ -72,6 +72,7 @@ try {
       <section>
         <p>¡Gracias por registrarte! Se te notificará por correo electrónico el estatus de tu solicitud de registro, es decir, si fue aprobada o rechazada, en el momento que tu cuenta sea activada podrás iniciar sesión.</p>
         <p>Notifica a un administrador para que active tu cuenta.</p>
+        <p><a href="./../../index.php">Inicio</a></p>
       </section>
     </article>
   </main>
