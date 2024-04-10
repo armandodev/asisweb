@@ -14,6 +14,8 @@ if (!isset($_SESSION['user'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi perfil | Docentes CETis 121</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
