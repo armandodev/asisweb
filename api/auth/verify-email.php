@@ -41,10 +41,10 @@ try {
 
   $subject = 'Recuperación de tu contraseña | Docentes CETis 121';
   $message = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: ' . BASE_URL . 'forgot-password.php?token=' . $token;
-  $message .= '<br><br>El enlace expirará en 5 minutos, al ser utilizado por primera vez o al solicitar un nuevo enlace.';
-  $message .= '<br><br>Si no solicitaste la recuperación de tu contraseña, ignora este mensaje.';
-  $message .= '<br><br>Este mensaje fue enviado automáticamente, por favor no respondas a este mensaje.';
-  $message .= '<br><br>Atentamente,<br>Docentes CETis 121';
+  $message .= '<br />El enlace expirará en 5 minutos, al ser utilizado por primera vez o al solicitar un nuevo enlace.';
+  $message .= '<br />Si no solicitaste la recuperación de tu contraseña, ignora este mensaje.';
+  $message .= '<br />Este mensaje fue enviado automáticamente, por favor no respondas a este mensaje.';
+  $message .= '<br />Atentamente,<br>Docentes CETis 121';
   $headers = 'From: ' . EMAIL_FROM . "\r\n" .
     'Reply-To: ' . EMAIL_FROM . "\r\n" .
     'X-Mailer: PHP/' . phpversion() .
