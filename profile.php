@@ -18,6 +18,7 @@ if (!isset($_SESSION['user'])) {
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/footer.css">
   <link rel="stylesheet" href="./css/profile.css">
 </head>
 
@@ -82,31 +83,34 @@ if (!isset($_SESSION['user'])) {
     </article>
   </main>
 
-  <footer>
-    <p>CETis No. 121 Sahuayo, Michoacán.</p>
+  <footer id="bottom-footer">
+    <div class="container">
+      <p>CETis No. 121 Sahuayo, Michoacán.</p>
 
-    <ul>
-      <li>
-        <a href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
-          Sitio web
-        </a>
-      </li>
-      <li>
-        <a href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
-          Facebook
-        </a>
-      </li>
-      <li>
-        <a href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
-          Instagram
-        </a>
-      </li>
-      <li>
-        <a href="tel:3535322224" target="_blank" rel="noopener noreferrer">
-          Teléfono
-        </a>
-      </li>
-    </ul>
+      <ul>
+        <li>
+          <a href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
+            Sitio web
+          </a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
+            Facebook
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a href="tel:3535322224" target="_blank" rel="noopener noreferrer">
+            Teléfono
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
 </body>
 
 </html>
