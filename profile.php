@@ -21,15 +21,16 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
-  <header>
-    <div class="content-wrapper">
-      <a href="./profile.php">
-        <img class="h-logo" src="./images/logo.webp" alt="Logo de DGTi">
+  <header id="top-header">
+    <div class="container">
+      <a class="th-logo-container" href="./profile.php">
+        <img class="th-logo" src="./images/logo.webp" alt="Logo de DGTi">
+        <span>CETis 121</span>
       </a>
 
-      <nav>
+      <nav id="th-nav">
         <ul>
-          <li><a href="./profile.php">Perfil</a></li>
+          <li><a class="active" href="./profile.php">Perfil</a></li>
           <li><a href="./schedule.php">Horario</a></li>
           <li><a href="./attendance-reports">Reportes de asistencia</a></li>
           <li><a href="./tutoring.php">Tutorías</a></li>
@@ -44,12 +45,12 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article>
+    <article class="container">
       <section>
         <h1>
-          <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>.
+          <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>
           <small>
-            <?= $_SESSION['user']['role'] ?>
+            (<?= $_SESSION['user']['role'] ?>)
           </small>
       </section>
       <section>
