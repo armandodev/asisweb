@@ -18,6 +18,7 @@ if (!isset($_SESSION['user'])) {
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/profile.css">
 </head>
 
 <body>
@@ -45,26 +46,39 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article class="container">
-      <section>
+    <article id="profile" class="container">
+      <section id="profile-info">
         <h1>
           <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>
           <small>
             (<?= $_SESSION['user']['role'] ?>)
           </small>
+        </h1>
+        <ul>
+          <li>
+            <strong>Correo electrónico:</strong>
+            <?= $_SESSION['user']['email'] ?>
+          </li>
+          <li>
+            <strong>Teléfono:</strong>
+            <?= $_SESSION['user']['tel'] ?>
+          </li>
+          <li>
+            <strong>Fecha de registro:</strong>
+            <?= $_SESSION['user']['created_at'] ?>
+          </li>
+        </ul>
       </section>
-      <section>
-        <p>Correo electrónico: <?= $_SESSION['user']['email'] ?></p>
-        <p>Teléfono: <?= $_SESSION['user']['tel'] ?></p>
-        <p>Rol: <?= $_SESSION['user']['role'] ?></p>
-      </section>
-      <section>
-        <p><a href="./edit-profile.php">Editar perfil</a></p>
-        <p><a href="./edit-password.php">Editar contraseña</a></p>
-      </section>
-      <section>
-        <p><a href="./logout.php">Cerrar sesión</a></p>
-      </section>
+      <nav id="profile-nav">
+        <ul>
+          <li>
+            <a href="./edit-profile.php">Editar perfil</a>
+          </li>
+          <li>
+            <a href="./change-password.php">Cambiar contraseña</a>
+          </li>
+        </ul>
+      </nav>
     </article>
   </main>
 
