@@ -20,3 +20,12 @@ html {
 .input {
   @apply w-full py-2 px-4 border-2 border-gray-300 rounded transition duration-300 ease-in-out;
 }
+
+.h-link {
+  @apply font-medium py-1 px-2 border-b-2 border-transparent hover:border-[#a91f21] hover:text-[#a91f21];
+  transition: color 0.3s, border-bottom 0.3s;
+}
+
+.h-link.active {
+  @apply text-[#a91f21] border-[#a91f21];
+}

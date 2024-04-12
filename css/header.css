@@ -1,43 +1,4 @@
-#top-header {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #ccc;
-  padding: 0.5em 0.25em;
-}
-
-#top-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.th-logo-container {
-  font-size: 1.2em;
-  font-weight: 700;
-  color: #222;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.th-logo {
-  width: 3em;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  object-position: center;
-}
-
-#th-nav ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 #th-nav ul li a {
-  color: #222;
-  text-decoration: none;
-  font-size: 1.1em;
-  font-weight: 500;
   padding: 0.1em 0.5em;
   border-bottom: 3px solid transparent;
   transition: color 0.3s, border-bottom 0.3s;

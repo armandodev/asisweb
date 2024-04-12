@@ -15,35 +15,34 @@ if (!isset($_SESSION['user'])) {
   <title>Mi perfil | Docentes CETis 121</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/header.css">
-  <link rel="stylesheet" href="./css/footer.css">
-  <link rel="stylesheet" href="./css/profile.css">
+  <link rel="stylesheet" href="./css/output.css">
 </head>
 
 <body>
-  <header id="top-header">
-    <div class="container">
-      <a class="th-logo-container" href="./profile.php">
-        <img class="th-logo" src="./images/logo.webp" alt="Logo de DGTi">
-        <span>CETis 121</span>
+  <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
+    <div class="container flex items-center justify-between">
+      <a class="flex items-center" href="./profile.php">
+        <img class="w-16 aspect-square" src="./images/logo.webp" alt="Logo de DGTi">
+        <span class="text-xl font-semibold">CETis 121</span>
       </a>
 
-      <nav id="th-nav">
-        <ul>
-          <li><a class="active" href="./profile.php">Perfil</a></li>
-          <li><a href="./schedule.php">Horario</a></li>
-          <li><a href="./tutoring.php">Tutorías</a></li>
+      <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-base md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
+        <ul class="flex gap-4 flex-col items-center md:flex-row md:gap-0">
+          <li><a class="h-link active" href="./profile.php">Perfil</a></li>
+          <li><a class="h-link" href="./schedule.php">Horario</a></li>
+          <li><a class="h-link" href="./tutoring.php">Tutorías</a></li>
           <?php if ($_SESSION['user']['role'] === 'Administrador') { ?>
-            <li><a href="./dashboard/index.php">Panel</a></li>
+            <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>
-          <li><a href=" ./logout.php">Cerrar sesión</a></li>
+          <li><a class="h-link" href=" ./logout.php">Cerrar sesión</a></li>
         </ul>
-        <!-- TODO: Agregar iconos del menú -->
-        <button id="close-menu">✖</button>
+        <button class="absolute top-2 right-2 md:hidden" id="close-menu">
+          <img src="./icons/close.svg" alt="Cerrar menú">
+        </button>
       </nav>
-      <button id="show-menu">☰</button>
+      <button class="md:hidden" id="show-menu">
+        <img src="./icons/menu.svg" alt="Abrir menú">
+      </button>
     </div>
   </header>
 
