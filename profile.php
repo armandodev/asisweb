@@ -34,9 +34,10 @@ if (!isset($_SESSION['user'])) {
         <ul>
           <li><a class="active" href="./profile.php">Perfil</a></li>
           <li><a href="./schedule.php">Horario</a></li>
-          <li><a href="./attendance-reports">Reportes de asistencia</a></li>
           <li><a href="./tutoring.php">Tutorías</a></li>
-          <li><a href="./dashboard/index.php">Panel</a></li>
+          <?php if ($_SESSION['user']['role'] === 'Administrador') { ?>
+            <li><a href="./dashboard/index.php">Panel</a></li>
+          <?php } ?>
           <li><a href=" ./logout.php">Cerrar sesión</a></li>
         </ul>
         <!-- TODO: Agregar iconos del menú -->
