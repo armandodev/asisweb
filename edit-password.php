@@ -15,36 +15,37 @@ if (!isset($_SESSION['user'])) {
   <title>Editar contraseña | Docentes CETis 121</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/form.css">
+  <link href="./css/output.css" rel="stylesheet">
 </head>
 
 <body>
   <main>
-    <article id="form-article" class="container">
+    <article class="container min-h-screen flex gap-4 flex-col justify-center items-center">
       <section>
-        <h1>Editar contraseña <small>Docentes CETis 121</small></h1>
+        <h1 class="text-3xl text-center font-semibold">Editar contraseña <small class="block text-xl font-normal text-[#a91f21]">Docentes CETis 121</small></h1>
       </section>
       <section>
-        <form action="./api/auth/edit-password.php" method="post">
-          <p>Campos obligatorios <span>*</span></p>
+        <form class="flex gap-4 flex-col justify-center w-full max-w-screen-sm text-lg" action="./api/auth/edit-password.php" method="post">
+          <p class="text-normal">Campos obligatorios <span class="text-red-600">*</span></p>
           <fieldset>
             <legend hidden>Contraseña</legend>
 
             <label title="Nueva contraseña">
-              <span>Nueva contraseña <span>*</span></span>
-              <input type="password" name="password" placeholder="********" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
+              <span>Nueva contraseña <span class="text-red-600">*</span></span>
+              <input class="input" type="password" name="password" placeholder="********" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
             </label>
 
             <label title="Confirmar nueva contraseña">
-              <span>Confirmar nueva contraseña <span>*</span></span>
-              <input type="password" name="confirm-password" placeholder="********" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
+              <span>Confirmar nueva contraseña <span class="text-red-600">*</span></span>
+              <input class="input" type="password" name="confirm-password" placeholder="********" pattern="^.{6,100}$" minlength="6" maxlength="100" required />
             </label>
           </fieldset>
-          <input type="submit" value="Guardar cambios" />
+          <input class="button" type="submit" value="Guardar cambios" />
         </form>
       </section>
+      <ul>
+        <li><a class="text-lg text-[#a91f21] underline" href="./profile.php">Volver al inicio</a></li>
+      </ul>
     </article>
   </main>
 </body>
