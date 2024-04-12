@@ -26,7 +26,7 @@ if (!isset($_SESSION['user'])) {
       </section>
       <section>
         <form class="flex gap-4 flex-col justify-center w-full max-w-screen-sm text-lg" action="./api/auth/edit-password.php" method="post">
-          <p class="text-normal">Campos obligatorios <span class="text-red-600">*</span></p>
+          <p class="text-base">Campos obligatorios <span class="text-red-600">*</span></p>
           <fieldset>
             <legend hidden>Contraseña</legend>
 

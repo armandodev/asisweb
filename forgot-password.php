@@ -84,42 +84,38 @@ if (isset($_GET['token'])) {
   <title><?= $ui['document_title']; ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/form.css">
+  <link rel="stylesheet" href="./css/output.css">
 </head>
 
 <body>
   <main>
-    <article id="form-article" class="container">
-      <section>
-        <h1><?= $ui['form_title']; ?> <small>Docentes CETis 121</small></h1>
+    <article class="container min-h-screen flex gap-4 flex-col justify-center items-center">
+      <section class="w-full max-w-screen-sm">
+        <h1 class="text-3xl text-center font-semibold"><?= $ui['form_title']; ?> <small class="block text-xl font-normal text-[#a91f21]">Docentes CETis 121</small></h1>
       </section>
-      <section>
-        <form action="<?= $ui['form_action']; ?>" method="post">
-          <p>Campos obligatorios <span>*</span></p>
+      <section class="w-full max-w-screen-sm">
+        <form class="flex gap-4 flex-col justify-center w-full text-lg" action="<?= $ui['form_action']; ?>" method="post">
+          <p class="text-base">Campos obligatorios <span class="text-red-600">*</span></p>
           <fieldset>
             <legend hidden>Datos de acceso</legend>
             <?php
             foreach ($ui['form_fields'] as $field) {
               if ($field['type'] === 'hidden') {
                 echo '<input type="hidden" name="' . $field['name'] . '" value="' . $field['value'] . '" />';
-              } else {
-                echo '<label title="' . $field['label'] . '">';
-                echo '<span>' . $field['label'] . ' <span>*</span></span>';
-                echo '<input type="' . $field['type'] . '" name="' . $field['name'] . '" placeholder="' . $field['placeholder'] . '" pattern="' . $field['pattern'] . '" minlength="' . $field['minlength'] . '" maxlength="' . $field['maxlength'] . '" ' . ($field['required'] ? 'required' : '') . ' />';
-                echo '</label>';
-              }
-            }
-            ?>
+              } else { ?>
+                <label title="<?= $field['label']; ?>">
+                  <span><?= $field['label'] ?><span class="text-red-600">*</span></span>
+                  <input class="input" type="<?= $field['type'] ?>" name="<?= $field['name'] ?>" autocomplete="<?= $field['name'] ?>" pattern="<?= $field['pattern'] ?>" minlength="<?= $field['minlength'] ?>" maxlength="<?= $field['maxlength'] ?>" placeholder="<?= $field['placeholder'] ?>" <?= $field['required'] ? 'required' : ''; ?> />
+              <?php }
+            } ?>
           </fieldset>
-          <input type="submit" value="<?= $ui['submit']; ?>" />
+          <input class="button" type="submit" value="<?= $ui['submit']; ?>" />
         </form>
       </section>
       <?php if (!isset($_GET['token'])) { ?>
-        <ul>
-          <li><a href="./index.php">Volver al inicio de sesión</a></li>
-          <li>¿No tienes una cuenta? <a href="./register.php">Regístrate</a></li>
+        <ul class="text-center">
+          <li><a class="text-lg text-[#a91f21] underline" href="./index.php">Volver al inicio de sesión</a></li>
+          <li>¿No tienes una cuenta? <a class="text-lg text-[#a91f21] underline" href="./register.php">Regístrate</a></li>
         </ul>
       <?php } ?>
     </article>
