@@ -33,32 +33,9 @@ create table
   ) engine = InnoDB default charset = utf8;
 
 -- Trigger `password_reset_expiration` (Restablecimiento de contraseña) (Establece la fecha de expiración de los tokens en 5 minutos después de la creación)
-create trigger `password_reset_expiration`
-  before insert on `password_resets`
-  for each row
-  set new.expires_at = date_add(new.created_at, interval 5 minute);
-
--- Table: `extra_emails` (Correos electrónicos extra de los docentes)
-create table
-  if not exists `extra_emails` (
-    `email_id` int (11) not null auto_increment primary key,
-    `user_id` int (11) not null,
-    `extra_email` varchar(255) not null unique key,
-    `created_at` datetime not null default current_timestamp,
-    `updated_at` datetime not null default current_timestamp on update current_timestamp,
-    foreign key (`user_id`) references `users` (`user_id`) on delete cascade
-  ) engine = InnoDB default charset = utf8;
-
--- Table: `extra_tels` (Teléfonos extra de los docentes)
-create table
-  if not exists `extra_tels` (
-    `tel_id` int (11) not null auto_increment primary key,
-    `user_id` int (11) not null,
-    `extra_tel` varchar(15) not null unique key,
-    `created_at` datetime not null default current_timestamp,
-    `updated_at` datetime not null default current_timestamp on update current_timestamp,
-    foreign key (`user_id`) references `users` (`user_id`) on delete cascade
-  ) engine = InnoDB default charset = utf8;
+create trigger `password_reset_expiration` before insert on `password_resets` for each row
+set
+  new.expires_at = date_add (new.created_at, interval 5 minute);
 
 -- Table: `subjects` (Materias)
 create table
@@ -155,32 +132,4 @@ create table
     foreign key (`user_id`) references `users` (`user_id`) on delete cascade,
     foreign key (`schedule_id`) references `schedule` (`schedule_id`) on delete cascade,
     foreign key (`control_number`) references `students` (`control_number`) on delete cascade
-  ) engine = InnoDB default charset = utf8;
-
--- Table: `teacher_absences` (Faltas de los docentes)
-create table
-  if not exists `teacher_absences` (
-    `absence_id` int (11) not null auto_increment primary key,
-    `user_id` int (11) not null,
-    `schedule_id` int (11) not null,
-    `date` date not null,
-    `status` enum ('Revisado', 'Pendiente') not null,
-    `reported_at` datetime not null default current_timestamp,
-    `updated_at` datetime not null default current_timestamp on update current_timestamp,
-    foreign key (`user_id`) references `users` (`user_id`) on delete cascade
-  ) engine = InnoDB default charset = utf8;
-
--- Table: `params` (Parámetros) (Datos de la escuela)
-create table
-  if not exists `params` (
-    `school_name` varchar(150) not null default 'Nombre completo de la escuela',
-    `short_school_name` varchar(20) null,
-    `period` varchar(6) not null default 'aaaa-n',
-    `director_name` varchar(100) not null default 'Nombre del director',
-    `cct` varchar(15) not null default 'CCT',
-    `address` varchar(150) null default 'Dirección de la escuela',
-    `state` varchar(100) not null default 'Estado de la escuela',
-    `city` varchar(100) not null default 'Ciudad de la escuela',
-    `postal_code` varchar(5) not null default '01234',
-    `tel` varchar(15) not null default '0123456789'
   ) engine = InnoDB default charset = utf8;
