@@ -17,11 +17,12 @@ if (!isset($_SESSION['user'])) {
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/form.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="form-article" class="container">
       <section>
         <h1>Editar contraseña <small>Docentes CETis 121</small></h1>
       </section>
@@ -29,7 +30,7 @@ if (!isset($_SESSION['user'])) {
         <form action="./api/auth/edit-password.php" method="post">
           <p>Campos obligatorios <span>*</span></p>
           <fieldset>
-            <legend>Contraseña</legend>
+            <legend hidden>Contraseña</legend>
 
             <label title="Nueva contraseña">
               <span>Nueva contraseña <span>*</span></span>

@@ -76,7 +76,7 @@ if (!isset($_SESSION['user'])) {
             <a href="./edit-profile.php">Editar perfil</a>
           </li>
           <li>
-            <a href="./change-password.php">Cambiar contraseña</a>
+            <a href="./edit-password.php">Cambiar contraseña</a>
           </li>
         </ul>
       </nav>

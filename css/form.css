@@ -121,7 +121,7 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 600px) {
-  form {
+  /* form {
     gap: 1em;
   }
 
@@ -147,7 +147,7 @@ form input[type="submit"]:hover {
 
   #form-article h1 small {
     font-size: 1rem;
-  }
+  } */
 
   .grid-span-2 {
     grid-template-columns: 1fr;

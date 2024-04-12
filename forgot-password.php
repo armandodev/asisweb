@@ -86,11 +86,12 @@ if (isset($_GET['token'])) {
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/form.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="form-article" class="container">
       <section>
         <h1><?= $ui['form_title']; ?> <small>Docentes CETis 121</small></h1>
       </section>
@@ -98,7 +99,7 @@ if (isset($_GET['token'])) {
         <form action="<?= $ui['form_action']; ?>" method="post">
           <p>Campos obligatorios <span>*</span></p>
           <fieldset>
-            <legend>Datos de acceso</legend>
+            <legend hidden>Datos de acceso</legend>
             <?php
             foreach ($ui['form_fields'] as $field) {
               if ($field['type'] === 'hidden') {
@@ -116,10 +117,10 @@ if (isset($_GET['token'])) {
         </form>
       </section>
       <?php if (!isset($_GET['token'])) { ?>
-        <section>
-          <p><a href="./index.php">Volver al inicio de sesión</a></p>
-          <p>¿No tienes una cuenta? <a href="./register.php">Regístrate</a></p>
-        </section>
+        <ul>
+          <li><a href="./index.php">Volver al inicio de sesión</a></li>
+          <li>¿No tienes una cuenta? <a href="./register.php">Regístrate</a></li>
+        </ul>
       <?php } ?>
     </article>
   </main>

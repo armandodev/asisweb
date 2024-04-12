@@ -17,11 +17,12 @@ if (!isset($_SESSION['user'])) {
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/form.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="form-article" class="container">
       <section>
         <h1>Edita tu perfil <small>Docentes CETis 121</small></h1>
       </section>
@@ -45,9 +46,9 @@ if (!isset($_SESSION['user'])) {
           <input type="submit" value="Guardar cambios" />
         </form>
       </section>
-      <section>
-        <p><a href="./profile.php">Regresar a tu perfil</a></p>
-      </section>
+      <ul>
+        <li><a href="./profile.php">Regresar a tu perfil</a></li>
+      </ul>
     </article>
   </main>
 </body>
