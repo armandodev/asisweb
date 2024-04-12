@@ -592,6 +592,10 @@ video {
   position: absolute;
 }
 
+.-top-full {
+  top: -100%;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -600,16 +604,8 @@ video {
   right: 0.5rem;
 }
 
-.top-0 {
-  top: 0px;
-}
-
-.top-2 {
-  top: 0.5rem;
-}
-
-.-top-full {
-  top: -100%;
+.top-6 {
+  top: 1.5rem;
 }
 
 .block {
@@ -839,6 +835,10 @@ html {
   color: rgb(169 31 33 / var(--tw-text-opacity));
 }
 
+#menu {
+  transition: top 0.3s;
+}
+
 @media (min-width: 640px) {
   .sm\:text-2xl {
     font-size: 1.5rem;
@@ -880,8 +880,8 @@ html {
     background-color: transparent;
   }
 
-  .md\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }

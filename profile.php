@@ -26,7 +26,7 @@ if (!isset($_SESSION['user'])) {
         <span class="text-xl font-semibold">CETis 121</span>
       </a>
 
-      <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-base md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
+      <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
         <ul class="flex gap-4 flex-col items-center md:flex-row md:gap-0">
           <li><a class="h-link active" href="./profile.php">Perfil</a></li>
           <li><a class="h-link" href="./schedule.php">Horario</a></li>
@@ -36,7 +36,7 @@ if (!isset($_SESSION['user'])) {
           <?php } ?>
           <li><a class="h-link" href=" ./logout.php">Cerrar sesión</a></li>
         </ul>
-        <button class="absolute top-2 right-2 md:hidden" id="close-menu">
+        <button class="absolute top-6 right-2 md:hidden" id="close-menu">
           <img src="./icons/close.svg" alt="Cerrar menú">
         </button>
       </nav>
@@ -111,6 +111,8 @@ if (!isset($_SESSION['user'])) {
       </ul>
     </div>
   </footer>
+
+  <script src="./js/menu.js"></script>
 </body>
 
 </html>

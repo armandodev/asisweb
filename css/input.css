@@ -29,3 +29,7 @@ html {
 .h-link.active {
   @apply text-[#a91f21] border-[#a91f21];
 }
+
+#menu {
+  transition: top 0.3s;
+}
