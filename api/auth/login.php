@@ -57,23 +57,18 @@ try {
   <link rel="stylesheet" href="./../../css/normalize.css">
   <link rel="stylesheet" href="./../../css/styles.css">
   <link rel="stylesheet" href="./../../css/header.css">
+  <link rel="stylesheet" href="./../../css/success.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="success" class="container">
       <section>
-        <h1>Bienvenido(a), <?= $user['first_name'] ?> <?= $user['last_name'] ?>.</h1>
+        <h1>Bienvenido(a), <span class="name"><?= $user['first_name'] ?> <?= $user['last_name'] ?></span></h1>
       </section>
-      <section>
-        <p>Correo electrónico: <?= $user['email'] ?></p>
-        <p>Teléfono: <?= $user['tel'] ?></p>
-        <p>Rol: <?= $user['role'] ?></p>
-      </section>
-      <section>
-        <p><a href="./../../index.php">Inicio</a></p>
-        <p><a href="./../../logout.php">Cerrar sesión</a></p>
-      </section>
+      <ul>
+        <li><a class="button" href="./../../index.php">Inicio</a></li>
+      </ul>
     </article>
   </main>
 </body>

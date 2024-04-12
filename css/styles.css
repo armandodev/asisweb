@@ -14,3 +14,24 @@ html {
   padding: 0.5em 1em;
   box-sizing: border-box;
 }
+
+.button {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #fff;
+  color: #a91f21;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 500;
+  padding: 0.5em 1em;
+  border: 2px solid #a91f21;
+  border-radius: 0.25em;
+  transition: background-color 0.3s, color 0.3s;
+  box-sizing: border-box;
+}
+
+.button:hover {
+  background-color: #a91f21;
+  color: #fff;
+}

@@ -19,18 +19,18 @@ unset($_SESSION['user']);
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/success.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="success" class="container">
       <section>
         <h1>Hasta luego <small>Docentes CETis 121</small></h1>
       </section>
-      <section>
-        <p>Has cerrado sesión exitosamente.</p>
-        <p><a href="./index.php">Iniciar sesión</a></p>
-      </section>
+      <ul>
+        <li><a class="button button-center" href="./index.php">Iniciar sesión</a></li>
+      </ul>
     </article>
   </main>
 </body>

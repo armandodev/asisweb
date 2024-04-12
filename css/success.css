@@ -1,0 +1,74 @@
+#success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 3em 1em;
+}
+
+#success section {
+  width: 100%;
+}
+
+#success h1,
+#success p {
+  margin: 0;
+  padding: 0;
+}
+
+#success h1 {
+  color: #111;
+  font-size: 3em;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 0.5em;
+  padding: 0;
+}
+
+#success h1 .name,
+#success h1 small {
+  display: block;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #a91f21;
+}
+
+#success p {
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.button {
+  width: 200px;
+}
+
+ul {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 400px) {
+  #success h1 {
+    font-size: 2em;
+  }
+
+  .name {
+    font-size: 1.1em;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
