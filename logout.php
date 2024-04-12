@@ -17,19 +17,17 @@ unset($_SESSION['user']);
   <title>Cierre de sesión | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/success.css">
+  <link rel="stylesheet" href="./css/output.css">
 </head>
 
 <body>
   <main>
-    <article id="success" class="container">
+    <article class="container min-h-screen flex gap-8 flex-col justify-center">
       <section>
-        <h1>Hasta luego <small>Docentes CETis 121</small></h1>
+        <h1 class="text-5xl sm:text-6xl font-semibold">Hasta luego <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
       </section>
       <ul>
-        <li><a class="button button-center" href="./index.php">Iniciar sesión</a></li>
+        <li><a class="button" href="./index.php">Iniciar sesión</a></li>
       </ul>
     </article>
   </main>
