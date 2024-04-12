@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 3em 1em;
 }
 
 #form-article section {
@@ -67,7 +68,9 @@ form label span span,
 }
 
 form input[type="email"],
-form input[type="password"] {
+form input[type="password"],
+form input[type="text"],
+form input[type="tel"] {
   border: 2px solid #ccc;
   border-radius: 0.1em;
   padding: 0.5em;
@@ -109,4 +112,44 @@ form input[type="submit"]:hover {
 
 #form-article ul a:hover {
   color: #800000;
+}
+
+.grid-span-2 {
+  display: grid;
+  gap: 0.5em;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media screen and (max-width: 600px) {
+  form {
+    gap: 1em;
+  }
+
+  form label {
+    font-size: 1em;
+  }
+
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="text"],
+  form input[type="tel"] {
+    padding: 0.25em;
+  }
+
+  form input[type="submit"] {
+    font-size: 1em;
+    padding: 0.25em 0.5em;
+  }
+
+  #form-article h1 {
+    font-size: 2em;
+  }
+
+  #form-article h1 small {
+    font-size: 1rem;
+  }
+
+  .grid-span-2 {
+    grid-template-columns: 1fr;
+  }
 }

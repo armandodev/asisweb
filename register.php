@@ -17,19 +17,20 @@ if (isset($_SESSION['user'])) {
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/form.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article id="form-article" class="container">
       <section>
         <h1>Solicitar Registro <small>Docentes CETis 121</small></h1>
       </section>
       <section>
         <form action="./api/auth/register.php" method="post">
           <p>Campos obligatorios <span>*</span></p>
-          <fieldset>
-            <legend>Nombre completo</legend>
+          <fieldset class="grid-span-2">
+            <legend hidden>Nombre completo</legend>
 
             <label title="Nombre(s)">
               <span>Nombre(s) <span>*</span></span>
@@ -43,7 +44,7 @@ if (isset($_SESSION['user'])) {
           </fieldset>
 
           <fieldset>
-            <legend>Datos de contacto</legend>
+            <legend hidden>Datos de contacto</legend>
 
             <label title="Correo electrónico">
               <span>Correo electrónico <span>*</span></span>
@@ -57,7 +58,7 @@ if (isset($_SESSION['user'])) {
           </fieldset>
 
           <fieldset>
-            <legend>Datos de acceso</legend>
+            <legend hidden>Datos de acceso</legend>
 
             <label title="Contraseña">
               <span>Contraseña <span>*</span></span>
@@ -68,9 +69,9 @@ if (isset($_SESSION['user'])) {
           <input type="submit" value="Solicitar registro" />
         </form>
       </section>
-      <section>
-        <p>¿Ya tienes una cuenta? <a href="./index.php">Inicia sesión</a></p>
-      </section>
+      <ul>
+        <li>¿Ya tienes una cuenta? <a href="./index.php">Inicia sesión</a></li>
+      </ul>
     </article>
   </main>
 </body>
