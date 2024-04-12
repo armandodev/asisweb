@@ -32,11 +32,6 @@ create table
     foreign key (`user_id`) references `users` (`user_id`) on delete cascade
   ) engine = InnoDB default charset = utf8;
 
--- Trigger `password_reset_expiration` (Restablecimiento de contraseña) (Establece la fecha de expiración de los tokens en 5 minutos después de la creación)
-create trigger `password_reset_expiration` before insert on `password_resets` for each row
-set
-  new.expires_at = date_add (new.created_at, interval 5 minute);
-
 -- Table: `subjects` (Materias)
 create table
   if not exists `subjects` (
@@ -133,3 +128,8 @@ create table
     foreign key (`schedule_id`) references `schedule` (`schedule_id`) on delete cascade,
     foreign key (`control_number`) references `students` (`control_number`) on delete cascade
   ) engine = InnoDB default charset = utf8;
+
+-- Trigger `password_reset_expiration` (Restablecimiento de contraseña) (Establece la fecha de expiración de los tokens en 5 minutos después de la creación)
+CREATE TRIGGER `password_reset_expiration` BEFORE INSERT ON `password_resets` 
+FOR EACH ROW 
+SET NEW.`expires_at` = DATE_ADD(NEW.`created_at`, INTERVAL 5 MINUTE);
