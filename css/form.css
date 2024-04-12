@@ -121,34 +121,6 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 600px) {
-  /* form {
-    gap: 1em;
-  }
-
-  form label {
-    font-size: 1em;
-  }
-
-  form input[type="email"],
-  form input[type="password"],
-  form input[type="text"],
-  form input[type="tel"] {
-    padding: 0.25em;
-  }
-
-  form input[type="submit"] {
-    font-size: 1em;
-    padding: 0.25em 0.5em;
-  }
-
-  #form-article h1 {
-    font-size: 2em;
-  }
-
-  #form-article h1 small {
-    font-size: 1rem;
-  } */
-
   .grid-span-2 {
     grid-template-columns: 1fr;
   }
