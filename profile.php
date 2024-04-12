@@ -47,15 +47,15 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article id="profile" class="container">
-      <section id="profile-info">
-        <h1>
+    <article id="profile" class="container flex flex-col justify-center">
+      <section class="flex flex-col gap-4">
+        <h1 class="text-3xl font-bold">
           <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>
           <small>
             (<?= $_SESSION['user']['role'] ?>)
           </small>
         </h1>
-        <ul>
+        <ul class="text-lg flex flex-col gap-4 list-none">
           <li>
             <strong>Correo electrónico:</strong>
             <?= $_SESSION['user']['email'] ?>
@@ -70,42 +70,42 @@ if (!isset($_SESSION['user'])) {
           </li>
         </ul>
       </section>
-      <nav id="profile-nav">
-        <ul>
+      <nav>
+        <ul class="flex gap-4 list-none my-8">
           <li>
-            <a href="./edit-profile.php">Editar perfil</a>
+            <a class="button" href="./edit-profile.php">Editar perfil</a>
           </li>
           <li>
-            <a href="./edit-password.php">Cambiar contraseña</a>
+            <a class="button" href="./edit-password.php">Cambiar contraseña</a>
           </li>
         </ul>
       </nav>
     </article>
   </main>
 
-  <footer id="bottom-footer">
-    <div class="container">
+  <footer class="flex items-center justify-center bg-[#f8f9fa] border-t-2 border-gray-300 h-20">
+    <div class="container flex items-center justify-between gap-4 py-4">
       <p>CETis No. 121 Sahuayo, Michoacán.</p>
 
-      <ul>
-        <li>
-          <a href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
-            Sitio web
-          </a>
-        </li>
+      <ul class="flex items-center gap-2">
         <li>
           <a href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
-            Facebook
+            <img src="./icons/facebook.svg" alt="Facebook">
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
-            Instagram
+            <img src="./icons/instagram.svg" alt="Instagram">
           </a>
         </li>
         <li>
           <a href="tel:3535322224" target="_blank" rel="noopener noreferrer">
-            Teléfono
+            <img src="./icons/phone.svg" alt="Teléfono">
+          </a>
+        </li>
+        <li>
+          <a href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
+            <img src="./icons/web.svg" alt="Sitio web">
           </a>
         </li>
       </ul>

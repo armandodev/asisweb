@@ -33,3 +33,7 @@ html {
 #menu {
   transition: top 0.3s;
 }
+
+#profile {
+  min-height: calc(100vh - 67.08px);
+}
