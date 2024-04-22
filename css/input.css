@@ -30,10 +30,10 @@ html {
   @apply text-[#a91f21] border-[#a91f21];
 }
 
-#menu {
-  transition: top 0.3s;
+.article {
+  min-height: calc(100vh - 67.08px);
 }
 
-#profile {
-  min-height: calc(100vh - 67.08px);
+#menu {
+  transition: top 0.3s;
 }

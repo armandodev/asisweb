@@ -47,7 +47,7 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article class="container flex flex-col justify-center">
+    <article class="article container flex flex-col justify-center">
       <h1 class="text-5xl sm:text-6xl font-semibold">Horario <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
     </article>
   </main>
