@@ -69,21 +69,16 @@ try {
   <title>Se ha cambiado tu contraseña | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="./../../css/normalize.css">
-  <link rel="stylesheet" href="./../../css/styles.css">
-  <link rel="stylesheet" href="./../../css/header.css">
+  <link rel="stylesheet" href="./../../css/output.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article class="container min-h-screen flex gap-8 flex-col justify-center">
       <section>
-        <h1>¡Tu contraseña ha sido cambiada con éxito! | Docentes CETis 121</h1>
+        <h1 class="text-5xl sm:text-6xl font-semibold">¡Tu contraseña ha sido cambiada con éxito! <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
       </section>
-      <section>
-        <p>La contraseña de tu cuenta ha sido cambiada con éxito. Ahora puedes iniciar sesión con tu nueva contraseña.</p>
-        <p><a href="./../../index.php">Iniciar sesión</a></p>
-      </section>
+      <a class="button sm:w-fit" href="./../../index.php">Iniciar sesión</a>
     </article>
   </main>
 </body>

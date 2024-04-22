@@ -54,21 +54,16 @@ try {
   <title>Inicio de sesión exitoso | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="./../../css/normalize.css">
-  <link rel="stylesheet" href="./../../css/styles.css">
-  <link rel="stylesheet" href="./../../css/header.css">
-  <link rel="stylesheet" href="./../../css/success.css">
+  <link rel="stylesheet" href="./../../css/output.css">
 </head>
 
 <body>
   <main>
-    <article id="success" class="container">
+    <article class="container min-h-screen flex gap-8 flex-col justify-center">
       <section>
-        <h1>Bienvenido(a), <span class="name"><?= $user['first_name'] ?> <?= $user['last_name'] ?></span></h1>
+        <h1 class="text-5xl sm:text-6xl font-semibold">Bienvenido(a), <span class="block text-xl sm:text-2xl text-[#a91f21] font-medium"><?= $user['first_name'] ?> <?= $user['last_name'] ?></span></h1>
       </section>
-      <ul>
-        <li><a class="button" href="./../../index.php">Inicio</a></li>
-      </ul>
+      <a class="button sm:w-fit" href="./../../index.php">Inicio</a></li>
     </article>
   </main>
 </body>

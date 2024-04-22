@@ -62,22 +62,19 @@ try {
   <title>Registro exitoso | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="./../../css/normalize.css">
-  <link rel="stylesheet" href="./../../css/styles.css">
-  <link rel="stylesheet" href="./../../css/header.css">
+  <link rel="stylesheet" href="./../../css/output.css">
 </head>
 
 <body>
   <main>
-    <article>
+    <article class="container min-h-screen flex gap-8 flex-col justify-center">
       <section>
-        <h1>Registro exitoso <small>Docentes CETis 121</small></h1>
+        <h1 class="text-5xl sm:text-6xl font-semibold">Registro exitoso <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
       </section>
       <section>
-        <p>¡Gracias por registrarte! Se te notificará por correo electrónico el estatus de tu solicitud de registro, es decir, si fue aprobada o rechazada, en el momento que tu cuenta sea activada podrás iniciar sesión.</p>
-        <p>Notifica a un administrador para que active tu cuenta.</p>
-        <p><a href="./../../index.php">Inicio</a></p>
+        <p class="text-base sm:text-lg text-gray-800">¡Gracias por registrarte! Se te notificará por correo electrónico el estatus de tu solicitud de registro, es decir, si fue aprobada o rechazada, en el momento que tu cuenta sea activada podrás iniciar sesión, notifica a un administrador para que active tu cuenta.</p>
       </section>
+      <a class="button sm:w-fit" href="./../../index.php">Inicio</a>
     </article>
   </main>
 </body>

@@ -47,7 +47,7 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article id="profile" class="container flex flex-col justify-center">
+    <article class="container flex flex-col justify-center">
       <section class="flex flex-col gap-4">
         <h1 class="text-3xl font-bold">
           <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>
