@@ -52,33 +52,31 @@ if (!isset($_SESSION['user'])) {
     </article>
   </main>
 
-  <footer class="flex items-center justify-center bg-[#f8f9fa] border-t-2 border-gray-300 h-20">
-    <div class="container flex items-center justify-between gap-4 py-4">
-      <p>CETis No. 121 Sahuayo, Michoacán.</p>
+  <footer class="w-full max-w-screen-xl p-4 mx-auto border-gray-300 border-t-2 flex flex-col md:flex-row justify-center md:items-center md:justify-between gap-y-4 mt-8">
+    <span>CETis No. 121 Sahuayo, Michoacán.</span>
 
-      <ul class="flex items-center gap-2">
-        <li>
-          <a href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
-            <img src="./icons/facebook.svg" alt="Facebook">
-          </a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
-            <img src="./icons/instagram.svg" alt="Instagram">
-          </a>
-        </li>
-        <li>
-          <a href="tel:3535322224" target="_blank" rel="noopener noreferrer">
-            <img src="./icons/phone.svg" alt="Teléfono">
-          </a>
-        </li>
-        <li>
-          <a href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
-            <img src="./icons/web.svg" alt="Sitio web">
-          </a>
-        </li>
-      </ul>
-    </div>
+    <ul class="list-none flex gap-4">
+      <li>
+        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
+          <img src="./icons/facebook.svg" alt="Facebook">
+        </a>
+      </li>
+      <li>
+        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
+          <img src="./icons/instagram.svg" alt="Instagram">
+        </a>
+      </li>
+      <li>
+        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
+          <img src="./icons/phone.svg" alt="Teléfono">
+        </a>
+      </li>
+      <li>
+        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
+          <img src="./icons/web.svg" alt="Sitio web">
+        </a>
+      </li>
+    </ul>
   </footer>
 
   <script src="./js/menu.js"></script>
