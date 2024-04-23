@@ -48,7 +48,73 @@ if (!isset($_SESSION['user'])) {
 
   <main>
     <article class="article container flex flex-col justify-center">
-      <h1 class="text-5xl sm:text-6xl font-semibold">Horario <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
+      <section>
+        <h1 class="text-5xl sm:text-6xl font-semibold text-center">Horario <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
+      </section>
+
+      <section>
+        <ul>
+          <li class="flex flex-col gap-4 mt-8">
+            <h2 class="text-3xl font-semibold">Lunes</h2>
+            <ul class="flex flex-col gap-4">
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">08:00 - 09:00</span>
+                <span class="text-lg">Matemáticas</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">09:00 - 10:00</span>
+                <span class="text-lg">Física</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">10:00 - 11:00</span>
+                <span class="text-lg">Química</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">11:00 - 12:00</span>
+                <span class="text-lg">Biología</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">12:00 - 13:00</span>
+                <span class="text-lg">Historia</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">13:00 - 14:00</span>
+                <span class="text-lg">Geografía</span>
+              </li>
+            </ul>
+          </li>
+
+          <li class="flex flex-col gap-4 mt-8">
+            <h2 class="text-3xl font-semibold">Martes</h2>
+            <ul class="flex flex-col gap-4">
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">08:00 - 09:00</span>
+                <span class="text-lg">Matemáticas</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">09:00 - 10:00</span>
+                <span class="text-lg">Física</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">10:00 - 11:00</span>
+                <span class="text-lg">Química</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">11:00 - 12:00</span>
+                <span class="text-lg">Biología</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">12:00 - 13:00</span>
+                <span class="text-lg">Historia</span>
+              </li>
+              <li class="flex flex-col gap-2">
+                <span class="text-xl font-semibold">13:00 - 14:00</span>
+                <span class="text-lg">Geografía</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
     </article>
   </main>
 
