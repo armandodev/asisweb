@@ -2,7 +2,7 @@
 require_once './config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
+  header('Location: ./');
   exit();
 }
 ?>

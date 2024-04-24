@@ -2,9 +2,37 @@
 require_once './config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
+  header('Location: ./');
   exit();
 }
+
+$weekdays = [
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+];
+
+$subjects = [
+  'Matemáticas',
+  'Física',
+  'Química',
+  'Biología',
+  'Historia',
+  'Geografía',
+  'Educación Física',
+];
+
+$hours = [
+  '8:00 - 9:00',
+  '9:00 - 10:00',
+  '10:00 - 11:00',
+  '11:00 - 12:00',
+  '12:00 - 13:00',
+  '13:00 - 14:00',
+  '14:00 - 15:00'
+];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,72 +75,32 @@ if (!isset($_SESSION['user'])) {
   </header>
 
   <main>
-    <article class="article container flex flex-col justify-center">
+    <article class="article container flex flex-col">
       <section>
-        <h1 class="text-5xl sm:text-6xl font-semibold text-center">Horario <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
-      </section>
-
-      <section>
-        <ul>
-          <li class="flex flex-col gap-4 mt-8">
-            <h2 class="text-3xl font-semibold">Lunes</h2>
-            <ul class="flex flex-col gap-4">
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">08:00 - 09:00</span>
-                <span class="text-lg">Matemáticas</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">09:00 - 10:00</span>
-                <span class="text-lg">Física</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">10:00 - 11:00</span>
-                <span class="text-lg">Química</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">11:00 - 12:00</span>
-                <span class="text-lg">Biología</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">12:00 - 13:00</span>
-                <span class="text-lg">Historia</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">13:00 - 14:00</span>
-                <span class="text-lg">Geografía</span>
-              </li>
-            </ul>
-          </li>
-
-          <li class="flex flex-col gap-4 mt-8">
-            <h2 class="text-3xl font-semibold">Martes</h2>
-            <ul class="flex flex-col gap-4">
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">08:00 - 09:00</span>
-                <span class="text-lg">Matemáticas</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">09:00 - 10:00</span>
-                <span class="text-lg">Física</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">10:00 - 11:00</span>
-                <span class="text-lg">Química</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">11:00 - 12:00</span>
-                <span class="text-lg">Biología</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">12:00 - 13:00</span>
-                <span class="text-lg">Historia</span>
-              </li>
-              <li class="flex flex-col gap-2">
-                <span class="text-xl font-semibold">13:00 - 14:00</span>
-                <span class="text-lg">Geografía</span>
-              </li>
-            </ul>
-          </li>
+        <ul class="flex flex-col gap-8">
+          <?php foreach ($weekdays as $weekday) { ?>
+            <li class="flex flex-col gap-4 mt-8">
+              <h2 class="text-4xl font-semibold text-center mb-4">
+                <?= $weekday ?>
+              </h2>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 text-center gap-4">
+                <?php
+                $i = 0;
+                foreach ($subjects as $subject) {
+                ?>
+                  <li>
+                    <a href="#" class="bg-[#f8f9fa] border-2 border-gray-300 inline-block w-full h-full p-4 hover:bg-gray-100 hover:scale-105 transition-all duration-200" title="Tomar asistencia">
+                      <h3 class="text-xl font-semibold"><?= $subject ?></h3>
+                      <span class="text-lg"><?= $hours[$i] ?></span>
+                    </a>
+                  </li>
+                <?php
+                  $i++;
+                }
+                ?>
+              </ul>
+            </li>
+          <?php } ?>
         </ul>
       </section>
     </article>
