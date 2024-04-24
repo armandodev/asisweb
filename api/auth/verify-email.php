@@ -39,19 +39,53 @@ try {
 
   if (!$result) throw new Exception('No se pudo generar el token de recuperación de contraseña', 500);
 
-  $subject = 'Recuperación de tu contraseña | Docentes CETis 121';
-  $message = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: ' . BASE_URL . 'forgot-password.php?token=' . $token;
-  $message .= '<br />El enlace expirará en 5 minutos, al ser utilizado por primera vez o al solicitar un nuevo enlace.';
-  $message .= '<br />Si no solicitaste la recuperación de tu contraseña, ignora este mensaje.';
-  $message .= '<br />Este mensaje fue enviado automáticamente, por favor no respondas a este mensaje.';
-  $message .= '<br />Atentamente,<br>Docentes CETis 121';
-  $headers = 'From: ' . EMAIL_FROM . "\r\n" .
-    'Reply-To: ' . EMAIL_FROM . "\r\n" .
-    'X-Mailer: PHP/' . phpversion() .
-    'MIME-Version: 1.0' . "\r\n" .
-    'Content-type: text/html; charset=utf-8';
 
-  mail($email, $subject, $message, $headers);
+  $to = $email;
+  $title = 'Restablecer contraseña | Docentes CETis 121';
+
+  $message = "
+  <main style='font-family: system-ui, sans-serif;'>
+    <h1 style='font-size: 2rem; font-weight: 700;'>
+      Restablecer contraseña <small style='display: block; font-size: 1.25rem; font-weight: 500; color: #a91f21;'>Docentes CETis 121</small>
+    </h1>
+    <p>
+      <strong style='font-weight: 700;'>Si no solicitaste este enlace, ignora este mensaje.</strong>
+    </p>
+    <p>
+      Debes hacer clic en el siguiente enlace para restablecer tu contraseña:
+    </p>
+    <a href='" . BASE_URL . "forgot-password.php?token=$token' style=' display: block; color: #a91f21; text-decoration: none;'>
+      Restablecer contraseña
+    </a>
+    <p>
+      Si tienes problemas para hacer clic en el enlace, copia y pega la
+      siguiente URL en tu navegador:
+      <span style='display: block;  color: #a91f21;'>
+        " . BASE_URL . "forgot-password.php?token=$token
+      </span>
+    </p>
+
+    <p style='font-size: 0.9rem;'>
+      <small style='display: block;'>
+        Este enlace expirará en 5 minutos.
+      </small>
+      <small style='display: block;'>
+        Att: Docentes Docentes CETis 121
+      </small>
+    </p>
+  </main>
+";
+
+  $headers = [
+    'MIME-Version: 1.0',
+    'Content-type: text/html; charset=utf-8',
+    'From: ' . EMAIL_FROM,
+    'Reply-To: ' . EMAIL_FROM,
+    'X-Mailer: PHP/' . phpversion()
+  ];
+
+  if (!mail($to, $title, $message, implode("\r\n", $headers)))
+    throw new Exception('Error al enviar el correo electrónico');
 
   header('HTTP/1.1 200 OK');
 } catch (Exception $e) {

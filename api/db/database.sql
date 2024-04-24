@@ -130,9 +130,9 @@ create table
   ) engine = InnoDB default charset = utf8;
 
 -- Trigger `password_reset_expiration` (Restablecimiento de contraseña) (Establece la fecha de expiración de los tokens en 5 minutos después de la creación)
-CREATE TRIGGER `password_reset_expiration` BEFORE INSERT ON `password_resets` FOR EACH ROW
-SET
-  NEW.`expires_at` = DATE_ADD (NEW.`created_at`, INTERVAL 5 MINUTE);
+CREATE TRIGGER `password_reset_expiration` BEFORE INSERT ON `password_resets` 
+FOR EACH ROW
+SET NEW.`expires_at` = DATE_ADD(NEW.`created_at`, INTERVAL 5 MINUTE);
 
 -- Insersiones de datos
 INSERT INTO
@@ -297,7 +297,7 @@ VALUES
     '353 000 0001',
     '$2y$10$ZM9HahYmBf.A2MH5b4e/ge7SERRd8Ep6vAuf7MAnQFRO20v/EGu1e',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 21:52:34',
     '2024-04-22 21:52:34'
   ),
@@ -309,7 +309,7 @@ VALUES
     '353 000 0002',
     '$2y$10$.Q6IwcAyU3CFdff6tj5.HemayFhi8wG3R27BsMb6KLA72ju.v8fdu',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 21:56:28',
     '2024-04-22 21:56:28'
   ),
@@ -321,7 +321,7 @@ VALUES
     '353 000 0003',
     '$2y$10$kvBm8LNYlRGx1hNGbREfxOQ24LzpBcPLl2KF88TcQ5xh1OzfPs4LO',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 21:57:46',
     '2024-04-22 21:57:46'
   ),
@@ -333,7 +333,7 @@ VALUES
     '353 000 0004',
     '$2y$10$q/LpvTTT3M6FWKDJRotR9uYg21QKgEkVwsHA8r4ujXCxoK7t/Yqba',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 21:58:33',
     '2024-04-22 21:58:33'
   ),
@@ -345,7 +345,7 @@ VALUES
     '353 000 0005',
     '$2y$10$qjUXjG4sQJaGmUpUxZ9ax.y7rVs73PTnjmtIw45MUq7d6pZDzVGxG',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 21:59:11',
     '2024-04-22 21:59:11'
   ),
@@ -357,7 +357,7 @@ VALUES
     '353 000 0006',
     '$2y$10$ZgeZGcDc/p.5XlvgU0HJ1urIGnRzuENjUPlKuC9H1UfY2x86szMya',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:01:33',
     '2024-04-22 22:01:33'
   ),
@@ -369,7 +369,7 @@ VALUES
     '353 000 0007',
     '$2y$10$RLzTGrFbvFKc13OxyfpOteNIStwxzU2V0PNWRY1wQ.fjfLd/Puib.',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:02:37',
     '2024-04-22 22:02:37'
   ),
@@ -381,7 +381,7 @@ VALUES
     '353 000 0008',
     '$2y$10$JdcYPAHhcxZQWBsWK2QK1e9cy2oLUQx.KhdNed/GQ1YVZFghn/0x6',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:04:14',
     '2024-04-22 22:04:14'
   ),
@@ -393,7 +393,7 @@ VALUES
     '353 000 0009',
     '$2y$10$BGjQk8Zk48cp.GTYulwRmu5BFB5G1mJqz8zAbLsZDjclc26vwCGUe',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:05:34',
     '2024-04-22 22:05:34'
   ),
@@ -405,7 +405,7 @@ VALUES
     '353 000 0010',
     '$2y$10$V1IkWFGuutQeWCHJOvoWceGmhXKCJCgS9Su383CJyZeSEHHiVqXtm',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:06:24',
     '2024-04-22 22:06:24'
   ),
@@ -417,7 +417,7 @@ VALUES
     '353 000 0011',
     '$2y$10$R4VEE9qnSz.0YARY58AHYuhgBvbdYbsC2yjYeYiLnftDOZGPJP9Mi',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:12:37',
     '2024-04-22 22:12:37'
   ),
@@ -429,7 +429,7 @@ VALUES
     '353 000 0012',
     '$2y$10$UbBlJatS3xtAybmANzfwMO8yFszKW2k1Npw5SOsLZX6qlOhDokJ1y',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:14:48',
     '2024-04-22 22:14:48'
   ),
@@ -441,7 +441,7 @@ VALUES
     '353 000 0013',
     '$2y$10$9hW05GxfvDvzW0otx6nFhOKiUug7PycZC365JHiEkPmQtMihAU69W',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:16:05',
     '2024-04-22 22:16:05'
   ),
@@ -453,7 +453,7 @@ VALUES
     '353 000 0014',
     '$2y$10$33s7l4k39TTrm2WvGNSsquIEqG7u6TC/LGwJZX1w.WnKAlO3InJ..',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:16:45',
     '2024-04-22 22:16:45'
   ),
@@ -465,7 +465,7 @@ VALUES
     '353 000 0015',
     '$2y$10$5/EtoOxYlQOP78woTyHGQu3iN6sajwomu2ZKGXETJ6XWb9C.Cz3b2',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:18:21',
     '2024-04-22 22:18:21'
   ),
@@ -477,7 +477,7 @@ VALUES
     '353 000 0016',
     '$2y$10$HeE93dOQ0cadPbfGbQXQ1.hy9N4DEkuC4CG0TeyIj3RXWM9ZEZd4.',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:20:04',
     '2024-04-22 22:20:04'
   ),
@@ -489,7 +489,7 @@ VALUES
     '353 000 0017',
     '$2y$10$42znXfu5CZNcGyHFHxitTusNkKTQ9ZKmJ33kH8y/oL4/FJngIGqTG',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:21:14',
     '2024-04-22 22:21:14'
   ),
@@ -501,7 +501,7 @@ VALUES
     '353 000 0018',
     '$2y$10$6oyGuqmx1FpAe/0kYFJjKOnVPuznW2R1lFo.no6eP/NgcakW3frLm',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:21:59',
     '2024-04-22 22:21:59'
   ),
@@ -513,7 +513,7 @@ VALUES
     '353 000 0019',
     '$2y$10$w5tcxGN9.Y519W0Dr0v4oeTDuZTurF/2HnxVz/KTI/3mE9WYnCT4K',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:25:42',
     '2024-04-22 22:25:42'
   ),
@@ -525,7 +525,7 @@ VALUES
     '353 000 0020',
     '$2y$10$LnmCJOD191/ng7MEqvT7Ju74yQkr8c/KEJcp9HldIfABf5I.I0Cb6',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:27:41',
     '2024-04-22 22:27:41'
   ),
@@ -537,7 +537,7 @@ VALUES
     '353 000 0021',
     '$2y$10$b3UFAMCuxqVs8AW/knQMOuea1sz.9q8twCXSvUhOAvGVDIEyA6exO',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:29:26',
     '2024-04-22 22:29:26'
   ),
@@ -549,7 +549,7 @@ VALUES
     '353 000 0022',
     '$2y$10$wurFCMOf5ZM.bl86drPPWeUIKcNSIrt4nOATNPHnX5u7NARFbQoXa',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:30:38',
     '2024-04-22 22:30:38'
   ),
@@ -561,7 +561,7 @@ VALUES
     '353 000 0023',
     '$2y$10$.DHEQQpsEtM4FI9Vk642nuyZUmpaY37St6LlBLL8IkjOHJIICvuB2',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:31:17',
     '2024-04-22 22:31:17'
   ),
@@ -573,7 +573,7 @@ VALUES
     '353 000 0024',
     '$2y$10$byOetkX/porwQ9NBZ49aZOumR5FDqnnX6gVIpT4evQpHoo.Llhkvq',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:32:15',
     '2024-04-22 22:32:15'
   ),
@@ -585,7 +585,7 @@ VALUES
     '353 000 0025',
     '$2y$10$CIz0fJtf42OcfZoAu8a1eOOTkJjzonRSk.Z339tiLXCY/TRfXqnYC',
     'Docente',
-    'Inactivo',
+    'Activo',
     '2024-04-22 22:32:53',
     '2024-04-22 22:32:53'
   );
@@ -3231,9 +3231,7 @@ INSERT INTO
     `curp`,
     `first_name`,
     `last_name`,
-    `generation`,
-    `created_at`,
-    `updated_at`
+    `generation`
   )
 VALUES
   (
@@ -5868,9 +5866,7 @@ INSERT INTO
     `curp`,
     `first_name`,
     `last_name`,
-    `generation`,
-    `created_at`,
-    `updated_at`
+    `generation`
   )
 VALUES
   (
