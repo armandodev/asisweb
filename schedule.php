@@ -89,8 +89,10 @@ $hours = [
                 foreach ($subjects as $subject) {
                 ?>
                   <li>
-                    <a href="#" class="bg-[#f8f9fa] border-2 border-gray-300 inline-block w-full h-full p-4 hover:bg-gray-100 hover:scale-105 transition-all duration-200" title="Tomar asistencia">
+                    <a href="#" class="bg-[#f8f9fa] border-2 border-gray-300 grid w-full h-full p-4 hover:bg-gray-100 hover:scale-105 transition-all duration-200" title="Tomar asistencia">
                       <h3 class="text-xl font-semibold"><?= $subject ?></h3>
+                      <span class="text-lg"><span class="font-semibold">Grupo: </span>5A Programación</span>
+                      <span class="text-lg"><span class="font-semibold">Aula: </span><?= $i + 1 ?></span>
                       <span class="text-lg"><?= $hours[$i] ?></span>
                     </a>
                   </li>
