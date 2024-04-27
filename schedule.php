@@ -1,3 +1,4 @@
+<!-- No se que comentar -->
 <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
     <div class="container flex items-center justify-between">
       <a class="flex items-center" href="./profile.php">
