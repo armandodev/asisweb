@@ -58,7 +58,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
         <li><a href="./students.php">Alumnos</a></li>
         <li><a href="./groups.php">Grupos</a></li>
         <li><a href="./teachers.php">Docentes</a></li>
-        <li><a href="./tutors.php">Tutores</a></li>
+        <li><a href="./schedule.php">Horarios</a></li>
       </ul>
     </article>
   </main>

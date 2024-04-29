@@ -10,6 +10,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   header('Location: ./');
   exit();
 }
+
+$groups = $db->execute('SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, period');
+
+if ($groups->rowCount() === 0) {
+  $empty = true;
+}
+
+$groups = $groups->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +26,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grupos | Docentes CETis 121</title>
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
 </head>
@@ -52,6 +60,46 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <main>
     <article class="article container">
       <h1 class="text-3xl font-semibold">Grupos</h1>
+
+      <a class="btn mt-4" href="./add-group.php">
+        <img src="./../icons/add.svg" alt="Agregar"> Agregar grupo
+      </a>
+
+      <?php if (isset($empty)) : ?>
+        <p class="text-center mt-4">No hay grupos registrados</p>
+      <?php else : ?>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>Salón</th>
+              <th>Semestre y grupo</th>
+              <th>Carrera</th>
+              <th>Tutor</th>
+              <th>Periodo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($groups as $group) : ?>
+              <tr>
+                <td><?= $group['classroom'] ?></td>
+                <td><?= $group['group_semester'] . $group['group_letter'] ?></td>
+                <td><?= $group['career_name'] ?></td>
+                <td><?= $group['first_name'] . ' ' . $group['last_name'] ?></td>
+                <td><?= $group['period'] ?></td>
+                <td>
+                  <a class="btn" href="./edit-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+                  </a>
+                  <a class="btn" href="./delete-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </article>
   </main>
 

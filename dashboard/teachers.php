@@ -10,6 +10,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   header('Location: ./');
   exit();
 }
+
+$users = $db->execute('SELECT * FROM users');
+
+if ($users->rowCount() === 0) {
+  $empty = true;
+}
+
+$users = $users->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +26,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Docentes | Docentes CETis 121</title>
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
 </head>
@@ -52,6 +60,46 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <main>
     <article class="article container">
       <h1 class="text-3xl font-semibold">Docentes</h1>
+
+      <a class="btn mt-4" href="./add-user.php">
+        <img src="./../icons/add.svg" alt="Agregar"> Agregar docente
+      </a>
+
+      <?php if (isset($empty)) : ?>
+        <p class="text-center mt-4">No hay docentes registradas</p>
+      <?php else : ?>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Rol</th>
+              <th>Status</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($users as $user) : ?>
+              <tr>
+                <td><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
+                <td><?= $user['email'] ?></td>
+                <td><?= $user['tel'] ?></td>
+                <td><?= $user['role'] ?></td>
+                <td><?= $user['status'] ?></td>
+                <td>
+                  <a class="btn" href="./edit-user.php?id=<?= $user['user_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+                  </a>
+                  <a class="btn" href="./delete-user.php?id=<?= $user['user_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </article>
   </main>
 

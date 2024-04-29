@@ -10,6 +10,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   header('Location: ./');
   exit();
 }
+
+$subjects = $db->execute('SELECT * FROM subjects');
+
+if ($subjects->rowCount() === 0) {
+  $empty = true;
+}
+
+$subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +26,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Materias | Docentes CETis 121</title>
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
 </head>
@@ -52,6 +60,38 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <main>
     <article class="article container">
       <h1 class="text-3xl font-semibold">Materias</h1>
+
+      <a class="btn mt-4" href="./add-subject.php">
+        <img src="./../icons/add.svg" alt="Agregar"> Agregar materia
+      </a>
+
+      <?php if (isset($empty)) : ?>
+        <p class="text-center mt-4">No hay materias registradas</p>
+      <?php else : ?>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>Materia</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($subjects as $subject) : ?>
+              <tr>
+                <td><?= $subject['subject_name'] ?></td>
+                <td>
+                  <a class="btn" href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+                  </a>
+                  <a class="btn" href="./delete-subject.php?id=<?= $subject['subject_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </article>
   </main>
 

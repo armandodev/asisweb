@@ -10,6 +10,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   header('Location: ./');
   exit();
 }
+
+$students = $db->execute('SELECT * FROM students');
+
+if ($students->rowCount() === 0) {
+  $empty = true;
+}
+
+$students = $students->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +26,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alumnos | Docentes CETis 121</title>
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
 </head>
@@ -52,6 +60,44 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   <main>
     <article class="article container">
       <h1 class="text-3xl font-semibold">Alumnos</h1>
+
+      <a class="btn mt-4" href="./add-student.php">
+        <img src="./../icons/add.svg" alt="Agregar"> Agregar alumno
+      </a>
+
+      <?php if (isset($empty)) : ?>
+        <p class="text-center mt-4">No hay alumnos registradas</p>
+      <?php else : ?>
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>No. de control</th>
+              <th>CURP</th>
+              <th>Nombre</th>
+              <th>Generación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($students as $student) : ?>
+              <tr>
+                <td><?= $student['control_number'] ?></td>
+                <td><?= $student['curp'] ?></td>
+                <td><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
+                <td><?= $student['generation'] ?></td>
+                <td>
+                  <a class="btn" href="./edit-student.php?id=<?= $student['control_number'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+                  </a>
+                  <a class="btn" href="./delete-student.php?id=<?= $student['control_number'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </article>
   </main>
 
