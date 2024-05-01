@@ -74,33 +74,24 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           <form id="search-form" class="w-full">
             <input class="input w-full" type="search" placeholder="Buscar materia" value="<?= $search ?>">
           </form>
-
-          <script>
-            const $form = document.getElementById('search-form');
-            const $input = $form.querySelector('input');
-
-            $form.addEventListener('submit', (e) => {
-              e.preventDefault();
-              const search = $input.value.trim();
-              window.location.href = `./subjects.php?search=${search}`;
-            });
-          </script>
         </nav>
       </section>
       <section>
-        <?php if (isset($empty)) : ?>
-          <p class="text-center">No se encontraron materias.</p>
-        <?php else : ?>
-          <table class="w-full mt-4">
-            <thead>
-              <tr class="bg-gray-200 text-gray-800 text-left">
-                <th class="p-2">Nombre</th>
-                <th class="p-2">Acciones</th>
+        <table class="w-full mt-4">
+          <thead>
+            <tr class="bg-gray-200 text-gray-800 text-left">
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (isset($empty)) { ?>
+              <tr class="border-b border-gray-300 bg-gray-100">
+                <td class="p-2 text-gray-600 text-center" colspan="2">No hay materias registradas</td>
               </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($subjects as $subject) : ?>
-                <tr class="border-b border-gray-300">
+            <?php } else { ?>
+              <?php foreach ($subjects as $subject) { ?>
+                <tr class="border-b border-gray-300 bg-gray-100">
                   <td class="p-2 text-gray-600"><?= $subject['subject_name'] ?></td>
                   <td class="p-2 flex gap-2">
                     <a href="./edit-subject.php?id=<?= $subject['subject_id'] ?>" title="Editar">
@@ -111,10 +102,10 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                   </td>
                 </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        <?php endif; ?>
+            <?php }
+            } ?>
+          </tbody>
+        </table>
       </section>
     </article>
   </main>
@@ -147,6 +138,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
   </footer>
 
   <script src="./../js/menu.js"></script>
+  <script src="./../js/search-form.js"></script>
 </body>
 
 </html>
