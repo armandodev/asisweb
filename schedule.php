@@ -1,4 +1,4 @@
-<!-- Solo es una prueba para ver si salen los cambios -->
+<!-- Solo es una prueba para ver si salen los cambios pero no salio asi que otra vez-->
 <?php
 require_once './config.php';
 
