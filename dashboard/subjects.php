@@ -11,7 +11,11 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
-$subjects = $db->execute('SELECT * FROM subjects');
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$subjects = $db->execute('SELECT * FROM subjects WHERE subject_name LIKE :search', [
+  ':search' => "%$search%"
+]);
 
 if ($subjects->rowCount() === 0) {
   $empty = true;
@@ -59,39 +63,59 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
-      <h1 class="text-3xl font-semibold">Materias</h1>
+      <section class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <h1 class="w-full flex items-center justify-between gap-x-2 text-3xl font-semibold sm:w-fit sm:justify-start p-2">
+          <span class="text-gray-800">Materias</span>
+          <a href="./add-subject.php" title="Agregar materia">
+            <img src="./../icons/add.svg" alt="Agregar">
+          </a>
+        </h1>
+        <nav class="w-full sm:max-w-sm">
+          <form id="search-form" class="w-full">
+            <input class="input w-full" type="search" placeholder="Buscar materia" value="<?= $search ?>">
+          </form>
 
-      <a class="btn mt-4" href="./add-subject.php">
-        <img src="./../icons/add.svg" alt="Agregar"> Agregar materia
-      </a>
+          <script>
+            const $form = document.getElementById('search-form');
+            const $input = $form.querySelector('input');
 
-      <?php if (isset($empty)) : ?>
-        <p class="text-center mt-4">No hay materias registradas</p>
-      <?php else : ?>
-        <table class="table mt-4">
-          <thead>
-            <tr>
-              <th>Materia</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($subjects as $subject) : ?>
-              <tr>
-                <td><?= $subject['subject_name'] ?></td>
-                <td>
-                  <a class="btn" href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar"> Editar
-                  </a>
-                  <a class="btn" href="./delete-subject.php?id=<?= $subject['subject_id'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
-                  </a>
-                </td>
+            $form.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const search = $input.value.trim();
+              window.location.href = `./subjects.php?search=${search}`;
+            });
+          </script>
+        </nav>
+      </section>
+      <section>
+        <?php if (isset($empty)) : ?>
+          <p class="text-center">No se encontraron materias.</p>
+        <?php else : ?>
+          <table class="w-full mt-4">
+            <thead>
+              <tr class="bg-gray-200 text-gray-800 text-left">
+                <th class="p-2">Nombre</th>
+                <th class="p-2">Acciones</th>
               </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
+            </thead>
+            <tbody>
+              <?php foreach ($subjects as $subject) : ?>
+                <tr class="border-b border-gray-300">
+                  <td class="p-2 text-gray-600"><?= $subject['subject_name'] ?></td>
+                  <td class="p-2 flex gap-2">
+                    <a href="./edit-subject.php?id=<?= $subject['subject_id'] ?>" title="Editar">
+                      <img src="./../icons/edit.svg" alt="Editar">
+                    </a>
+                    <a href="./delete-subject.php?id=<?= $subject['subject_id'] ?>" title="Eliminar">
+                      <img src="./../icons/delete.svg" alt="Eliminar">
+                    </a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
+      </section>
     </article>
   </main>
 
