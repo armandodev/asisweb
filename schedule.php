@@ -1,3 +1,4 @@
+<!-- Solo es una prueba para ver si salen los cambios -->
 <?php
 require_once './config.php';
 
