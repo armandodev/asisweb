@@ -21,6 +21,7 @@
 
   Recuerda que hacer pull se refiere a traer los cambios del repositorio remoto a tu repositorio local y hacer push se refiere a enviar los cambios de tu repositorio local al repositorio remoto lo que hace que yo pueda ver los cambios que has hecho.
  -->
+ <!-- Esta es la prueba del push -->
 <?php
 require_once './config.php';
 
