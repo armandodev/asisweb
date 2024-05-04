@@ -27,20 +27,28 @@ try {
 
   $db = new Database();
 
-  $sql = 'SELECT email, tel FROM users WHERE user_id = :user_id';
+  $sql = 'SELECT first_name, last_name, email, tel FROM users WHERE user_id = :user_id';
   $result = $db->execute($sql, ['user_id' => $_SESSION['user']['user_id']]);
 
   if ($result->rowCount() === 0) throw new Exception('No se encontró el usuario', 404);
 
   $user = $result->fetch(PDO::FETCH_ASSOC);
 
-  if ($user['email'] === $email && $user['tel'] === $tel) throw new Exception('No se realizaron cambios', 400);
+  if ($user['email'] === $email && $user['tel'] === $tel && $user['first_name'] === $first_name && $user['last_name'] === $last_name) throw new Exception('No hay cambios que guardar', 400);
 
-  $sql = 'UPDATE users SET email = :email, tel = :tel WHERE user_id = :user_id';
-  $result = $db->execute($sql, ['email' => $email, 'tel' => $tel, 'user_id' => $_SESSION['user']['user_id']]);
+  $sql = 'UPDATE users SET email = :email, tel = :tel, first_name = :first_name, last_name = :last_name WHERE user_id = :user_id';
+  $result = $db->execute($sql, [
+    'email' => $email,
+    'tel' => $tel,
+    'first_name' => $first_name,
+    'last_name' => $last_name,
+    'user_id' => $_SESSION['user']['user_id']
+  ]);
 
   if ($result->rowCount() === 0) throw new Exception('No se pudo actualizar el perfil', 500);
 
+  $_SESSION['user']['first_name'] = $first_name;
+  $_SESSION['user']['last_name'] = $last_name;
   $_SESSION['user']['email'] = $email;
   $_SESSION['user']['tel'] = $tel;
 
