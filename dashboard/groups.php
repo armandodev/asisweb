@@ -2,16 +2,16 @@
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
 if ($_SESSION['user']['role'] !== 'Administrador') {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
-$groups = $db->execute('SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, period');
+$groups = $db->execute('SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, career_name, period');
 
 if ($groups->rowCount() === 0) {
   $empty = true;
@@ -25,7 +25,7 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grupos | Docentes CETis 121</title>
+  <title>Docentes | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -58,48 +58,48 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container">
-      <h1 class="text-3xl font-semibold">Grupos</h1>
-
-      <a class="btn mt-4" href="./add-group.php">
-        <img src="./../icons/add.svg" alt="Agregar"> Agregar grupo
-      </a>
-
-      <?php if (isset($empty)) : ?>
-        <p class="text-center mt-4">No hay grupos registrados</p>
-      <?php else : ?>
-        <table class="table mt-4">
-          <thead>
+    <article class="article container overflow-x-scroll">
+      <table class="w-full mt-4 border border-gray-300 text-nowrap">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="p-2">Salón</th>
+            <th class="p-2">Grado y grupo</th>
+            <th class="p-2">Periodo</th>
+            <th class="p-2">Tutor</th>
+            <th class="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (isset($empty)) : ?>
             <tr>
-              <th>Salón</th>
-              <th>Semestre y grupo</th>
-              <th>Carrera</th>
-              <th>Tutor</th>
-              <th>Periodo</th>
-              <th>Acciones</th>
+              <td class="p-2" colspan="6">No hay docentes registrados.</td>
             </tr>
-          </thead>
-          <tbody>
+          <?php else : ?>
             <?php foreach ($groups as $group) : ?>
-              <tr>
-                <td><?= $group['classroom'] ?></td>
-                <td><?= $group['group_semester'] . $group['group_letter'] ?></td>
-                <td><?= $group['career_name'] ?></td>
-                <td><?= $group['first_name'] . ' ' . $group['last_name'] ?></td>
-                <td><?= $group['period'] ?></td>
-                <td>
-                  <a class="btn" href="./edit-group.php?id=<?= $group['group_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+              <tr class="border-t border-gray-300">
+                <td class="p-2"><?= $group['classroom'] ?></td>
+                <td class="p-2"><?= $group['group_semester'] . $group['group_letter'] . ' ' . $group['career_name'] ?></td>
+                <td class="p-2"><?= $group['period'] ?></td>
+                <td class="p-2"><?= $group['first_name'] . ' ' . $group['last_name'] ?></td>
+                <td class="flex justify-center gap-2 p-2">
+                  <a class="btn w-6" href="./group-schedule.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/list.svg" alt="Listas">
                   </a>
-                  <a class="btn" href="./delete-group.php?id=<?= $group['group_id'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  <a class="btn w-6" href="./group-schedule.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/schedule.svg" alt="Horario">
+                  </a>
+                  <a class="btn w-6" href="./edit-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar">
+                  </a>
+                  <a class="btn w-6" href="./delete-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
     </article>
   </main>
 

@@ -2,12 +2,12 @@
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
 if ($_SESSION['user']['role'] !== 'Administrador') {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
@@ -58,40 +58,36 @@ $careers = $careers->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container">
-      <h1 class="text-3xl font-semibold">Carreras</h1>
-
-      <a class="btn mt-4" href="./add-carrer.php">
-        <img src="./../icons/add.svg" alt="Agregar"> Agregar carrera
-      </a>
-
-      <?php if (isset($empty)) : ?>
-        <p class="text-center mt-4">No hay carreras registradas</p>
-      <?php else : ?>
-        <table class="table mt-4">
-          <thead>
+    <article class="article container overflow-x-scroll">
+      <table class="w-full mt-4 border border-gray-300 text-nowrap">
+        <thead class="bg-gray-200 text-gray-700 sticky -top-1">
+          <tr>
+            <th class="p-2">Nombre</th>
+            <th class="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (isset($empty)) : ?>
             <tr>
-              <th>Carrera</th>
-              <th>Acciones</th>
+              <td class="p-2" colspan="2">No hay materias registradas</td>
             </tr>
-          </thead>
-          <tbody>
+          <?php else : ?>
             <?php foreach ($careers as $career) : ?>
-              <tr>
-                <td><?= $career['career_name'] ?></td>
-                <td>
-                  <a class="btn" href="./edit-career.php?id=<?= $career['career_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+              <tr class="border-t border-gray-300">
+                <td class="p-2"><?= $career['career_name'] ?></td>
+                <td class="flex justify-center gap-2 p-2">
+                  <a class="btn w-8" href="./edit-career.php?id=<?= $career['career_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar">
                   </a>
-                  <a class="btn" href="./delete-career.php?id=<?= $career['career_id'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  <a class="btn w-8" href="./delete-career.php?id=<?= $career['career_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
     </article>
   </main>
 

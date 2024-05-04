@@ -66,23 +66,23 @@ $total_pages = ceil(count($users) / $limit);
 
   <main>
     <article class="article container overflow-x-scroll">
-      <h1 class="text-3xl font-semibold text-center py-4">Docentes</h1>
-
-      <?php if (isset($empty)) : ?>
-        <p class="text-center mt-4">No hay docentes registradas</p>
-      <?php else : ?>
-        <table class="w-full mt-4 border border-gray-300 text-nowrap">
-          <thead class="bg-gray-200 text-gray-700 sticky -top-1">
+      <table class="w-full mt-4 border border-gray-300 text-nowrap">
+        <thead class="bg-gray-200 text-gray-700 sticky -top-1">
+          <tr>
+            <th class="p-2">Nombre</th>
+            <th class="p-2">Correo</th>
+            <th class="p-2">Teléfono</th>
+            <th class="p-2">Rol</th>
+            <th class="p-2">Estatus</th>
+            <th class="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (isset($empty)) : ?>
             <tr>
-              <th class="p-2">Nombre</th>
-              <th class="p-2">Correo</th>
-              <th class="p-2">Teléfono</th>
-              <th class="p-2">Rol</th>
-              <th class="p-2">Estatus</th>
-              <th class="p-2">Acciones</th>
+              <td class="p-2" colspan="6">No hay docentes registrados.</td>
             </tr>
-          </thead>
-          <tbody class="text-center">
+          <?php else : ?>
             <?php foreach ($users as $user) : ?>
               <tr class="border-t border-gray-300">
                 <td class="p-2"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
@@ -106,18 +106,6 @@ $total_pages = ceil(count($users) / $limit);
           </tbody>
         </table>
       <?php endif; ?>
-      
-       <section class="flex justify-center mt-4">
-        <ul class="flex gap-2">
-          <li>
-            <a class="btn <?= $page <= 1 ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page - 1 ?>">Anterior</a>
-          </li>
-          <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
-          <li>
-            <a class="btn <?= $page >= $total_pages ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page + 1 ?>">Siguiente</a>
-          </li>
-        </ul>
-      </section>
     </article>
   </main>
 

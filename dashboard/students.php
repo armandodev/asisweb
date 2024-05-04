@@ -2,16 +2,16 @@
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
 if ($_SESSION['user']['role'] !== 'Administrador') {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
-$students = $db->execute('SELECT * FROM students');
+$students = $db->execute('SELECT * FROM students LIMIT 15');
 
 if ($students->rowCount() === 0) {
   $empty = true;
@@ -25,7 +25,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alumnos | Docentes CETis 121</title>
+  <title>Docentes | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -58,46 +58,45 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container">
-      <h1 class="text-3xl font-semibold">Alumnos</h1>
-
-      <a class="btn mt-4" href="./add-student.php">
-        <img src="./../icons/add.svg" alt="Agregar"> Agregar alumno
-      </a>
-
-      <?php if (isset($empty)) : ?>
-        <p class="text-center mt-4">No hay alumnos registradas</p>
-      <?php else : ?>
-        <table class="table mt-4">
-          <thead>
+    <article class="article container overflow-x-scroll">
+      <table class="w-full mt-4 border border-gray-300 text-nowrap">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="p-2">No. Control</th>
+            <th class="p-2">CURP</th>
+            <th class="p-2">Nombre</th>
+            <th class="p-2">Generación</th>
+            <th class="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (isset($empty)) : ?>
             <tr>
-              <th>No. de control</th>
-              <th>CURP</th>
-              <th>Nombre</th>
-              <th>Generación</th>
-              <th>Acciones</th>
+              <td class="p-2" colspan="6">No hay docentes registrados.</td>
             </tr>
-          </thead>
-          <tbody>
+          <?php else : ?>
             <?php foreach ($students as $student) : ?>
-              <tr>
-                <td><?= $student['control_number'] ?></td>
-                <td><?= $student['curp'] ?></td>
-                <td><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
-                <td><?= $student['generation'] ?></td>
-                <td>
-                  <a class="btn" href="./edit-student.php?id=<?= $student['control_number'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+              <tr class="border-t border-gray-300">
+                <td class="p-2"><?= $student['control_number'] ?></td>
+                <td class="p-2"><?= $student['curp'] ?></td>
+                <td class="p-2"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
+                <td class="p-2"><?= $student['generation'] ?></td>
+                <td class="flex justify-center gap-2 p-2">
+                  <a class="btn w-6" href="./student-schedule.php?id=<?= $student['control_number'] ?>">
+                    <img src="./../icons/schedule.svg" alt="Horario">
                   </a>
-                  <a class="btn" href="./delete-student.php?id=<?= $student['control_number'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                  <a class="btn w-6" href="./edit-student.php?id=<?= $student['control_number'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar">
+                  </a>
+                  <a class="btn w-6" href="./delete-student.php?id=<?= $student['control_number'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      <?php endif; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
     </article>
   </main>
 
