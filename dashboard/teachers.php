@@ -2,12 +2,12 @@
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
 if ($_SESSION['user']['role'] !== 'Administrador') {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
@@ -58,13 +58,13 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container">
+    <article class="article container overflow-x-scroll">
       <h1 class="text-3xl font-semibold text-center py-4">Docentes</h1>
 
       <?php if (isset($empty)) : ?>
         <p class="text-center mt-4">No hay docentes registradas</p>
       <?php else : ?>
-        <table class="w-full mt-4 border border-gray-300">
+        <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700 sticky -top-1">
             <tr>
               <th class="p-2">Nombre</th>
@@ -83,14 +83,14 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
                 <td class="p-2"><?= $user['tel'] ?></td>
                 <td class="p-2"><?= $user['role'] ?></td>
                 <td class="p-2"><?= $user['status'] ?></td>
-                <td class="flex gap-2 p-2">
-                  <a class="btn" href="./schedule.php?id=<?= $user['user_id'] ?>">
+                <td class="flex justify-center gap-2 p-2">
+                  <a class="btn w-6" href="./schedule.php?id=<?= $user['user_id'] ?>">
                     <img src="./../icons/schedule.svg" alt="Horario">
                   </a>
-                  <a class="btn" href="./edit-user.php?id=<?= $user['user_id'] ?>">
+                  <a class="btn w-6" href="./edit-user.php?id=<?= $user['user_id'] ?>">
                     <img src="./../icons/edit.svg" alt="Editar">
                   </a>
-                  <a class="btn" href="./delete-user.php?id=<?= $user['user_id'] ?>">
+                  <a class="btn w-6" href="./delete-user.php?id=<?= $user['user_id'] ?>">
                     <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
