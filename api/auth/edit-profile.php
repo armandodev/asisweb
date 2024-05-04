@@ -9,6 +9,12 @@ if (!isset($_SESSION['user'])) {
 try {
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
 
+  if (!isset($_POST['first_name']) || $_POST['first_name'] === '') throw new Exception('El nombre es requerido', 400);
+  $first_name = $_POST['first_name'];
+
+  if (!isset($_POST['last_name']) || $_POST['last_name'] === '') throw new Exception('El apellido es requerido', 400);
+  $last_name = $_POST['last_name'];
+
   if (!isset($_POST['email']) || $_POST['email'] === '') throw new Exception('El correo electrónico es requerido', 400);
   else $email = $_POST['email'];
 
