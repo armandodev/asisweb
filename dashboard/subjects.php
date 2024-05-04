@@ -25,7 +25,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Docentes | Docentes CETis 121</title>
+  <title>Materias | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -59,8 +59,6 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container overflow-x-scroll">
-      <h1 class="text-3xl font-semibold text-center py-4">Materias</h1>
-
       <table class="w-full mt-4 border border-gray-300 text-nowrap">
         <thead class="bg-gray-200 text-gray-700 sticky -top-1">
           <tr>
@@ -69,7 +67,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           </tr>
         </thead>
         <tbody class="text-center">
-          <?php if (!isset($empty)) : ?>
+          <?php if (isset($empty)) : ?>
             <tr>
               <td class="p-2" colspan="2">No hay materias registradas</td>
             </tr>

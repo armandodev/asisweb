@@ -54,7 +54,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
       <h1 class="text-3xl font-semibold">Panel de administración</h1>
       <ul>
         <li><a href="./subjects.php">Materias</a></li>
-        <li><a href="./carrers.php">Carreras</a></li>
+        <li><a href="./careers.php">Carreras</a></li>
         <li><a href="./students.php">Alumnos</a></li>
         <li><a href="./groups.php">Grupos</a></li>
         <li><a href="./teachers.php">Docentes</a></li>

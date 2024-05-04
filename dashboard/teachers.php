@@ -67,9 +67,6 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container overflow-x-scroll">
-      <h1 class="text-3xl font-semibold text-center py-4">Docentes</h1>
-
-
       <table class="w-full mt-4 border border-gray-300 text-nowrap">
         <thead class="bg-gray-200 text-gray-700 sticky -top-1">
           <tr>
