@@ -15,6 +15,13 @@ $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+if isset($_GET['search']) {
+  $searchTerm = $_GET['search'];
+  $students = $db->execute("SELECT * FROM students WHERE first_name LIKE '%$searchTerm%' OR last_name LIKE '%$searchTerm%' OR control_number LIKE '%$searchTerm%' LIMIT $limit OFFSET $offset");
+} else {
+  $searchTerm = '';
+}
+
 $total_students = $db->execute('SELECT COUNT(*) FROM students');
 $total_students = $total_students->fetchColumn();
 $total_pages = ceil($total_students / $limit);
@@ -67,6 +74,10 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
+    <form action="" method="GET" class="mb-4">
+        <input type="text" name="search" placeholder="Buscar por nombre o número de control" value="<?= $searchTerm ?>">
+        <button type="submit">Buscar</button>
+      </form>
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700">
