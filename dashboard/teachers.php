@@ -66,8 +66,8 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container overflow-x-scroll">
-      <section>
+    <article class="article container">
+      <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700 sticky -top-1">
             <tr>

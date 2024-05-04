@@ -11,6 +11,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
+$limit = 15;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+$total_students = $db->execute('SELECT COUNT(*) FROM students');
+$total_students = $total_students->fetchColumn();
+$total_pages = ceil($total_students / $limit);
+
 $students = $db->execute('SELECT * FROM students LIMIT 15');
 
 if ($students->rowCount() === 0) {
@@ -58,45 +66,65 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container overflow-x-scroll">
-      <table class="w-full mt-4 border border-gray-300 text-nowrap">
-        <thead class="bg-gray-200 text-gray-700">
-          <tr>
-            <th class="p-2">No. Control</th>
-            <th class="p-2">CURP</th>
-            <th class="p-2">Nombre</th>
-            <th class="p-2">Generación</th>
-            <th class="p-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          <?php if (isset($empty)) : ?>
+    <article class="article container">
+      <section class="overflow-x-scroll">
+        <table class="w-full mt-4 border border-gray-300 text-nowrap">
+          <thead class="bg-gray-200 text-gray-700">
             <tr>
-              <td class="p-2" colspan="6">No hay docentes registrados.</td>
+              <th class="p-2">No. Control</th>
+              <th class="p-2">CURP</th>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Generación</th>
+              <th class="p-2">Acciones</th>
             </tr>
-          <?php else : ?>
-            <?php foreach ($students as $student) : ?>
-              <tr class="border-t border-gray-300">
-                <td class="p-2"><?= $student['control_number'] ?></td>
-                <td class="p-2"><?= $student['curp'] ?></td>
-                <td class="p-2"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
-                <td class="p-2"><?= $student['generation'] ?></td>
-                <td class="flex justify-center gap-2 p-2">
-                  <a class="btn w-6" href="./student-schedule.php?id=<?= $student['control_number'] ?>">
-                    <img src="./../icons/schedule.svg" alt="Horario">
-                  </a>
-                  <a class="btn w-6" href="./edit-student.php?id=<?= $student['control_number'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar">
-                  </a>
-                  <a class="btn w-6" href="./delete-student.php?id=<?= $student['control_number'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar">
-                  </a>
-                </td>
+          </thead>
+          <tbody class="text-center">
+            <?php if (isset($empty)) : ?>
+              <tr>
+                <td class="p-2" colspan="6">No hay docentes registrados.</td>
               </tr>
-            <?php endforeach; ?>
+            <?php else : ?>
+              <?php foreach ($students as $student) : ?>
+                <tr class="border-t border-gray-300">
+                  <td class="p-2"><?= $student['control_number'] ?></td>
+                  <td class="p-2"><?= $student['curp'] ?></td>
+                  <td class="p-2"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
+                  <td class="p-2"><?= $student['generation'] ?></td>
+                  <td class="flex justify-center gap-2 p-2">
+                    <a class="btn w-6" href="./student-schedule.php?id=<?= $student['control_number'] ?>">
+                      <img src="./../icons/schedule.svg" alt="Horario">
+                    </a>
+                    <a class="btn w-6" href="./edit-student.php?id=<?= $student['control_number'] ?>">
+                      <img src="./../icons/edit.svg" alt="Editar">
+                    </a>
+                    <a class="btn w-6" href="./delete-student.php?id=<?= $student['control_number'] ?>">
+                      <img src="./../icons/delete.svg" alt="Eliminar">
+                    </a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </section>
+      <section class="flex justify-center mt-4">
+        <ul class="flex gap-2">
+          <?php if ($page > 1) : ?>
+            <li>
+              <a class="btn" href="?page=<?= $page - 1 ?>">
+                < Anterior </a>
+            </li>
           <?php endif; ?>
-        </tbody>
-      </table>
+          <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
+          <?php if ($page < $total_pages) : ?>
+            <li>
+              <a class="btn" href="?page=<?= $page + 1 ?>">
+                Siguiente >
+              </a>
+            </li>
+          <?php endif; ?>
+        </ul>
+      </section>
     </article>
   </main>
 
