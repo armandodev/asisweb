@@ -1,27 +1,3 @@
-<!-- Solo es una prueba para ver si salen los cambios pero no salio asi que otra vez-->
-<!-- Como que no funciona con commit push -->
-<!-- Confirmo que he recibido tus cambios compañere pero entrega para la proxima cambios con la ultima version del repositorio -->
-<!-- 
-  Para esto necesitas hacer un pull de los cambios que se han hecho en el repositorio remoto y luego hacer un push de tus cambios.
-  Si no haces el pull, git no sabrá que hay cambios nuevos en el repositorio remoto y no podrá hacer el push.
-  Como estas en un fork para hacer el pull de los cambios del repositorio original debes agregarlo como remoto.
-  Para hacerlo puedes seguir los siguientes pasos:
-  1. Agregar el repositorio original como remoto:
-    git remote add upstream
-  2. Hacer el pull de los cambios del repositorio original:
-    git pull upstream main
-  3. Hacer el push de tus cambios:
-    git push origin main
-  Con estos pasos deberías poder hacer el push de tus cambios sin problemas, cada que vayas a trabajar en el proyecto te recomiendo hacer el pull de los cambios del repositorio original para tener la última versión de la siguiente manera:
-  1. Hacer el pull de los cambios del repositorio original:
-    git pull upstream main
-  2. Hacer tus cambios y luego hacer el push de tus cambios:
-    git push origin main
-  De esta manera siempre tendrás la última versión del proyecto y podrás hacer tus cambios sin problemas.
-
-  Recuerda que hacer pull se refiere a traer los cambios del repositorio remoto a tu repositorio local y hacer push se refiere a enviar los cambios de tu repositorio local al repositorio remoto lo que hace que yo pueda ver los cambios que has hecho.
- -->
- <!-- Esta es la prueba del push -->
 <?php
 require_once './config.php';
 
