@@ -2,20 +2,16 @@
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
 if ($_SESSION['user']['role'] !== 'Administrador') {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-
-$subjects = $db->execute('SELECT * FROM subjects WHERE subject_name LIKE :search', [
-  ':search' => "%$search%"
-]);
+$subjects = $db->execute('SELECT * FROM subjects');
 
 if ($subjects->rowCount() === 0) {
   $empty = true;
@@ -29,7 +25,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materias | Docentes CETis 121</title>
+  <title>Docentes | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -62,51 +58,38 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container">
-      <section class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <h1 class="w-full flex items-center justify-between gap-x-2 text-3xl font-semibold sm:w-fit sm:justify-start p-2">
-          <span class="text-gray-800">Materias</span>
-          <a href="./add-subject.php" title="Agregar materia">
-            <img src="./../icons/add.svg" alt="Agregar">
-          </a>
-        </h1>
-        <nav class="w-full sm:max-w-sm">
-          <form id="search-form" class="w-full">
-            <input class="input w-full" type="search" placeholder="Buscar materia" value="<?= $search ?>">
-          </form>
-        </nav>
-      </section>
-      <section>
-        <table class="w-full mt-4">
-          <thead>
-            <tr class="bg-gray-200 text-gray-800 text-left">
-              <th class="p-2">Nombre</th>
-              <th class="p-2">Acciones</th>
+    <article class="article container overflow-x-scroll">
+      <h1 class="text-3xl font-semibold text-center py-4">Materias</h1>
+
+      <table class="w-full mt-4 border border-gray-300 text-nowrap">
+        <thead class="bg-gray-200 text-gray-700 sticky -top-1">
+          <tr>
+            <th class="p-2">Nombre</th>
+            <th class="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (!isset($empty)) : ?>
+            <tr>
+              <td class="p-2" colspan="2">No hay materias registradas</td>
             </tr>
-          </thead>
-          <tbody>
-            <?php if (isset($empty)) { ?>
-              <tr class="border-b border-gray-300 bg-gray-100">
-                <td class="p-2 text-gray-600 text-center" colspan="2">No hay materias registradas</td>
+          <?php else : ?>
+            <?php foreach ($subjects as $subject) : ?>
+              <tr class="border-t border-gray-300">
+                <td class="p-2"><?= $subject['subject_name'] ?></td>
+                <td class="flex justify-center gap-2 p-2">
+                  <a class="btn w-8" href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar">
+                  </a>
+                  <a class="btn w-8" href="./delete-subject.php?id=<?= $subject['subject_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar">
+                  </a>
+                </td>
               </tr>
-            <?php } else { ?>
-              <?php foreach ($subjects as $subject) { ?>
-                <tr class="border-b border-gray-300 bg-gray-100">
-                  <td class="p-2 text-gray-600"><?= $subject['subject_name'] ?></td>
-                  <td class="p-2 flex gap-2">
-                    <a href="./edit-subject.php?id=<?= $subject['subject_id'] ?>" title="Editar">
-                      <img src="./../icons/edit.svg" alt="Editar">
-                    </a>
-                    <a href="./delete-subject.php?id=<?= $subject['subject_id'] ?>" title="Eliminar">
-                      <img src="./../icons/delete.svg" alt="Eliminar">
-                    </a>
-                  </td>
-                </tr>
-            <?php }
-            } ?>
-          </tbody>
-        </table>
-      </section>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
     </article>
   </main>
 
@@ -138,7 +121,6 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
   </footer>
 
   <script src="./../js/menu.js"></script>
-  <script src="./../js/search-form.js"></script>
 </body>
 
 </html>
