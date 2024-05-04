@@ -11,7 +11,7 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
-$users = $db->execute('SELECT * FROM users');
+$users = $db->execute('SELECT * FROM users ORDER BY role DESC, first_name ASC, last_name ASC');
 
 if ($users->rowCount() === 0) {
   $empty = true;
@@ -59,40 +59,39 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
-      <h1 class="text-3xl font-semibold">Docentes</h1>
-
-      <a class="btn mt-4" href="./add-user.php">
-        <img src="./../icons/add.svg" alt="Agregar"> Agregar docente
-      </a>
+      <h1 class="text-3xl font-semibold text-center py-4">Docentes</h1>
 
       <?php if (isset($empty)) : ?>
         <p class="text-center mt-4">No hay docentes registradas</p>
       <?php else : ?>
-        <table class="table mt-4">
-          <thead>
+        <table class="w-full mt-4 border border-gray-300">
+          <thead class="bg-gray-200 text-gray-700 sticky -top-1">
             <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Teléfono</th>
-              <th>Rol</th>
-              <th>Status</th>
-              <th>Acciones</th>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Correo</th>
+              <th class="p-2">Teléfono</th>
+              <th class="p-2">Rol</th>
+              <th class="p-2">Estatus</th>
+              <th class="p-2">Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="text-center">
             <?php foreach ($users as $user) : ?>
-              <tr>
-                <td><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
-                <td><?= $user['email'] ?></td>
-                <td><?= $user['tel'] ?></td>
-                <td><?= $user['role'] ?></td>
-                <td><?= $user['status'] ?></td>
-                <td>
+              <tr class="border-t border-gray-300">
+                <td class="p-2"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
+                <td class="p-2"><?= $user['email'] ?></td>
+                <td class="p-2"><?= $user['tel'] ?></td>
+                <td class="p-2"><?= $user['role'] ?></td>
+                <td class="p-2"><?= $user['status'] ?></td>
+                <td class="flex gap-2 p-2">
+                  <a class="btn" href="./schedule.php?id=<?= $user['user_id'] ?>">
+                    <img src="./../icons/schedule.svg" alt="Horario">
+                  </a>
                   <a class="btn" href="./edit-user.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar"> Editar
+                    <img src="./../icons/edit.svg" alt="Editar">
                   </a>
                   <a class="btn" href="./delete-user.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar"> Eliminar
+                    <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
               </tr>

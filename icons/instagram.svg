@@ -6,10 +6,12 @@
   height="24"
   fill="#3f3f46"
 >
-  <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+  <g
     id="SVGRepo_tracerCarrier"
     stroke-linecap="round"
-    stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+    stroke-linejoin="round"></g>
+  <g id="SVGRepo_iconCarrier">
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
