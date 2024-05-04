@@ -31,12 +31,12 @@ if (!isset($_SESSION['user'])) {
           <fieldset class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <legend hidden>Información personal</legend>
 
-            <label title="Nombre">
+            <label title="Nombre(s)">
               <span>Nombre(s) <span class="text-red-600">*</span></span>
               <input class="input" type="text" name="first_name" autocomplete="given-name" minlength="2" maxlength="255" placeholder="Tu nombre" required value="<?= $_SESSION['user']['first_name'] ?>" />
             </label>
 
-            <label title="Apellido">
+            <label title="Apellido(s)">
               <span>Apellido(s) <span class="text-red-600">*</span></span>
               <input class="input" type="text" name="last_name" autocomplete="family-name" minlength="2" maxlength="255" placeholder="Tu apellido" required value="<?= $_SESSION['user']['last_name'] ?>" />
             </label>
