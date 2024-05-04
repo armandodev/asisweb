@@ -27,19 +27,23 @@ if (!isset($_SESSION['user'])) {
       <section>
         <form class="flex gap-4 flex-col justify-center w-full max-w-screen-sm text-lg" action="./api/auth/edit-profile.php" method="post">
           <p class="text-base">Campos obligatorios <span class="text-red-600">*</span></p>
-          <fieldset>
-            <legend hidden>Datos de contacto</legend>
+
+          <fieldset class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <legend hidden>Información personal</legend>
 
             <label title="Nombre">
-              <span>Nombre <span class="text-red-600">*</span></span>
+              <span>Nombre(s) <span class="text-red-600">*</span></span>
               <input class="input" type="text" name="first_name" autocomplete="given-name" minlength="2" maxlength="255" placeholder="Tu nombre" required value="<?= $_SESSION['user']['first_name'] ?>" />
             </label>
 
             <label title="Apellido">
-              <span>Apellido <span class="text-red-600">*</span></span>
+              <span>Apellido(s) <span class="text-red-600">*</span></span>
               <input class="input" type="text" name="last_name" autocomplete="family-name" minlength="2" maxlength="255" placeholder="Tu apellido" required value="<?= $_SESSION['user']['last_name'] ?>" />
             </label>
+          </fieldset>
 
+          <fieldset>
+            <legend hidden>Datos de contacto</legend>
             <label title="Correo electrónico">
               <span>Correo electrónico <span class="text-red-600">*</span></span>
               <input class="input" type="email" name="email" autocomplete="email" pattern="^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" minlength="5" maxlength="255" placeholder="ejemplo@dominio.com" required value="<?= $_SESSION['user']['email'] ?>" />
