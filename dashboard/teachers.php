@@ -11,6 +11,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
+// Te echo una mano para la paginación, necesitas un par de variables para saber en qué página estás y cuántos registros quieres mostrar, por ejemplo:
+// $limit = 10; // Número de registros a mostrar
+// $page = isset($_GET['page']) ? $_GET['page'] : 1; // Página actual, si en la URL no se especifica ninguna, por defecto será la 1, si se especifica, se tomará ese valor
+
+// Ahora, para hacer la paginación, necesitas modificar tu consulta para que te devuelva solo los registros que necesitas, por ejemplo:
+// $offset = ($page - 1) * $limit; // El offset es el número de registros que tienes que saltar para llegar a la página actual
+// $users = $db->execute("SELECT * FROM users ORDER BY role DESC, first_name ASC, last_name ASC LIMIT $limit OFFSET $offset");
+
 $users = $db->execute('SELECT * FROM users ORDER BY role DESC, first_name ASC, last_name ASC');
 
 if ($users->rowCount() === 0) {
