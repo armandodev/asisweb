@@ -23,8 +23,7 @@ if ($users->rowCount() === 0) {
 
 $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
-$total_pages = ceil(count($users) / $limit); 
-
+$total_pages = ceil(count($users) / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,46 +65,59 @@ $total_pages = ceil(count($users) / $limit);
 
   <main>
     <article class="article container overflow-x-scroll">
-      <table class="w-full mt-4 border border-gray-300 text-nowrap">
-        <thead class="bg-gray-200 text-gray-700 sticky -top-1">
-          <tr>
-            <th class="p-2">Nombre</th>
-            <th class="p-2">Correo</th>
-            <th class="p-2">Teléfono</th>
-            <th class="p-2">Rol</th>
-            <th class="p-2">Estatus</th>
-            <th class="p-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          <?php if (isset($empty)) : ?>
+      <section>
+        <table class="w-full mt-4 border border-gray-300 text-nowrap">
+          <thead class="bg-gray-200 text-gray-700 sticky -top-1">
             <tr>
-              <td class="p-2" colspan="6">No hay docentes registrados.</td>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Correo</th>
+              <th class="p-2">Teléfono</th>
+              <th class="p-2">Rol</th>
+              <th class="p-2">Estatus</th>
+              <th class="p-2">Acciones</th>
             </tr>
-          <?php else : ?>
-            <?php foreach ($users as $user) : ?>
-              <tr class="border-t border-gray-300">
-                <td class="p-2"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
-                <td class="p-2"><?= $user['email'] ?></td>
-                <td class="p-2"><?= $user['tel'] ?></td>
-                <td class="p-2"><?= $user['role'] ?></td>
-                <td class="p-2"><?= $user['status'] ?></td>
-                <td class="flex justify-center gap-2 p-2">
-                  <a class="btn w-6" href="./schedule.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/schedule.svg" alt="Horario">
-                  </a>
-                  <a class="btn w-6" href="./edit-user.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar">
-                  </a>
-                  <a class="btn w-6" href="./delete-user.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/delete.svg" alt="Eliminar">
-                  </a>
-                </td>
+          </thead>
+          <tbody class="text-center">
+            <?php if (isset($empty)) : ?>
+              <tr>
+                <td class="p-2" colspan="6">No hay docentes registrados.</td>
               </tr>
-            <?php endforeach; ?>
+            <?php else : ?>
+              <?php foreach ($users as $user) : ?>
+                <tr class="border-t border-gray-300">
+                  <td class="p-2"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
+                  <td class="p-2"><?= $user['email'] ?></td>
+                  <td class="p-2"><?= $user['tel'] ?></td>
+                  <td class="p-2"><?= $user['role'] ?></td>
+                  <td class="p-2"><?= $user['status'] ?></td>
+                  <td class="flex justify-center gap-2 p-2">
+                    <a class="btn w-6" href="./schedule.php?id=<?= $user['user_id'] ?>">
+                      <img src="./../icons/schedule.svg" alt="Horario">
+                    </a>
+                    <a class="btn w-6" href="./edit-user.php?id=<?= $user['user_id'] ?>">
+                      <img src="./../icons/edit.svg" alt="Editar">
+                    </a>
+                    <a class="btn w-6" href="./delete-user.php?id=<?= $user['user_id'] ?>">
+                      <img src="./../icons/delete.svg" alt="Eliminar">
+                    </a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </tbody>
         </table>
-      <?php endif; ?>
+      </section>
+      <section class="flex justify-center mt-4">
+        <ul class="flex gap-2">
+          <li>
+            <a class="btn <?= $page <= 1 ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page - 1 ?>">Anterior</a>
+          </li>
+          <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
+          <li>
+            <a class="btn <?= $page >= $total_pages ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page + 1 ?>">Siguiente</a>
+          </li>
+        </ul>
+      </section>
     </article>
   </main>
 
