@@ -19,7 +19,7 @@ $total_students = $db->execute('SELECT COUNT(*) FROM students');
 $total_students = $total_students->fetchColumn();
 $total_pages = ceil($total_students / $limit);
 
-$students = $db->execute('SELECT * FROM students LIMIT 15');
+$students = $db->execute("SELECT * FROM students LIMIT $limit OFFSET $offset");
 
 if ($students->rowCount() === 0) {
   $empty = true;
@@ -91,13 +91,10 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
                   <td class="p-2"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
                   <td class="p-2"><?= $student['generation'] ?></td>
                   <td class="flex justify-center gap-2 p-2">
-                    <a class="btn w-6" href="./student-schedule.php?id=<?= $student['control_number'] ?>">
-                      <img src="./../icons/schedule.svg" alt="Horario">
-                    </a>
-                    <a class="btn w-6" href="./edit-student.php?id=<?= $student['control_number'] ?>">
+                    <a class="btn w-8" href="./edit-student.php?id=<?= $student['control_number'] ?>">
                       <img src="./../icons/edit.svg" alt="Editar">
                     </a>
-                    <a class="btn w-6" href="./delete-student.php?id=<?= $student['control_number'] ?>">
+                    <a class="btn w-8" href="./delete-student.php?id=<?= $student['control_number'] ?>">
                       <img src="./../icons/delete.svg" alt="Eliminar">
                     </a>
                   </td>
