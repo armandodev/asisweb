@@ -13,8 +13,12 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
 
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-
 $offset = ($page - 1) * $limit;
+
+$total_users = $db->execute('SELECT COUNT(*) FROM users');
+$total_users = $total_users->fetchColumn();
+$total_pages = ceil($total_users / $limit);
+
 $users = $db->execute("SELECT * FROM users ORDER BY role DESC, first_name ASC, last_name ASC LIMIT $limit OFFSET $offset");
 
 if ($users->rowCount() === 0) {
@@ -22,8 +26,6 @@ if ($users->rowCount() === 0) {
 }
 
 $users = $users->fetchAll(PDO::FETCH_ASSOC);
-
-$total_pages = ceil(count($users) / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -109,13 +111,20 @@ $total_pages = ceil(count($users) / $limit);
       </section>
       <section class="flex justify-center mt-4">
         <ul class="flex gap-2">
-          <li>
-            <a class="btn <?= $page <= 1 ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page - 1 ?>">Anterior</a>
-          </li>
+          <?php if ($page > 1) : ?>
+            <li>
+              <a class="btn" href="?page=<?= $page - 1 ?>">
+                < Anterior </a>
+            </li>
+          <?php endif; ?>
           <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
-          <li>
-            <a class="btn <?= $page >= $total_pages ? 'opacity-50 pointer-events-none' : '' ?>" href="?page=<?= $page + 1 ?>">Siguiente</a>
-          </li>
+          <?php if ($page < $total_pages) : ?>
+            <li>
+              <a class="btn" href="?page=<?= $page + 1 ?>">
+                Siguiente >
+              </a>
+            </li>
+          <?php endif; ?>
         </ul>
       </section>
     </article>
