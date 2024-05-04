@@ -19,9 +19,9 @@ Asisweb, es un proyecto web para la agilización del manejo de horarios de docen
 
 - [✅] Agregar la opción de editar el nombre del usuario desde la página [editar perfil](./edit-profile.php). (Delaimy)
 - [] Agregar la opción de manejo de horarios para completar los datos de prueba restantes dentro del panel de administración. (CRUD) (Armando)
-- [] Agregar los datos de prueba restantes en la base de datos con los horarios dados en la pagina de Facebook del [CETis 121](https://www.facebook.com/media/set/?set=a.671046351718037&type=3). (Armando)
+- [] Agregar los datos de prueba restantes en la base de datos con los horarios dados en la pagina de Facebook del [CETis 121](https://www.facebook.com/media/set/?set=a.671046351718037&type=3). (Delaimy)
 - [] Mostrar en la pagina de schedule los horarios de los profesores de manera dinámica con los datos de la base de datos. (Armando)
-- [] Agregar la opción de paginación en los datos de la tabla de horarios en el panel de administración. Esto quiere decir que si hay mas de 10 registros, se deben mostrar 10 y los demás en otra pagina. (Delaimy)
+- [] Agregar la opción de paginación en los datos de la tabla de alumnos en el panel de administración. Esto quiere decir que si hay mas de 10 registros, se deben mostrar 10 y los demás en otra pagina. (Delaimy)
 - [] Agregar la misma paginación en todas las tablas de la aplicación en las que se muestren registros. (Delaimy)
 - [] Exportar la nueva base de datos con los datos de prueba completos. (Armando)
 - [] Iniciar la idea de la toma de asistencias en la aplicación. (Delaimy y Armando)
