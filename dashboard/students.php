@@ -14,19 +14,14 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-if isset($_GET['search']) {
-  $searchTerm = $_GET['search'];
-  $students = $db->execute("SELECT * FROM students WHERE first_name LIKE '%$searchTerm%' OR last_name LIKE '%$searchTerm%' OR control_number LIKE '%$searchTerm%' LIMIT $limit OFFSET $offset");
-} else {
-  $searchTerm = '';
-}
-
-$total_students = $db->execute('SELECT COUNT(*) FROM students');
+$total_students = $db->execute('SELECT COUNT(*) FROM students WHERE first_name LIKE :search OR last_name LIKE :search OR control_number LIKE :search', ['search' => "%$search%"]);
 $total_students = $total_students->fetchColumn();
 $total_pages = ceil($total_students / $limit);
+$total_pages = $total_pages ? $total_pages : 1;
 
-$students = $db->execute("SELECT * FROM students LIMIT $limit OFFSET $offset");
+$students = $db->execute("SELECT * FROM students WHERE first_name LIKE :search OR last_name LIKE :search OR control_number LIKE :search LIMIT $limit OFFSET $offset", ['search' => "%$search%", 'limit' => $limit, 'offset' => $offset]);
 
 if ($students->rowCount() === 0) {
   $empty = true;
@@ -74,9 +69,9 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
-    <form action="" method="GET" class="mb-4">
-        <input type="text" name="search" placeholder="Buscar por nombre o número de control" value="<?= $searchTerm ?>">
-        <button type="submit">Buscar</button>
+      <form class="flex gap-4" method="GET" class="mb-4">
+        <input class="input" type="search" name="search" placeholder="Nombre o No. control" value="<?= $search ?>">
+        <button class="button" type="submit">Buscar</button>
       </form>
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
