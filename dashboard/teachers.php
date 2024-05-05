@@ -14,10 +14,12 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_users = $db->execute('SELECT COUNT(*) FROM users');
+$total_users = $db->execute('SELECT COUNT(*) FROM users WHERE first_name LIKE :search OR last_name LIKE :search OR role LIKE :search', ['search' =>"%$search%"]);
 $total_users = $total_users->fetchColumn();
 $total_pages = ceil($total_users / $limit);
+$total_pages = $total_pages ? $total_pages : 1;
 
 $users = $db->execute("SELECT * FROM users ORDER BY role DESC, first_name ASC, last_name ASC LIMIT $limit OFFSET $offset");
 
@@ -67,6 +69,10 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
+    <form class="flex gap-4" method="GET" class="mb-4">
+        <input class="input" type="search" name="search" placeholder="Nombre o Rol" value="<?= $search ?>">
+        <button class="button" type="submit">Buscar</button>
+      </form>
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700 sticky -top-1">

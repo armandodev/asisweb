@@ -14,10 +14,12 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_groups = $db->execute('SELECT COUNT(*) FROM groups');
+$total_groups = $db->execute('SELECT COUNT(*) FROM groups WHERE group_semester LIKE :search OR group_letter LIKE :search OR classroom LIKE :search', ['search' => "%$search%"]);
 $total_groups = $total_groups->fetchColumn();
 $total_pages = ceil($total_groups / $limit);
+$total_pages = $total_pages ? $total_pages : 1;
 
 $groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset");
 
@@ -67,6 +69,10 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container overflow-x-scroll">
+    <form class="flex gap-4" method="GET" class="mb-4">
+        <input class="input" type="search" name="search" placeholder="Grado o Grupo" value="<?= $search ?>">
+        <button class="button" type="submit">Buscar</button>
+      </form>
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700">

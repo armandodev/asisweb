@@ -14,10 +14,13 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects');
+
+$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects WHERE subject_name LIKE :search', ['search' => "%$search%"])
 $total_subjects = $total_subjects->fetchColumn();
 $total_pages = ceil($total_subjects / $limit);
+$total_pages = $total_pages ? $total_pages : 1;
 
 $subjects = $db->execute("SELECT * FROM subjects LIMIT $limit OFFSET $offset");
 
@@ -67,6 +70,10 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
+    <form class="flex gap-4" method="GET" class="mb-4">
+        <input class="input" type="search" name="search" placeholder="Materia" value="<?= $search ?>">
+        <button class="button" type="submit">Buscar</button>
+      </form>
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700 sticky -top-1">
