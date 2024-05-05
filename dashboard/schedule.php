@@ -1,13 +1,25 @@
 <?php
-require_once './config.php';
-require_once './api/schedule/get.php';
+require_once './../config.php';
+require_once './../api/schedule/get.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('Location: ./../');
   exit();
 }
 
-$schedule = getSchedule($_SESSION['user']['user_id'], $db);
+if ($_SESSION['user']['role'] !== 'Administrador') {
+  header('Location: ./../');
+  exit();
+}
+
+if (!$_SERVER['REQUEST_METHOD'] === 'GET' || !isset($_GET['id'])) {
+  header('Location: ./groups.php');
+  exit();
+}
+
+$user_id = $_GET['id'];
+
+$schedule = getSchedule($user_id, $db);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,33 +30,31 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
   <title>Horario | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/output.css">
+  <link rel="stylesheet" href="./../css/output.css">
 </head>
 
 <body>
   <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
     <div class="container flex items-center justify-between">
       <a class="flex items-center" href="./profile.php">
-        <img class="w-16 aspect-square" src="./images/logo.webp" alt="Logo de DGTi">
+        <img class="w-16 aspect-square" src="./../images/logo.webp" alt="Logo de DGTi">
         <span class="text-xl font-semibold">CETis 121</span>
       </a>
 
       <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
         <ul class="flex gap-4 flex-col items-center md:flex-row md:gap-0">
-          <li><a class="h-link" href="./profile.php">Perfil</a></li>
-          <li><a class="h-link active" href="./schedule.php">Horario</a></li>
-          <li><a class="h-link" href="./tutoring.php">Tutorías</a></li>
-          <?php if ($_SESSION['user']['role'] === 'Administrador') { ?>
-            <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
-          <?php } ?>
-          <li><a class="h-link" href=" ./logout.php">Cerrar sesión</a></li>
+          <li><a class="h-link" href="./../profile.php">Perfil</a></li>
+          <li><a class="h-link" href="./../schedule.php">Horario</a></li>
+          <li><a class="h-link" href="./../tutoring.php">Tutorías</a></li>
+          <li><a class="h-link active" href="./index.php">Panel</a></li>
+          <li><a class="h-link" href=" ./../logout.php">Cerrar sesión</a></li>
         </ul>
         <button class="absolute top-6 right-2 md:hidden" id="close-menu">
-          <img src="./icons/close.svg" alt="Cerrar menú">
+          <img src="./../icons/close.svg" alt="Cerrar menú">
         </button>
       </nav>
       <button class="md:hidden" id="show-menu">
-        <img src="./icons/menu.svg" alt="Abrir menú">
+        <img src="./../icons/menu.svg" alt="Abrir menú">
       </button>
     </div>
   </header>
@@ -55,24 +65,24 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700">
             <tr>
-              <th class="p-2">Hora</th>
-              <th class="p-2">Lunes</th>
-              <th class="p-2">Martes</th>
-              <th class="p-2">Miércoles</th>
-              <th class="p-2">Jueves</th>
-              <th class="p-2">Viernes</th>
+              <th class="p-2 border border-gray-300">Hora</th>
+              <th class="p-2 border border-gray-300">Lunes</th>
+              <th class="p-2 border border-gray-300">Martes</th>
+              <th class="p-2 border border-gray-300">Miércoles</th>
+              <th class="p-2 border border-gray-300">Jueves</th>
+              <th class="p-2 border border-gray-300">Viernes</th>
             </tr>
           </thead>
           <tbody class="text-center">
             <?php foreach ($schedule as $hour => $days) { ?>
               <tr>
-                <td class="p-2"><?= $hour ?></td>
+                <td class="p-2 bg-gray-200 border border-gray-300 text-gray-700 font-bold"><?= $hour ?></td>
                 <?php foreach ($days as $day => $class) { ?>
-                  <td class="p-2">
+                  <td class="p-2 border border-gray-300">
                     <?php if ($class) { ?>
-                      <span class="block"><?= $class['subject'] ?></span>
-                      <span class="block text-sm"><?= $class['group'] ?></span>
-                      <span class="block text-sm"><?= $class['classroom'] ?></span>
+                      <span class="block text-base font-bold"><?= $class['subject'] ?></span>
+                      <span class="block text-xs text-gray-700"><?= $class['group'] ?></span>
+                      <span class="block text-xs text-gray-700"><?= $class['classroom'] ?></span>
                     <?php } ?>
                   </td>
                 <?php } ?>
@@ -90,28 +100,28 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
     <ul class="list-none flex gap-4">
       <li>
         <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
-          <img src="./icons/facebook.svg" alt="Facebook">
+          <img src="./../icons/facebook.svg" alt="Facebook">
         </a>
       </li>
       <li>
         <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
-          <img src="./icons/instagram.svg" alt="Instagram">
+          <img src="./../icons/instagram.svg" alt="Instagram">
         </a>
       </li>
       <li>
         <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
-          <img src="./icons/phone.svg" alt="Teléfono">
+          <img src="./../icons/phone.svg" alt="Teléfono">
         </a>
       </li>
       <li>
         <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
-          <img src="./icons/web.svg" alt="Sitio web">
+          <img src="./../icons/web.svg" alt="Sitio web">
         </a>
       </li>
     </ul>
   </footer>
 
-  <script src="./js/menu.js"></script>
+  <script src="./../js/menu.js"></script>
 </body>
 
 </html>
