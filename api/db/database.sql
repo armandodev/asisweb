@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-05-2024 a las 06:23:58
+-- Tiempo de generación: 05-05-2024 a las 19:31:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `asisweb`
 --
+
+create database if not exists asisweb;
+use asisweb;
 
 -- --------------------------------------------------------
 
@@ -1121,7 +1124,9 @@ INSERT INTO `schedule` (`schedule_id`, `user_id`, `group_id`, `subject_id`, `day
 (40, 23, 15, 3, 'Viernes', '11:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
 (41, 23, 15, 3, 'Viernes', '12:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
 (42, 23, NULL, 63, 'Viernes', '13:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(43, 23, NULL, 63, 'Viernes', '14:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57');
+(43, 23, NULL, 63, 'Viernes', '14:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
+(60, 14, 23, 31, 'Jueves', '09:00:00', '2024-05-05 00:47:38', '2024-05-05 00:47:38'),
+(61, 14, 23, 31, 'Jueves', '10:00:00', '2024-05-05 00:47:38', '2024-05-05 00:47:38');
 
 -- --------------------------------------------------------
 
@@ -2285,7 +2290,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT de la tabla `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `subjects`
