@@ -63,18 +63,20 @@ $careers = $careers->fetchAll(PDO::FETCH_ASSOC);
         <thead class="bg-gray-200 text-gray-700 sticky -top-1">
           <tr>
             <th class="p-2">Nombre</th>
+            <th class="p-2">Abreviatura</th>
             <th class="p-2">Acciones</th>
           </tr>
         </thead>
         <tbody class="text-center">
           <?php if (isset($empty)) : ?>
             <tr>
-              <td class="p-2" colspan="2">No hay materias registradas</td>
+              <td class="p-2" colspan="2">No hay carreras registradas</td>
             </tr>
           <?php else : ?>
             <?php foreach ($careers as $career) : ?>
               <tr class="border-t border-gray-300">
                 <td class="p-2"><?= $career['career_name'] ?></td>
+                <td class="p-2"><?= $career['abbreviation'] ? $career['abbreviation'] : 'Sin abreviatura' ?></td>
                 <td class="flex justify-center gap-2 p-2">
                   <a class="btn w-8" href="./edit-career.php?id=<?= $career['career_id'] ?>">
                     <img src="./../icons/edit.svg" alt="Editar">

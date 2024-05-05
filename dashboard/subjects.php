@@ -70,7 +70,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 
   <main>
     <article class="article container">
-    <form class="flex gap-4" method="GET" class="mb-4">
+      <form class="flex gap-4" method="GET" class="mb-4">
         <input class="input" type="search" name="search" placeholder="Materia" value="<?= $search ?>">
         <button class="button" type="submit">Buscar</button>
       </form>
@@ -79,6 +79,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           <thead class="bg-gray-200 text-gray-700 sticky -top-1">
             <tr>
               <th class="p-2">Nombre</th>
+              <th class="p-2">Siglas</th>
               <th class="p-2">Acciones</th>
             </tr>
           </thead>
@@ -91,6 +92,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
               <?php foreach ($subjects as $subject) : ?>
                 <tr class="border-t border-gray-300">
                   <td class="p-2"><?= $subject['subject_name'] ?></td>
+                  <td class="p-2"><?= $subject['initialism'] ? $subject['initialism'] : 'Sin siglas' ?></td>
                   <td class="flex justify-center gap-2 p-2">
                     <a class="btn w-8" href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
                       <img src="./../icons/edit.svg" alt="Editar">
