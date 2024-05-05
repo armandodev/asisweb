@@ -17,7 +17,7 @@ $offset = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 
-$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects WHERE subject_name LIKE :search', ['search' => "%$search%"])
+$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects WHERE subject_name LIKE :search', ['search' => "%$search%"]);
 $total_subjects = $total_subjects->fetchColumn();
 $total_pages = ceil($total_subjects / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
