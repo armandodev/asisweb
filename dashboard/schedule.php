@@ -55,24 +55,24 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700">
             <tr>
-              <th class="p-2 border border-gray-300">Hora</th>
-              <th class="p-2 border border-gray-300">Lunes</th>
-              <th class="p-2 border border-gray-300">Martes</th>
-              <th class="p-2 border border-gray-300">Miércoles</th>
-              <th class="p-2 border border-gray-300">Jueves</th>
-              <th class="p-2 border border-gray-300">Viernes</th>
+              <th class="p-2">Hora</th>
+              <th class="p-2">Lunes</th>
+              <th class="p-2">Martes</th>
+              <th class="p-2">Miércoles</th>
+              <th class="p-2">Jueves</th>
+              <th class="p-2">Viernes</th>
             </tr>
           </thead>
           <tbody class="text-center">
             <?php foreach ($schedule as $hour => $days) { ?>
               <tr>
-                <td class="p-2 bg-gray-200 border border-gray-300 text-gray-700 font-bold"><?= $hour ?></td>
+                <td class="p-2"><?= $hour ?></td>
                 <?php foreach ($days as $day => $class) { ?>
-                  <td class="p-2 border border-gray-300">
+                  <td class="p-2">
                     <?php if ($class) { ?>
-                      <span class="block text-base font-bold"><?= $class['subject'] ?></span>
-                      <span class="block text-xs text-gray-700"><?= $class['group'] ?></span>
-                      <span class="block text-xs text-gray-700"><?= $class['classroom'] ?></span>
+                      <span class="block"><?= $class['subject'] ?></span>
+                      <span class="block text-sm"><?= $class['group'] ?></span>
+                      <span class="block text-sm"><?= $class['classroom'] ?></span>
                     <?php } ?>
                   </td>
                 <?php } ?>
@@ -83,7 +83,6 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
       </section>
     </article>
   </main>
-
 
   <footer class="w-full max-w-screen-xl p-4 mx-auto border-gray-300 border-t-2 flex flex-col md:flex-row justify-center md:items-center md:justify-between gap-y-4 mt-8">
     <span>CETis No. 121 Sahuayo, Michoacán.</span>

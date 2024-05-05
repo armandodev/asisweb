@@ -5,6 +5,40 @@ session_start();
 
 define('BASE_URL', 'http://localhost/asisweb/');
 define('EMAIL_FROM', 'no-reply@localhost');
+define('HOURS', [
+  [
+    'hour' => '7:00 - 8:00',
+    'start' => '07:00:00'
+  ],
+  [
+    'hour' => '8:00 - 9:00',
+    'start' => '08:00:00'
+  ],
+  [
+    'hour' => '9:00 - 10:00',
+    'start' => '09:00:00'
+  ],
+  [
+    'hour' => '10:00 - 11:00',
+    'start' => '10:00:00'
+  ],
+  [
+    'hour' => '11:00 - 12:00',
+    'start' => '11:00:00'
+  ],
+  [
+    'hour' => '12:00 - 13:00',
+    'start' => '12:00:00'
+  ],
+  [
+    'hour' => '13:00 - 14:00',
+    'start' => '13:00:00'
+  ],
+  [
+    'hour' => '14:00 - 15:00',
+    'start' => '14:00:00'
+  ],
+]);
 
 if (isset($_SESSION['user'])) {
   try {
