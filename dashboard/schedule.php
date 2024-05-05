@@ -22,9 +22,9 @@ $user_id = $_GET['id'];
 $schedule = getSchedule($user_id, $db);
 
 $subjects = $db->execute('SELECT subject_id, subject_name, initialism FROM subjects ORDER BY subject_name')->fetchAll(PDO::FETCH_ASSOC);
-array_unshift($subjects, ['subject_id' => '', 'subject_name' => 'Selecciona una materia', 'initialism' => '']);
-$groups = $db->execute('SELECT career_name, abbreviation, group_semester, group_letter FROM groups INNER JOIN careers ON groups.career_id = careers.career_id ORDER BY group_semester, group_letter')->fetchAll(PDO::FETCH_ASSOC);
-array_unshift($groups, ['career_name' => '', 'abbreviation' => '', 'group_semester' => '', 'group_letter' => '']);
+array_unshift($subjects, ['subject_id' => '', 'subject_name' => '', 'initialism' => '']);
+$groups = $db->execute('SELECT career_name, abbreviation, group_semester, group_letter, group_id FROM groups INNER JOIN careers ON groups.career_id = careers.career_id ORDER BY group_semester, group_letter')->fetchAll(PDO::FETCH_ASSOC);
+array_unshift($groups, ['group_id' => '', 'group_semester' => '', 'group_letter' => '', 'career_name' => '', 'abbreviation' => '']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,17 +87,18 @@ array_unshift($groups, ['career_name' => '', 'abbreviation' => '', 'group_semest
                     <td class="p-2 border border-gray-300">
                       <div class="flex flex-col gap-2">
                         <?php if ($class) { ?>
-                          <input type="hidden" name="id" value="<?= $class['id'] ?>">
-                          <select name="subject" class="w-full p-1 border border-gray-300 rounded-md">
+                          <input type="hidden" name="id[]" value="<?= $class['id'] ?>">
+                          <input type="hidden" name="start_time[]" value="<?= $class['start_time'] ?>">
+                          <select name="subject[]" class="w-full p-1 border border-gray-300 rounded-md">
                             <?php foreach ($subjects as $subject) { ?>
                               <option value="<?= $subject['subject_id'] ?>" <?= ($subject['initialism'] ? $subject['initialism'] : $subject['subject_name']) === $class['subject'] ? 'selected' : '' ?>>
                                 <?= $subject['initialism'] ? $subject['initialism'] : $subject['subject_name'] ?>
                               </option>
                             <?php } ?>
                           </select>
-                          <select name="group" class="w-full p-1 border border-gray-300 rounded-md">
+                          <select name="group[]" class="w-full p-1 border border-gray-300 rounded-md">
                             <?php foreach ($groups as $group) { ?>
-                              <option value="<?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) ?>" <?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) === $class['group'] ? 'selected' : '' ?>>
+                              <option value="<?= $group['group_id'] ?>" <?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) === $class['group'] ? 'selected' : '' ?>>
                                 <?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) ?>
                               </option>
                             <?php } ?>
@@ -111,7 +112,8 @@ array_unshift($groups, ['career_name' => '', 'abbreviation' => '', 'group_semest
             </tbody>
           </table>
 
-          <button class="w-full p-2 mt-4 bg-blue-500 text-white rounded-md" type="submit">Guardar</button>
+          <input type="hidden" name="user_id" value="<?= $user_id ?>">
+          <input class="w-full p-2 mt-4 bg-blue-500 text-white rounded-md cursor-pointer" type="submit" value="Guardar cambios">
         </form>
       </section>
     </article>
