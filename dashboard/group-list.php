@@ -1,5 +1,6 @@
 <?php
 require_once './../config.php';
+require_once './../api/group/get.php';
 
 if (!isset($_SESSION['user'])) {
   header('Location: ./../');
@@ -11,23 +12,17 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
-$limit = 15;
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-
-$total_groups = $db->execute('SELECT COUNT(*) FROM groups WHERE group_semester LIKE :search OR group_letter LIKE :search OR classroom LIKE :search', ['search' => "%$search%"]);
-$total_groups = $total_groups->fetchColumn();
-$total_pages = ceil($total_groups / $limit);
-$total_pages = $total_pages ? $total_pages : 1;
-
-$groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset");
-
-if ($groups->rowCount() === 0) {
-  $empty = true;
+if (!$_SERVER['REQUEST_METHOD'] === 'GET' || !isset($_GET['id'])) {
+  header('Location: ./groups.php');
+  exit();
 }
 
-$groups = $groups->fetchAll(PDO::FETCH_ASSOC);
+$group_id = $_GET['id'];
+
+$students = getGroupList($group_id, $db);
+if (count($students) === 0) {
+  $empty = true;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -35,7 +30,7 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grupos | Docentes CETis 121</title>
+  <title>Docentes | Docentes CETis 121</title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -68,45 +63,35 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-    <article class="article container overflow-x-scroll">
-      <form class="flex gap-4" method="GET" class="mb-4">
-        <input class="input" type="search" name="search" placeholder="Grado o Grupo" value="<?= $search ?>">
-        <button class="button" type="submit">Buscar</button>
-      </form>
+    <article class="article container">
       <section class="overflow-x-scroll">
         <table class="w-full mt-4 border border-gray-300 text-nowrap">
           <thead class="bg-gray-200 text-gray-700">
             <tr>
-              <th class="p-2">Salón</th>
-              <th class="p-2">Grado y grupo</th>
-              <th class="p-2">Periodo</th>
-              <th class="p-2">Tutor</th>
+              <th class="p-2">No. Control</th>
+              <th class="p-2">CURP</th>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Generación</th>
               <th class="p-2">Acciones</th>
             </tr>
           </thead>
           <tbody class="text-center">
             <?php if (isset($empty)) : ?>
               <tr>
-                <td class="p-2" colspan="6">No hay docentes registrados.</td>
+                <td class="p-2" colspan="6">No hay alumnos registrados.</td>
               </tr>
             <?php else : ?>
-              <?php foreach ($groups as $group) : ?>
+              <?php foreach ($students as $student) : ?>
                 <tr class="border-t border-gray-300">
-                  <td class="p-2"><?= $group['classroom'] ?></td>
-                  <td class="p-2"><?= $group['group_semester'] . $group['group_letter'] . ' ' . $group['career_name'] ?></td>
-                  <td class="p-2"><?= $group['period'] ?></td>
-                  <td class="p-2"><?= $group['first_name'] . ' ' . $group['last_name'] ?></td>
+                  <td class="p-2"><?= $student['control_number'] ?></td>
+                  <td class="p-2"><?= $student['curp'] ?></td>
+                  <td class="p-2"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
+                  <td class="p-2"><?= $student['generation'] ?></td>
                   <td class="flex justify-center gap-2 p-2">
-                    <a class="btn w-6" href="./group-list.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/list.svg" alt="Listas">
-                    </a>
-                    <a class="btn w-6" href="./group-schedule.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/schedule.svg" alt="Horario">
-                    </a>
-                    <a class="btn w-6" href="./edit-group.php?id=<?= $group['group_id'] ?>">
+                    <a class="btn w-8" href="./edit-student.php?id=<?= $student['control_number'] ?>">
                       <img src="./../icons/edit.svg" alt="Editar">
                     </a>
-                    <a class="btn w-6" href="./delete-group.php?id=<?= $group['group_id'] ?>">
+                    <a class="btn w-8" href="./delete-student.php?id=<?= $student['control_number'] ?>">
                       <img src="./../icons/delete.svg" alt="Eliminar">
                     </a>
                   </td>
@@ -115,24 +100,6 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
           </tbody>
         </table>
-      </section>
-      <section class="flex justify-center mt-4">
-        <ul class="flex gap-2">
-          <?php if ($page > 1) : ?>
-            <li>
-              <a class="btn" href="?page=<?= $page - 1 ?>">
-                < Anterior </a>
-            </li>
-          <?php endif; ?>
-          <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
-          <?php if ($page < $total_pages) : ?>
-            <li>
-              <a class="btn" href="?page=<?= $page + 1 ?>">
-                Siguiente >
-              </a>
-            </li>
-          <?php endif; ?>
-        </ul>
       </section>
     </article>
   </main>

@@ -1,7 +1,7 @@
 <?php
 function getSchedule($user_id, $db)
 {
-  $sql = 'SELECT start_time, subject_name, initialism, group_semester, group_letter, career_name, abbreviation, classroom, day FROM schedule
+  $sql = 'SELECT schedule_id, start_time, subject_name, initialism, group_semester, group_letter, career_name, abbreviation, classroom, day FROM schedule
           INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
           INNER JOIN groups ON schedule.group_id = groups.group_id
           INNER JOIN careers ON groups.career_id = careers.career_id
@@ -29,12 +29,14 @@ function getSchedule($user_id, $db)
     $classes = $result->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($classes as $class) {
+      $schedule_id = $class['schedule_id'];
       $day = $class['day'];
       $subject = $class['initialism'] ? $class['initialism'] : $class['subject_name'];
-      $group = $class['group_semester'] . $class['group_letter'] . ' - ' . ($class['abbreviation'] ? $class['abbreviation'] : $class['career_name']);
+      $group = $class['group_semester'] . $class['group_letter'] . ' ' . ($class['abbreviation'] ? $class['abbreviation'] : $class['career_name']);
       $classroom = $class['classroom'];
 
       $schedule[$class_hour][$day] = [
+        "id" => $schedule_id,
         'subject' => $subject,
         'group' => $group,
         'classroom' => "Aula $classroom"
@@ -50,6 +52,7 @@ function getSchedule($user_id, $db)
 
       if ($schedule[$class_hour][$day] === '') {
         $schedule[$class_hour][$day] = [
+          "id" => $schedule_id,
           'subject' => $subject,
           'group' => '',
           'classroom' => ''

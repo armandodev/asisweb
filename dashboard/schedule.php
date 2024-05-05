@@ -20,6 +20,11 @@ if (!$_SERVER['REQUEST_METHOD'] === 'GET' || !isset($_GET['id'])) {
 $user_id = $_GET['id'];
 
 $schedule = getSchedule($user_id, $db);
+
+$subjects = $db->execute('SELECT subject_id, subject_name, initialism FROM subjects ORDER BY subject_name')->fetchAll(PDO::FETCH_ASSOC);
+array_unshift($subjects, ['subject_id' => '', 'subject_name' => 'Selecciona una materia', 'initialism' => '']);
+$groups = $db->execute('SELECT career_name, abbreviation, group_semester, group_letter FROM groups INNER JOIN careers ON groups.career_id = careers.career_id ORDER BY group_semester, group_letter')->fetchAll(PDO::FETCH_ASSOC);
+array_unshift($groups, ['career_name' => '', 'abbreviation' => '', 'group_semester' => '', 'group_letter' => '']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -62,34 +67,52 @@ $schedule = getSchedule($user_id, $db);
   <main>
     <article class="article container flex flex-col">
       <section class="overflow-x-scroll">
-        <table class="w-full mt-4 border border-gray-300 text-nowrap">
-          <thead class="bg-gray-200 text-gray-700">
-            <tr>
-              <th class="p-2 border border-gray-300">Hora</th>
-              <th class="p-2 border border-gray-300">Lunes</th>
-              <th class="p-2 border border-gray-300">Martes</th>
-              <th class="p-2 border border-gray-300">Miércoles</th>
-              <th class="p-2 border border-gray-300">Jueves</th>
-              <th class="p-2 border border-gray-300">Viernes</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            <?php foreach ($schedule as $hour => $days) { ?>
+        <form action="./../api/schedule/update.php" method="POST">
+          <table class="w-full mt-4 border border-gray-300 text-nowrap">
+            <thead class="bg-gray-200 text-gray-700">
               <tr>
-                <td class="p-2 bg-gray-200 border border-gray-300 text-gray-700 font-bold"><?= $hour ?></td>
-                <?php foreach ($days as $day => $class) { ?>
-                  <td class="p-2 border border-gray-300">
-                    <?php if ($class) { ?>
-                      <span class="block text-base font-bold"><?= $class['subject'] ?></span>
-                      <span class="block text-xs text-gray-700"><?= $class['group'] ?></span>
-                      <span class="block text-xs text-gray-700"><?= $class['classroom'] ?></span>
-                    <?php } ?>
-                  </td>
-                <?php } ?>
+                <th class="p-2 border border-gray-300">Hora</th>
+                <th class="p-2 border border-gray-300">Lunes</th>
+                <th class="p-2 border border-gray-300">Martes</th>
+                <th class="p-2 border border-gray-300">Miércoles</th>
+                <th class="p-2 border border-gray-300">Jueves</th>
+                <th class="p-2 border border-gray-300">Viernes</th>
               </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="text-center">
+              <?php foreach ($schedule as $hour => $days) { ?>
+                <tr>
+                  <td class="p-2 bg-gray-200 border border-gray-300 text-gray-700 font-bold"><?= $hour ?></td>
+                  <?php foreach ($days as $day => $class) { ?>
+                    <td class="p-2 border border-gray-300">
+                      <div class="flex flex-col gap-2">
+                        <?php if ($class) { ?>
+                          <input type="hidden" name="id" value="<?= $class['id'] ?>">
+                          <select name="subject" class="w-full p-1 border border-gray-300 rounded-md">
+                            <?php foreach ($subjects as $subject) { ?>
+                              <option value="<?= $subject['subject_id'] ?>" <?= ($subject['initialism'] ? $subject['initialism'] : $subject['subject_name']) === $class['subject'] ? 'selected' : '' ?>>
+                                <?= $subject['initialism'] ? $subject['initialism'] : $subject['subject_name'] ?>
+                              </option>
+                            <?php } ?>
+                          </select>
+                          <select name="group" class="w-full p-1 border border-gray-300 rounded-md">
+                            <?php foreach ($groups as $group) { ?>
+                              <option value="<?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) ?>" <?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) === $class['group'] ? 'selected' : '' ?>>
+                                <?= $group['group_semester'] . $group['group_letter'] . ' ' . ($group['abbreviation'] ? $group['abbreviation'] : $group['career_name']) ?>
+                              </option>
+                            <?php } ?>
+                          </select>
+                        <?php } ?>
+                      </div>
+                    </td>
+                  <?php } ?>
+                </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+
+          <button class="w-full p-2 mt-4 bg-blue-500 text-white rounded-md" type="submit">Guardar</button>
+        </form>
       </section>
     </article>
   </main>
