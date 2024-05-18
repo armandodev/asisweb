@@ -17,12 +17,12 @@ $offset = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 
-$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects WHERE subject_name LIKE :search', ['search' => "%$search%"]);
+$total_subjects = $db->execute('SELECT COUNT(*) FROM subjects WHERE subject_name LIKE :search OR initialism LIKE :search', ['search' => "%$search%"]);
 $total_subjects = $total_subjects->fetchColumn();
 $total_pages = ceil($total_subjects / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$subjects = $db->execute("SELECT * FROM subjects LIMIT $limit OFFSET $offset");
+$subjects = $db->execute("SELECT * FROM subjects WHERE subject_name LIKE :search OR initialism LIKE :search LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
 
 if ($subjects->rowCount() === 0) {
   $empty = true;
@@ -86,7 +86,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           <tbody class="text-center">
             <?php if (isset($empty)) : ?>
               <tr>
-                <td class="p-2" colspan="2">No hay materias registradas</td>
+                <td class="p-2" colspan="3">No hay materias registradas</td>
               </tr>
             <?php else : ?>
               <?php foreach ($subjects as $subject) : ?>

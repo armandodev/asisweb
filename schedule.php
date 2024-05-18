@@ -73,6 +73,11 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
                       <span class="block text-base font-bold"><?= $class['subject'] ?></span>
                       <span class="block text-xs text-gray-700"><?= $class['group'] ?></span>
                       <span class="block text-xs text-gray-700"><?= $class['classroom'] ?></span>
+                      <?php if ($class['group_id']) { ?>
+                        <a href="./take-attendance.php?id=<?= $class['group_id'] ?>" class="w-full text-center text-xs bg-gray-200 hover:bg-gray-300 rounded-md p-2 text-gray-700 hover:text-gray-900 transition-all duration-200 mt-2 block">
+                          Tomar asistencia
+                        </a>
+                      <?php } ?>
                     <?php } ?>
                   </td>
                 <?php } ?>

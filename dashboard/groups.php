@@ -21,7 +21,7 @@ $total_groups = $total_groups->fetchColumn();
 $total_pages = ceil($total_groups / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset");
+$groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id WHERE group_semester LIKE :search OR career_name LIKE :search ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
 
 if ($groups->rowCount() === 0) {
   $empty = true;
@@ -70,7 +70,7 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
   <main>
     <article class="article container overflow-x-scroll">
       <form class="flex gap-4" method="GET" class="mb-4">
-        <input class="input" type="search" name="search" placeholder="Grado o Grupo" value="<?= $search ?>">
+        <input class="input" type="search" name="search" placeholder="Semestre o carrera" value="<?= $search ?>">
         <button class="button" type="submit">Buscar</button>
       </form>
       <section class="overflow-x-scroll">
@@ -87,7 +87,7 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
           <tbody class="text-center">
             <?php if (isset($empty)) : ?>
               <tr>
-                <td class="p-2" colspan="6">No hay docentes registrados.</td>
+                <td class="p-2" colspan="6">No hay grupos registrados.</td>
               </tr>
             <?php else : ?>
               <?php foreach ($groups as $group) : ?>

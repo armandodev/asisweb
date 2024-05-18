@@ -87,7 +87,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC);
           <tbody class="text-center">
             <?php if (isset($empty)) : ?>
               <tr>
-                <td class="p-2" colspan="6">No hay docentes registrados.</td>
+                <td class="p-2" colspan="6">No hay alumnos registrados.</td>
               </tr>
             <?php else : ?>
               <?php foreach ($students as $student) : ?>
