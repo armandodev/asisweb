@@ -117,16 +117,21 @@ create table
 create table
   if not exists `attendance` (
     `attendance_id` int (11) not null auto_increment primary key,
-    `user_id` int (11) not null,
-    `schedule_id` int (11) not null,
     `control_number` varchar(14) not null,
-    `datetime` datetime not null,
     `status` enum ('Presente', 'Ausente', 'Retardo', 'Justificado') not null,
+    `report_id` int (11) null,
+    foreign key (`report_id`) references `reports` (`report_id`) on delete cascade
+  ) engine = InnoDB default charset = utf8;
+
+-- Table: `reports` (Reportes) (Reportes de los grupos)
+create table
+  if not exists `reports` (
+    `report_id` int (11) not null auto_increment primary key,
+    `datetime` datetime not null default current_timestamp,
+    `schedule_id` int (11) not null,
     `created_at` datetime not null default current_timestamp,
     `updated_at` datetime not null default current_timestamp on update current_timestamp,
-    foreign key (`user_id`) references `users` (`user_id`) on delete cascade,
-    foreign key (`schedule_id`) references `schedule` (`schedule_id`) on delete cascade,
-    foreign key (`control_number`) references `students` (`control_number`) on delete cascade
+    foreign key (`schedule_id`) references `schedule` (`schedule_id`) on delete cascade
   ) engine = InnoDB default charset = utf8;
 
 -- Trigger `password_reset_expiration` (Restablecimiento de contraseña) (Establece la fecha de expiración de los tokens en 5 minutos después de la creación)
