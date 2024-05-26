@@ -11,6 +11,32 @@ if ($_SESSION['user']['role'] !== 'Administrador') {
   exit();
 }
 
+require_once './../config.php';
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrador') {
+  header('Location: ./../');
+  exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['add'])) {
+    $subject_name = $_POST['subject_name'];
+    $initialism = $_POST['initialism'];
+
+    $db->execute('INSERT INTO subjects (subject_name, initialism) VALUES (:subject_name, :initialism)', ['subject_name' => $subject_name, 'initialism' => $initialism]);
+  } elseif (isset($_POST['edit'])) {
+    $subject_id = $_POST['subject_id'];
+    $subject_name = $_POST['subject_name'];
+    $initialism = $_POST['initialism'];
+
+    $db->execute('UPDATE subjects SET subject_name = :subject_name, initialism = :initialism WHERE subject_id = :subject_id', ['subject_name' => $subject_name, 'initialism' => $initialism, 'subject_id' => $subject_id]);
+  } elseif (isset($_POST['delete'])) {
+    $subject_id = $_POST['subject_id'];
+
+    $db->execute('DELETE FROM subjects WHERE subject_id = :subject_id', ['subject_id' => $subject_id]);
+  }
+}
+
 $limit = 15;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -32,6 +58,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
+  
 
 <head>
   <meta charset="UTF-8">
@@ -69,6 +96,53 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
+  <div class="flex justify-center space-x-6">
+  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
+    <form action="" method="post">
+      <h2 class="text-2xl font-semibold mb-4">Agregar nueva materia</h2>
+      <div class="mb-4">
+        <label for="add_subject_name" class="block text-gray-700">Nombre de la materia:</label>
+        <input type="text" id="add_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <div class="mb-4">
+        <label for="add_initialism" class="block text-gray-700">Inicialización:</label>
+        <input type="text" id="add_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <button type="submit" name="add" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Agregar</button>
+    </form>
+  </div>
+
+  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
+    <form action="" method="post">
+      <h2 class="text-2xl font-semibold mb-4">Editar materia</h2>
+      <div class="mb-4">
+        <label for="edit_subject_id" class="block text-gray-700">ID de la materia:</label>
+        <input type="number" id="edit_subject_id" name="subject_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <div class="mb-4">
+        <label for="edit_subject_name" class="block text-gray-700">Nuevo nombre de la materia:</label>
+        <input type="text" id="edit_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <div class="mb-4">
+        <label for="edit_initialism" class="block text-gray-700">Nueva inicialización:</label>
+        <input type="text" id="edit_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <button type="submit" name="edit" class="w-full bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600">Editar</button>
+    </form>
+  </div>
+
+  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
+    <form action="" method="post">
+      <h2 class="text-2xl font-semibold mb-4">Eliminar materia</h2>
+      <div class="mb-4">
+        <label for="delete_subject_id" class="block text-gray-700">ID de la materia:</label>
+        <input type="number" id="delete_subject_id" name="subject_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      </div>
+      <button type="submit" name="delete" class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600">Eliminar</button>
+    </form>
+  </div>
+</div>
+
     <article class="article container">
       <form class="flex gap-4" method="GET" class="mb-4">
         <input class="input" type="search" name="search" placeholder="Materia" value="<?= $search ?>">
