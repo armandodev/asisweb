@@ -58,7 +58,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
-  
+
 
 <head>
   <meta charset="UTF-8">
@@ -96,52 +96,41 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
   </header>
 
   <main>
-  <div class="flex justify-center space-x-6">
-  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
-    <form action="" method="post">
-      <h2 class="text-2xl font-semibold mb-4">Agregar nueva materia</h2>
-      <div class="mb-4">
-        <label for="add_subject_name" class="block text-gray-700">Nombre de la materia:</label>
-        <input type="text" id="add_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+    <div class="flex justify-center space-x-6">
+      <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
+        <form action="" method="post">
+          <h2 class="text-2xl font-semibold mb-4">Agregar nueva materia</h2>
+          <div class="mb-4">
+            <label for="add_subject_name" class="block text-gray-700">Nombre de la materia:</label>
+            <input type="text" id="add_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div class="mb-4">
+            <label for="add_initialism" class="block text-gray-700">Inicialización:</label>
+            <input type="text" id="add_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <button type="submit" name="add" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Agregar</button>
+        </form>
       </div>
-      <div class="mb-4">
-        <label for="add_initialism" class="block text-gray-700">Inicialización:</label>
-        <input type="text" id="add_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
-      </div>
-      <button type="submit" name="add" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Agregar</button>
-    </form>
-  </div>
 
-  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
-    <form action="" method="post">
-      <h2 class="text-2xl font-semibold mb-4">Editar materia</h2>
-      <div class="mb-4">
-        <label for="edit_subject_id" class="block text-gray-700">ID de la materia:</label>
-        <input type="number" id="edit_subject_id" name="subject_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+      <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
+        <form action="" method="post">
+          <h2 class="text-2xl font-semibold mb-4">Editar materia</h2>
+          <div class="mb-4">
+            <label for="edit_subject_id" class="block text-gray-700">ID de la materia:</label>
+            <input type="number" id="edit_subject_id" name="subject_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div class="mb-4">
+            <label for="edit_subject_name" class="block text-gray-700">Nuevo nombre de la materia:</label>
+            <input type="text" id="edit_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div class="mb-4">
+            <label for="edit_initialism" class="block text-gray-700">Nueva inicialización:</label>
+            <input type="text" id="edit_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <button type="submit" name="edit" class="w-full bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600">Editar</button>
+        </form>
       </div>
-      <div class="mb-4">
-        <label for="edit_subject_name" class="block text-gray-700">Nuevo nombre de la materia:</label>
-        <input type="text" id="edit_subject_name" name="subject_name" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
-      </div>
-      <div class="mb-4">
-        <label for="edit_initialism" class="block text-gray-700">Nueva inicialización:</label>
-        <input type="text" id="edit_initialism" name="initialism" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
-      </div>
-      <button type="submit" name="edit" class="w-full bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600">Editar</button>
-    </form>
-  </div>
-
-  <div class="flex-grow max-w-md p-6 bg-white rounded-lg shadow-md">
-    <form action="" method="post">
-      <h2 class="text-2xl font-semibold mb-4">Eliminar materia</h2>
-      <div class="mb-4">
-        <label for="delete_subject_id" class="block text-gray-700">ID de la materia:</label>
-        <input type="number" id="delete_subject_id" name="subject_id" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
-      </div>
-      <button type="submit" name="delete" class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600">Eliminar</button>
-    </form>
-  </div>
-</div>
+    </div>
 
     <article class="article container">
       <form class="flex gap-4" method="GET" class="mb-4">
@@ -171,7 +160,7 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
                     <a class="btn w-8" href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
                       <img src="./../icons/edit.svg" alt="Editar">
                     </a>
-                    <a class="btn w-8" href="./delete-subject.php?id=<?= $subject['subject_id'] ?>">
+                    <a class="btn w-8" href="./../api/subject.php?action=delete&id=<?= $subject['subject_id'] ?>">
                       <img src="./../icons/delete.svg" alt="Eliminar">
                     </a>
                   </td>
