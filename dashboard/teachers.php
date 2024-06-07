@@ -16,12 +16,12 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_users = $db->execute('SELECT COUNT(*) FROM users WHERE first_name LIKE :search OR last_name LIKE :search OR role LIKE :search OR status LIKE :search', ['search' => "%$search%"]);
+$total_users = $db->execute('SELECT COUNT(*) FROM users WHERE name LIKE :search OR role LIKE :search OR status LIKE :search', ['search' => "%$search%"]);
 $total_users = $total_users->fetchColumn();
 $total_pages = ceil($total_users / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$users = $db->execute("SELECT * FROM users WHERE first_name LIKE :search OR last_name LIKE :search OR role LIKE :search OR status LIKE :search ORDER BY role DESC, first_name ASC, last_name ASC LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
+$users = $db->execute("SELECT * FROM users WHERE name LIKE :search OR role LIKE :search OR status LIKE :search ORDER BY role DESC, name ASC LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
 
 if ($users->rowCount() === 0) {
   $empty = true;
@@ -93,7 +93,7 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
             <?php else : ?>
               <?php foreach ($users as $user) : ?>
                 <tr class="border-t border-gray-300">
-                  <td class="p-2"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
+                  <td class="p-2"><?= $user['name']  ?></td>
                   <td class="p-2"><?= $user['email'] ?></td>
                   <td class="p-2"><?= $user['tel'] ?></td>
                   <td class="p-2"><?= $user['role'] ?></td>

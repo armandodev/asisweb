@@ -4,7 +4,7 @@ require_once __DIR__ . '/api/db/utils.php';
 session_start();
 
 define('BASE_URL', 'http://localhost/asisweb/');
-define('EMAIL_FROM', 'no-reply@localhost');
+define('EMAIL_FROM', 'no-reply@localhost.com');
 define('HOURS', [
   [
     'hour' => '7:00 - 8:00',
@@ -40,9 +40,10 @@ define('HOURS', [
   ],
 ]);
 
+$db = new Database();
+
 if (isset($_SESSION['user'])) {
   try {
-    $db = new Database();
     $sql = 'SELECT * FROM users WHERE user_id = :id';
     $result = $db->execute($sql, ['id' => $_SESSION['user']['user_id']]);
 
