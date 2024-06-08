@@ -2,7 +2,6 @@
 require_once './../config.php';
 
 if (isset($_SESSION['user'])) {
-  header('HTTP/1.1 301 Moved Permanently');
   header('Location: ./../../');
   exit();
 }
@@ -15,7 +14,6 @@ try {
 
     $result = $db->fetch('SELECT user_id FROM email_codes WHERE code = :code AND expires_at > NOW()', [':code' => $code]);
     if (!$result) {
-      header('HTTP/1.1 400');
       $_SESSION['verify-email-error'] = "El código no es válido, ya ha sido utilizado o expiró";
       header('Location: ./../verify-email.php');
       exit();
@@ -25,13 +23,11 @@ try {
 
     $user = $db->fetch('SELECT email, status FROM users WHERE user_id = :user_id LIMIT 1', [':user_id' => $user_id]);
     if (!$user) {
-      header('HTTP/1.1 400');
       $_SESSION['verify-email-error'] = "El email no está registrado";
       header('Location: ./../verify-email.php');
       exit();
     }
     if ($user['status'] === 0) {
-      header('HTTP/1.1 400');
       $_SESSION['verify-email-error'] = "El usuario está inactivo";
       header('Location: ./../verify-email.php');
       exit();
@@ -68,10 +64,8 @@ try {
   $_SESSION['user'] = $user;
   $_SESSION['welcome'] = true;
 
-  header('HTTP/1.1 200 OK');
   header('Location: ./../profile.php');
 } catch (Exception $e) {
-  header('HTTP/1.1 ' . $e->getCode());
   $_SESSION['login-error'] = $e->getMessage();
   header('Location: ./../login.php');
   exit();

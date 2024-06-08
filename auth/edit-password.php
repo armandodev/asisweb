@@ -37,10 +37,7 @@ try {
   $result = $db->execute($sql, ['password' => password_hash($password, PASSWORD_DEFAULT), 'user_id' => $_SESSION['user']['user_id']]);
 
   if (!$result) throw new Exception('No se pudo actualizar la contraseña', 500);
-
-  header('HTTP/1.1 200 OK');
 } catch (Exception $e) {
-  header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
   echo $e->getMessage();
   exit();
 }
@@ -51,7 +48,7 @@ try {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Se ha cambiado tu contraseña | Docentes CETis 121</title>
+  <title>Se ha cambiado tu contraseña | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
 
   <link rel="stylesheet" href="./../../css/output.css">
@@ -61,7 +58,7 @@ try {
   <main>
     <article class="container min-h-screen flex gap-8 flex-col justify-center">
       <section>
-        <h1 class="text-5xl sm:text-6xl font-semibold">¡Tu contraseña ha sido cambiada con éxito! <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
+        <h1 class="text-5xl sm:text-6xl font-semibold">¡Tu contraseña ha sido cambiada con éxito! <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes <?= SCHOOL_NAME ?></small></h1>
       </section>
       <a class="button sm:w-fit" href="./../../profile.php">Regresar a tu perfil</a>
     </article>

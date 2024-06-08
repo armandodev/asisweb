@@ -7,6 +7,5 @@ if (!isset($_SESSION['user'])) {
 }
 
 unset($_SESSION['user']);
-header('HTTP/1.1 301 Moved Permanently');
 header('Location: ./login.php');
 exit();

@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editar contraseña | Docentes CETis 121</title>
+  <title>Editar contraseña | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link href="./css/output.css" rel="stylesheet">
@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
   <main>
     <article class="container min-h-screen flex gap-4 flex-col justify-center items-center">
       <section>
-        <h1 class="text-3xl text-center font-semibold">Editar contraseña <small class="block text-xl font-normal text-[#a91f21]">Docentes CETis 121</small></h1>
+        <h1 class="text-3xl text-center font-semibold">Editar contraseña <small class="block text-xl font-normal text-[#a91f21]">Docentes <?= SCHOOL_NAME ?></small></h1>
       </section>
       <section>
         <form class="flex gap-4 flex-col justify-center w-full max-w-screen-sm text-lg" action="./api/auth/edit-password.php" method="post">

@@ -2,7 +2,6 @@
 require_once './config.php';
 
 if (isset($_SESSION['user'])) {
-  header('HTTP/1.1 301 Moved Permanently');
   header('Location: ./profile.php');
   exit();
 }
@@ -13,7 +12,7 @@ if (isset($_SESSION['user'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registro | Docentes CETis 121</title>
+  <title>Registro | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
   <link rel="stylesheet" href="./css/normalize.css">
@@ -24,7 +23,7 @@ if (isset($_SESSION['user'])) {
 <body>
   <main class="container">
     <section>
-      <h1>Registrate<small>Docentes CETis 121</small></h1>
+      <h1>Registrate<small>Docentes <?= SCHOOL_NAME ?></small></h1>
     </section>
     <section>
       <?php if (isset($_SESSION['register-error'])) { ?>

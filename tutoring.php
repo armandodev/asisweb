@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tutorías | Docentes CETis 121</title>
+  <title>Tutorías | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./css/output.css">
@@ -22,8 +22,8 @@ if (!isset($_SESSION['user'])) {
   <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
     <div class="container flex items-center justify-between">
       <a class="flex items-center" href="./profile.php">
-        <img class="w-16 aspect-square" src="./images/logo.webp" alt="Logo de DGTi">
-        <span class="text-xl font-semibold">CETis 121</span>
+        <img class="w-16 aspect-square" src="./images/logo.webp" alt="<?= LOGO_ALT ?>">
+        <span class="text-xl font-semibold"><?= SCHOOL_NAME ?></span>
       </a>
 
       <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
@@ -48,7 +48,7 @@ if (!isset($_SESSION['user'])) {
 
   <main>
     <article class="article container flex flex-col justify-center">
-      <h1 class="text-5xl sm:text-6xl font-semibold">Tutorías <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes CETis 121</small></h1>
+      <h1 class="text-5xl sm:text-6xl font-semibold">Tutorías <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes <?= SCHOOL_NAME ?></small></h1>
     </article>
   </main>
 

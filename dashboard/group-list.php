@@ -30,7 +30,7 @@ if (count($students) === 0) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Docentes | Docentes CETis 121</title>
+  <title>Docentes | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./../css/output.css">
@@ -40,8 +40,8 @@ if (count($students) === 0) {
   <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
     <div class="container flex items-center justify-between">
       <a class="flex items-center" href="./../profile.php">
-        <img class="w-16 aspect-square" src="./../images/logo.webp" alt="Logo de DGTi">
-        <span class="text-xl font-semibold">CETis 121</span>
+        <img class="w-16 aspect-square" src="./../images/logo.webp" alt="<?= LOGO_ALT ?>">
+        <span class="text-xl font-semibold"><?= SCHOOL_NAME ?></span>
       </a>
 
       <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">

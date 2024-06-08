@@ -2,7 +2,6 @@
 require_once './config.php';
 
 if (isset($_SESSION['user'])) {
-  header('HTTP/1.1 301 Moved Permanently');
   header('Location: ./profile.php');
   exit();
 }
@@ -29,7 +28,7 @@ if (!isset($_SESSION['verify-email-error'])) {
 
     $to = $email;
     $subject = 'Verificación de inicio de sesión';
-    $message = "Hola $user[name],<br />Para iniciar sesión en Docentes CETis 121, por favor ingrese el código de verificación que te hemos enviado a tu correo electrónico:<br />$code<br />No te olvides que el código es único y no puedes reutilizarlo, este código expirará en 5 minutos.<br />Si no solicitaste este enlace, ignora este mensaje.<br />Atentamente,<br />Docentes CETis 121<br />";
+    $message = "Hola $user[name],<br />Para iniciar sesión en Docentes ". SCHOOL_NAME .", por favor ingrese el código de verificación que te hemos enviado a tu correo electrónico:<br />$code<br />No te olvides que el código es único y no puedes reutilizarlo, este código expirará en 5 minutos.<br />Si no solicitaste este enlace, ignora este mensaje.<br />Atentamente,<br />Docentes ". SCHOOL_NAME ."<br />";
     $headers = [
       'MIME-Version: 1.0',
       'Content-type: text/html; charset=utf-8',
@@ -44,7 +43,6 @@ if (!isset($_SESSION['verify-email-error'])) {
     $db->execute('INSERT INTO email_codes (user_id, code) VALUES (:user_id, :code)', [':user_id' => $user['user_id'], ':code' => $code]);
   } catch (Exception $e) {
     $_SESSION['send-email-error'] = $e->getMessage();
-    header('HTTP/1.1 ' . $e->getCode());
     header('Location: ../send-email.php');
   }
 }
@@ -55,7 +53,7 @@ if (!isset($_SESSION['verify-email-error'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificación de correo electrónico | Docentes CETis 121</title>
+  <title>Verificación de correo electrónico | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./css/normalize.css">
@@ -66,7 +64,7 @@ if (!isset($_SESSION['verify-email-error'])) {
 <body>
   <main class="container">
     <section>
-      <h1>Verificación de correo electrónico<small>Docentes CETis 121</small></h1>
+      <h1>Verificación de correo electrónico<small>Docentes <?= SCHOOL_NAME ?></small></h1>
     </section>
     <section>
       <?php if (isset($_SESSION['verify-email-error'])) { ?>

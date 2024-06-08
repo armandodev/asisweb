@@ -2,7 +2,6 @@
 require_once './config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('HTTP/1.1 301 Moved Permanently');
   header('Location: ./login.php');
   exit();
 }
@@ -16,7 +15,7 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi perfil | Docentes CETis 121</title>
+  <title>Mi perfil | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="./css/normalize.css">
@@ -128,8 +127,8 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
   <header id="top-header">
     <div class="container">
       <a class="logo" href="./profile.php">
-        <img src="./images/logo.webp" alt="Logo de DGTi">
-        <strong>CETis 121</strong>
+        <img src="./images/logo.webp" alt="<?= LOGO_ALT ?>">
+        <strong><?= SCHOOL_NAME ?></strong>
       </a>
 
       <nav id="menu">

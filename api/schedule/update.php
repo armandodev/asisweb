@@ -48,13 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   }
 
-  // Redirigir de vuelta a la página de horario con un mensaje de éxito
-  header('HTTP/1.1 200 OK');
   echo 'Datos actualizados correctamente';
   exit();
 } else {
-  // Si la solicitud no es POST, responder con un error 405 Method Not Allowed
-  header('HTTP/1.1 405 Method Not Allowed');
   echo 'Método no permitido';
   exit();
 }

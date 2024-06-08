@@ -3,7 +3,8 @@ require_once __DIR__ . '/api/db/utils.php';
 
 session_start();
 
-define('BASE_URL', 'http://localhost/asisweb/');
+define('SCHOOL_NAME', 'CETis 121');
+define('LOGO_ALT', 'Logo de DGTi');
 define('EMAIL_FROM', 'no-reply@localhost.com');
 define('HOURS', [
   [
@@ -44,8 +45,8 @@ $db = new Database();
 
 if (isset($_SESSION['user'])) {
   try {
-    $sql = 'SELECT * FROM users WHERE user_id = :id';
-    $result = $db->execute($sql, ['id' => $_SESSION['user']['user_id']]);
+    $sql = 'SELECT * FROM users WHERE user_id = :user_id';
+    $result = $db->execute($sql, [':user_id' => $_SESSION['user']['user_id']]);
 
     if ($result->rowCount() === 0) throw new Exception('Tu cuenta ha sido desactivada o eliminada', 403);
     $user = $result->fetch(PDO::FETCH_ASSOC);
@@ -56,7 +57,6 @@ if (isset($_SESSION['user'])) {
     session_destroy();
     session_start();
     $_SESSION['login-error'] = $e->getMessage();
-    header('HTTP/1.1' . $e->getCode());
     header('Location: ./login.php');
     exit();
   }
