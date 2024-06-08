@@ -24,42 +24,24 @@ try {
 
   $result = $db->fetch('SELECT password, status FROM users WHERE email = :email', ['email' => $email]);
   if (!$result) throw new Exception('El usuario no existe', 400);
-  if ($result['status'] === 'Inactivo') throw new Exception('El usuario está inactivo', 400);
-  if (!password_verify($password, $result['password'])) throw new Exception('La contraseña es incorrecta', 400);
+  if ($result['status'] === 0) throw new Exception('El usuario está inactivo', 400);
+
+  // Este pedazo de código es temporal, solo en lo que las contraseñas actuales de les apliquen el hash, de no hacerlo así se indicaría que la contraseña es incorrecta a pesar de que sea correcta.
+  if ($password === $result['password']) {
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $db->execute('UPDATE users SET password = :password WHERE email = :email', [':password' => $hashed_password, ':email' => $email]);
+  } else if (!password_verify($password, $result['password'])) throw new Exception('La contraseña es incorrecta', 400);
 
   $user = $db->fetch('SELECT user_id, name, email, tel, role FROM users WHERE email = :email', ['email' => $email]);
   if (!$user) throw new Exception('No se pudo obtener la información del usuario', 500);
   $_SESSION['user'] = $user;
+  $_SESSION['welcome'] = true;
 
   header('HTTP/1.1 200 OK');
+  header('Location: ./../profile.php');
 } catch (Exception $e) {
   header('HTTP/1.1 ' . $e->getCode());
   $_SESSION['login-error'] = $e->getMessage();
   header('Location: ./../login.php');
   exit();
 }
-?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio de sesión exitoso | Docentes CETis 121</title>
-  <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon" />
-
-  <link rel="stylesheet" href="./../css/output.css">
-</head>
-
-<body>
-  <main>
-    <article class="container min-h-screen flex gap-8 flex-col justify-center">
-      <section>
-        <h1 class="text-5xl sm:text-6xl font-semibold">Bienvenido(a), <span class="block text-xl sm:text-2xl text-[#a91f21] font-medium"><?= $user['name'] ?></span></h1>
-      </section>
-      <a class="button sm:w-fit" href="./../profile.php">Inicio</a></li>
-    </article>
-  </main>
-</body>
-
-</html>

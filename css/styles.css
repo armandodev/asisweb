@@ -18,3 +18,32 @@ html {
   padding: 0.5rem 1rem;
   box-sizing: border-box;
 }
+
+.button {
+  cursor: pointer;
+  display: block;
+  background: rgb(var(--primary));
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+  text-decoration: none;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid rgb(var(--primary));
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+}
+
+.button-link {
+  cursor: pointer;
+  display: inline-block;
+  background: none;
+  color: rgb(var(--primary));
+  font-size: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  text-decoration: underline;
+  padding: 0;
+  border: none;
+}

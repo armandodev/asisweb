@@ -47,16 +47,17 @@ if (isset($_SESSION['user'])) {
     $sql = 'SELECT * FROM users WHERE user_id = :id';
     $result = $db->execute($sql, ['id' => $_SESSION['user']['user_id']]);
 
-    if ($result->rowCount() === 0) throw new Exception('Tu usuario ha sido eliminado por un administrador', 403);
+    if ($result->rowCount() === 0) throw new Exception('Tu cuenta ha sido desactivada o eliminada', 403);
     $user = $result->fetch(PDO::FETCH_ASSOC);
-    if ($user['status'] !== 'Activo') throw new Exception('Tu cuenta ha sido desactivada', 403);
+    if ($user['status'] !== 1) throw new Exception('Tu cuenta ha sido desactivada o eliminada', 403);
 
     $_SESSION['user'] = $user;
   } catch (Exception $e) {
     session_destroy();
-    header('HTTP/1.1' . $e->getCode() . ' ' . $e->getMessage());
-    echo $e->getMessage();
-    echo '<p><a href="' .  BASE_URL . 'index.php">Inicia sesión nuevamente</a></p>';
+    session_start();
+    $_SESSION['login-error'] = $e->getMessage();
+    header('HTTP/1.1' . $e->getCode());
+    header('Location: ./login.php');
     exit();
   }
 }

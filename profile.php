@@ -2,9 +2,13 @@
 require_once './config.php';
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ./');
+  header('HTTP/1.1 301 Moved Permanently');
+  header('Location: ./login.php');
   exit();
 }
+
+$profileAvatar = './images/avatars/' . $_SESSION['user']['user_id'] . '.png';
+if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,101 +19,183 @@ if (!isset($_SESSION['user'])) {
   <title>Mi perfil | Docentes CETis 121</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./css/output.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/forms.css">
+  <link rel="stylesheet" href="./css/modals.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/profile.css">
 </head>
 
 <body>
-  <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
-    <div class="container flex items-center justify-between">
-      <a class="flex items-center" href="./profile.php">
-        <img class="w-16 aspect-square" src="./images/logo.webp" alt="Logo de DGTi">
-        <span class="text-xl font-semibold">CETis 121</span>
+  <?php if ($_SESSION['welcome']) { ?>
+    <dialog id="welcome-modal" class="modal modal-content">
+      <h3 className="modal-title">
+        Bienvenido(a)
+      </h3>
+      <p className="modal-text">
+        <?= $_SESSION['user']['name'] ?> (<?= $_SESSION['user']['role'] ? 'Administrador' : 'Docente' ?>)
+      </p>
+
+      <ul class="modal-actions">
+        <li>
+          <button class="button" id="close-welcome-modal">Cerrar</button>
+        </li>
+      </ul>
+    </dialog>
+  <?php $_SESSION['welcome'] = false;
+  } ?>
+
+  <dialog id="logout-modal" class="modal modal-content">
+    <h3 class="modal-title">¿Estás seguro que quieres cerrar la sesión?</h3>
+
+    <p class="modal-text">
+      Al cerrar la sesión, no podrás acceder a tu perfil ni a tus datos.
+    </p>
+
+    <ul class="modal-actions">
+      <li><a class="button" href="./logout.php">Cerrar sesión</a></li>
+      <li>
+        <button class="button" id="close-logout-modal">Cancelar</button>
+      </li>
+    </ul>
+  </dialog>
+
+  <dialog id="edit-profile-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-profile-modal">
+      <img src="./icons/close.svg" alt="Cerrar">
+    </button>
+
+    <h3 class="modal-title">Editar perfil</h3>
+    <p class="modal-text">
+      Para cambiar tu contraseña, da click <button class="button-link" id="edit-password">aquí</button>.
+    </p>
+
+    <form action="./auth/edit-profile.php" method="post">
+      <fieldset>
+        <legend hidden aria-hidden>Datos personales</legend>
+
+        <label title="Nombre">
+          <span>Nombre</span>
+          <input type="text" name="name" autoComplete="name" placeholder="John Doe" value="<?= $_SESSION['user']['name'] ?>" required />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend hidden aria-hidden>Datos de contacto</legend>
+
+        <label title="Correo electrónico">
+          <span>Correo electrónico</span>
+          <input type="email" name="email" autoComplete="email" placeholder="john.doe@example.com" value="<?= $_SESSION['user']['email'] ?>" required />
+        </label>
+
+        <label title="Teléfono">
+          <span>Teléfono</span>
+          <input type="tel" name="tel" autoComplete="tel" placeholder="353 000 0000" value="<?= $_SESSION['user']['tel'] ?>" required />
+        </label>
+      </fieldset>
+
+      <button class="button" type="submit">Guardar</button>
+    </form>
+  </dialog>
+
+  <dialog id="edit-password-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-password-modal">
+      <img src="./icons/close.svg" alt="Cerrar">
+    </button>
+
+    <h3 class="modal-title">Cambiar contraseña</h3>
+
+    <form action="./auth/edit-password.php" method="post">
+      <fieldset>
+        <legend hidden>Datos de acceso</legend>
+        <label title="Nueva contraseña">
+          <span>Nueva contraseña</span>
+          <input required type="password" id="password" name="password" autoComplete="new-password" placeholder="********" />
+        </label>
+
+        <label title="Confirmar nueva contraseña">
+          <span>Confirmar nueva contraseña</span>
+          <input required type="password" id="confirm-password" name="confirm-password" autoComplete="new-password" placeholder="********" />
+        </label>
+      </fieldset>
+
+      <button class="button" type="submit">Guardar</button>
+    </form>
+  </dialog>
+
+  <header id="top-header">
+    <div class="container">
+      <a class="logo" href="./profile.php">
+        <img src="./images/logo.webp" alt="Logo de DGTi">
+        <strong>CETis 121</strong>
       </a>
 
-      <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
-        <ul class="flex gap-4 flex-col items-center md:flex-row md:gap-0">
+      <nav id="menu">
+        <ul>
           <li><a class="h-link active" href="./profile.php">Perfil</a></li>
           <li><a class="h-link" href="./schedule.php">Horario</a></li>
           <li><a class="h-link" href="./tutoring.php">Tutorías</a></li>
-          <?php if ($_SESSION['user']['role'] === 'Administrador') { ?>
+          <?php if ($_SESSION['user']['role']) { ?>
             <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>
-          <li><a class="h-link" href=" ./logout.php">Cerrar sesión</a></li>
+          <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
-        <button class="absolute top-6 right-2 md:hidden" id="close-menu">
-          <img src="./icons/close.svg" alt="Cerrar menú">
-        </button>
       </nav>
-      <button class="md:hidden" id="show-menu">
+      <button id="toggle-menu">
         <img src="./icons/menu.svg" alt="Abrir menú">
       </button>
     </div>
   </header>
 
-  <main>
-    <article class="article container flex flex-col justify-center">
-      <section class="flex flex-col gap-4">
-        <h1 class="text-3xl font-bold">
-          <?= $_SESSION['user']['first_name'] ?> <?= $_SESSION['user']['last_name'] ?>
-          <small>
-            (<?= $_SESSION['user']['role'] ?>)
-          </small>
-        </h1>
-        <ul class="text-lg flex flex-col gap-4 list-none">
-          <li>
-            <strong>Correo electrónico:</strong>
-            <?= $_SESSION['user']['email'] ?>
-          </li>
-          <li>
-            <strong>Teléfono:</strong>
-            <?= $_SESSION['user']['tel'] ?>
-          </li>
-          <li>
-            <strong>Fecha de registro:</strong>
-            <?= $_SESSION['user']['created_at'] ?>
-          </li>
-        </ul>
-      </section>
-      <nav>
-        <ul class="flex gap-4 list-none my-8">
-          <li>
-            <a class="button" href="./edit-profile.php">Editar perfil</a>
-          </li>
-          <li>
-            <a class="button" href="./edit-password.php">Cambiar contraseña</a>
-          </li>
-        </ul>
-      </nav>
-    </article>
+  <main class="container">
+    <section id="profile">
+      <img src="<?= $profileAvatar ?>" alt="<?= $_SESSION['user']['name'] ?>" id="avatar" />
+      <p id="name">
+        <?= $_SESSION['user']['name'] ?>
+        <small>
+          (<?= $_SESSION['user']['role'] ? 'Administrador' : 'Docente' ?>)
+        </small>
+      </p>
+      <p id="info">
+        <span><?= $_SESSION['user']['email'] ?></span>
+        <span class="block"><?= $_SESSION['user']['tel'] ?></span>
+      </p>
+      <button class="button" id="edit-profile">
+        Editar perfil
+      </button>
+    </section>
   </main>
 
-  <footer class="w-full max-w-screen-xl p-4 mx-auto border-gray-300 border-t-2 flex flex-col md:flex-row justify-center md:items-center md:justify-between gap-y-4 mt-8">
-    <span>CETis No. 121 Sahuayo, Michoacán.</span>
+  <footer id="bottom-footer">
+    <span>CETis No. 121 Sahuayo, Michoacan.</span>
 
-    <ul class="list-none flex gap-4">
+    <ul>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
           <img src="./icons/facebook.svg" alt="Facebook">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
           <img src="./icons/instagram.svg" alt="Instagram">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
           <img src="./icons/phone.svg" alt="Teléfono">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
           <img src="./icons/web.svg" alt="Sitio web">
         </a>
       </li>
     </ul>
   </footer>
 
+  <script src="./js/modals.js"></script>
   <script src="./js/menu.js"></script>
 </body>
 

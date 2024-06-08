@@ -21,39 +21,37 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <body>
-  <main>
-    <article class="container">
-      <section>
-        <h1>Inicio de sesión<small>Docentes CETis 121</small></h1>
-      </section>
-      <section>
-        <?php if (isset($_SESSION['login-error'])) { ?>
-          <p class="error"><?= $_SESSION['login-error'] ?></p>
-        <?php unset($_SESSION['login-error']);
-        } ?>
-        <form action="./auth/login.php" method="post">
-          <fieldset>
-            <legend hidden aria-hidden>Datos de acceso</legend>
+  <main class="container">
+    <section>
+      <h1>Inicio de sesión<small>Docentes CETis 121</small></h1>
+    </section>
+    <section>
+      <?php if (isset($_SESSION['login-error'])) { ?>
+        <p class="error"><?= $_SESSION['login-error'] ?></p>
+      <?php unset($_SESSION['login-error']);
+      } ?>
+      <form action="./auth/login.php" method="post">
+        <fieldset>
+          <legend hidden aria-hidden>Datos de acceso</legend>
 
-            <label title="Correo electrónico">
-              <span>Correo electrónico</span>
-              <input type="email" id="email" name="email" autoComplete="email" placeholder="john.doe@example.com" required />
-            </label>
+          <label title="Correo electrónico">
+            <span>Correo electrónico</span>
+            <input type="email" id="email" name="email" autoComplete="email" placeholder="john.doe@example.com" required />
+          </label>
 
-            <label title="Contraseña">
-              <span>Contraseña</span>
-              <input required type="password" id="password" name="password" autoComplete="current-password" placeholder="********" />
-            </label>
-          </fieldset>
+          <label title="Contraseña">
+            <span>Contraseña</span>
+            <input required type="password" id="password" name="password" autoComplete="current-password" placeholder="********" />
+          </label>
+        </fieldset>
 
-          <button type="submit">Iniciar sesión</button>
-        </form>
-      </section>
-      <ul>
-        <li><a href="./send-email.php">¿Olvidaste tu contraseña?</a></li>
-        <li>¿No tienes una cuenta? <a href="./register.php">Regístrate</a></li>
-      </ul>
-    </article>
+        <button type="submit">Iniciar sesión</button>
+      </form>
+    </section>
+    <ul>
+      <li><a href="./send-email.php">¿Olvidaste tu contraseña?</a></li>
+      <li>¿No tienes una cuenta? <a href="./register.php">Regístrate</a></li>
+    </ul>
   </main>
 </body>
 

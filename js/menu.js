@@ -1,11 +1,9 @@
-const showMenu = document.getElementById("show-menu");
-const closeMenu = document.getElementById("close-menu");
+const toggleMenu = document.getElementById("toggle-menu");
 const menu = document.getElementById("menu");
 
-showMenu.addEventListener("click", () => {
-  menu.style.top = "0";
-});
-
-closeMenu.addEventListener("click", () => {
-  menu.style.top = "-100%";
+toggleMenu.addEventListener("click", () => {
+  menu.classList.toggle("active");
+  toggleMenu.innerHTML = menu.classList.contains("active")
+    ? "<img src='./icons/close.svg' alt='Cerrar menú'>"
+    : "<img src='./icons/menu.svg' alt='Abrir menú'>";
 });

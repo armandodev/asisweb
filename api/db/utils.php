@@ -4,7 +4,7 @@ class Database
   private $host = 'localhost';
   private $db_name = 'asisweb';
   private $username = 'root';
-  private $password = '2707';
+  private $password = '';
   private $port = '3306';
   public $conn;
 

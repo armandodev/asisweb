@@ -1,4 +1,4 @@
-.container {
+main.container {
   display: flex;
   gap: 1rem;
   flex-direction: column;
@@ -76,7 +76,7 @@ input:focus {
   border-color: rgb(var(--gray-500));
 }
 
-button {
+button[type="submit"] {
   cursor: pointer;
   width: 100%;
   padding: 0.5rem 1rem;
