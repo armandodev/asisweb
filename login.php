@@ -30,6 +30,10 @@ if (isset($_SESSION['user'])) {
         <p class="error"><?= $_SESSION['login-error'] ?></p>
       <?php unset($_SESSION['login-error']);
       } ?>
+      <?php if (isset($_SESSION['register-success'])) { ?>
+        <p class="success"><?= $_SESSION['register-success'] ?></p>
+      <?php unset($_SESSION['register-success']);
+      } ?>
       <form action="./auth/login.php" method="post">
         <fieldset>
           <legend hidden aria-hidden>Datos de acceso</legend>

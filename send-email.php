@@ -2,6 +2,7 @@
 require_once './config.php';
 
 if (isset($_SESSION['user'])) {
+  header('HTTP/1.1 301 Moved Permanently');
   header('Location: ./profile.php');
   exit();
 }
@@ -21,33 +22,31 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <body>
-  <main>
-    <article class="container">
-      <section>
-        <h1>Enviar correo electrónico<small>Docentes CETis 121</small></h1>
-      </section>
-      <section>
-        <?php if (isset($_SESSION['send-email-error'])) { ?>
-          <p class="error"><?= $_SESSION['send-email-error'] ?></p>
-        <?php unset($_SESSION['send-email-error']);
-        } ?>
-        <form action="./auth/send-email.php" method="post">
-          <fieldset>
-            <legend hidden aria-hidden>Datos de acceso</legend>
+  <main class="container">
+    <section>
+      <h1>Enviar correo electrónico<small>Docentes CETis 121</small></h1>
+    </section>
+    <section>
+      <?php if (isset($_SESSION['send-email-error'])) { ?>
+        <p class="error"><?= $_SESSION['send-email-error'] ?></p>
+      <?php unset($_SESSION['send-email-error']);
+      } ?>
+      <form action="./verify-email.php" method="post">
+        <fieldset>
+          <legend hidden aria-hidden>Datos de acceso</legend>
 
-            <label title="Correo electrónico">
-              <span>Correo electrónico</span>
-              <input type="email" id="email" name="email" autoComplete="email" placeholder="john.doe@example.com" required />
-            </label>
-          </fieldset>
+          <label title="Correo electrónico">
+            <span>Correo electrónico</span>
+            <input type="email" id="email" name="email" autoComplete="email" placeholder="john.doe@example.com" required />
+          </label>
+        </fieldset>
 
-          <button type="submit">Enviar correo electrónico</button>
-        </form>
-      </section>
-      <ul>
-        <li><a href="./login.php">Volver al inicio de sesión</a></li>
-      </ul>
-    </article>
+        <button type="submit">Enviar correo electrónico</button>
+      </form>
+    </section>
+    <ul>
+      <li><a href="./login.php">Volver al inicio de sesión</a></li>
+    </ul>
   </main>
 </body>
 
