@@ -91,7 +91,7 @@ $schedule = getSchedule($_SESSION['user']['user_id'], $db);
 
 
   <footer class="w-full max-w-screen-xl p-4 mx-auto border-gray-300 border-t-2 flex flex-col md:flex-row justify-center md:items-center md:justify-between gap-y-4 mt-8">
-    <span>CETis No. 121 Sahuayo, Michoacán.</span>
+    <span>CETis No. 121 Sahuayo, Michoacan.</span>
 
     <ul class="list-none flex gap-4">
       <li>
