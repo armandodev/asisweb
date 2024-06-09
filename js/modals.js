@@ -1,19 +1,19 @@
 // Modal de bienvenida
-const welcome = document.getElementById("welcome-modal"); // Seleccionamos el elemento del modal
+const info = document.getElementById("info-modal"); // Seleccionamos el elemento del modal
 
-if (welcome) {
+if (info) {
   // Si el elemento del modal existe
-  const closeWelcome = document.getElementById("close-welcome-modal"); // Seleccionamos el botón de cerrar el modal
+  const closeInfo = document.getElementById("close-info-modal"); // Seleccionamos el botón de cerrar el modal
 
-  if (closeWelcome) {
+  if (closeInfo) {
     // Si el botón de cerrar el modal existe
-    closeWelcome.addEventListener("click", () => {
+    closeInfo.addEventListener("click", () => {
       // Al hacer clic en el botón de cerrar el modal
-      welcome.close(); // Cerramos el modal
+      info.close(); // Cerramos el modal
     });
   }
 
-  welcome.showModal(); // Mostramos el modal al cargar la página
+  info.showModal(); // Mostramos el modal al cargar la página
 }
 
 // Modal de logout

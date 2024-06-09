@@ -1,68 +1,43 @@
 <?php
-require_once './../../config.php';
+require_once './../config.php'; // Requerimos nuestro archivo de configuración
 
-if (!isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
-  exit();
+if (!isset($_SESSION['user'])) { // Si no tenemos una sesión
+  header('Location: ./profile.php'); // Redireccionamos a la página de inicio de sesión
+  exit(); // Cerramos el script
 }
 
-try {
-  if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
+try { // Tratamiento de errores
+  if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405); // Si el método no es POST, lanzamos una excepción
 
-  if (!isset($_POST['password']) || $_POST['password'] === '') throw new Exception('La contraseña es requerida', 400);
-  else $password = $_POST['password'];
-  if (!isset($_POST['confirm-password']) || $_POST['confirm-password'] === '') throw new Exception('La contraseña es requerida', 400);
-  else $password2 = $_POST['confirm-password'];
+  if (!isset($_POST['password'])) throw new Exception('La contraseña es requerida', 400); // Si no se ha enviado la contraseña, lanzamos una excepción
+  else $password = $_POST['password']; // En caso contrario, se obtiene la contraseña
+  if (!isset($_POST['confirm-password'])) throw new Exception('La contraseña es requerida', 400); // Si no se ha enviado la confirmación de contraseña, lanzamos una excepción
+  else $password2 = $_POST['confirm-password']; // En caso contrario, se obtiene la confirmación de contraseña
 
-  if (!preg_match('/^.{6,100}$/', $password)) throw new Exception('La contraseña no es válida', 400);
-  if ($password !== $password2) throw new Exception('Las contraseñas no coinciden', 400);
+  // Limpiamos los espacios de inicio y fin de línea de las contraseñas
+  trim($password);
+  trim($password2);
 
-  $db = new Database();
+  if ($password !== $password2) throw new Exception('Las contraseñas no coinciden', 400); // Si las contraseñas no coinciden, lanzamos una excepción
 
-  $sql = 'SELECT password, status FROM users WHERE user_id = :user_id';
-  $result = $db->execute($sql, ['user_id' => $_SESSION['user']['user_id']]);
+  $result = $db->fetch('SELECT password, status FROM users WHERE user_id = :user_id', ['user_id' => $_SESSION['user']['user_id']]); // Obtenemos la contraseña y el estado del usuario
+  if (!$result) throw new Exception('El usuario no existe', 404); // Si no se encontró el usuario, lanzamos una excepción
+  if ($result['status'] === 0) throw new Exception('El usuario está inactivo', 400); // Si el usuario está inactivo, lanzamos una excepción
 
-  if ($result->rowCount() === 0) throw new Exception('El usuario no existe', 404);
+  if (password_verify($password, $result['password'])) throw new Exception('La nueva contraseña no puede ser igual a la anterior', 400); // Si la nueva contraseña no puede ser igual a la anterior, lanzamos una excepción
 
-  $result = $result->fetch(PDO::FETCH_ASSOC);
+  $result = $db->execute('UPDATE users SET password = :password WHERE user_id = :user_id', ['password' => password_hash($password, PASSWORD_DEFAULT), 'user_id' => $_SESSION['user']['user_id']]); // Actualizamos la contraseña en la base de datos con la nueva contraseña
+  if (!$result) throw new Exception('No se pudo actualizar la contraseña', 500); // Si no pudimos actualizar la contraseña, lanzamos una excepción
 
-  $status = $result['status'];
-  $password_hash = $result['password'];
-
-  if ($status === 'Inactivo') throw new Exception('El usuario está inactivo', 400);
-
-  if (password_verify($password, $password_hash)) throw new Exception('La nueva contraseña no puede ser igual a la anterior', 400);
-
-  $sql = 'UPDATE users SET password = :password WHERE user_id = :user_id';
-  $result = $db->execute($sql, ['password' => password_hash($password, PASSWORD_DEFAULT), 'user_id' => $_SESSION['user']['user_id']]);
-
-  if (!$result) throw new Exception('No se pudo actualizar la contraseña', 500);
+  $_SESSION['info'] = [
+    'title' => 'Contraseña actualizada correctamente', // Guardamos el título del mensaje de éxito en la sesión
+    'message' => 'Tu contraseña ha sido actualizada correctamente' // Guardamos el mensaje de éxito en la sesión
+  ]; // Guardamos el mensaje de éxito en la sesión
+  header('Location: ./../profile.php'); // Redireccionamos a la página de perfil
 } catch (Exception $e) {
-  echo $e->getMessage();
-  exit();
+  $_SESSION['info'] = [
+    'title' => 'Error al actualizar contraseña', // Guardamos el título del mensaje de error en la sesión
+    'message' => $e->getMessage() // Guardamos el mensaje de error en la sesión
+  ]; // Guardamos el mensaje de error en la sesión
+  header('Location: ./../profile.php'); // Redireccionamos a la página de perfil
 }
-?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Se ha cambiado tu contraseña | Docentes <?= SCHOOL_NAME ?></title>
-  <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
-
-  <link rel="stylesheet" href="./../../css/output.css">
-</head>
-
-<body>
-  <main>
-    <article class="container min-h-screen flex gap-8 flex-col justify-center">
-      <section>
-        <h1 class="text-5xl sm:text-6xl font-semibold">¡Tu contraseña ha sido cambiada con éxito! <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes <?= SCHOOL_NAME ?></small></h1>
-      </section>
-      <a class="button sm:w-fit" href="./../../profile.php">Regresar a tu perfil</a>
-    </article>
-  </main>
-</body>
-
-</html>

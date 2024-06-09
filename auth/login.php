@@ -65,8 +65,12 @@ try { // Tratamiento de errores
   $user = $db->fetch('SELECT user_id, name, email, tel, role FROM users WHERE email = :email', ['email' => $email]); // Obtenemos la información del usuario
   if (!$user) throw new Exception('No se pudo obtener la información del usuario', 500); // Si no se pudo obtener la información del usuario, lanzamos un error 
   $_SESSION['user'] = $user; // Se almacena la información del usuario en la sesión
-  $_SESSION['welcome'] = true; // Se indica que el usuario se ha iniciado sesión, este valor me permite mostrar un mensaje de bienvenida en la página de perfil
-
+  $name = $user['name']; // Obtenemos el nombre del usuario
+  $role = $user['role'] ? 'Administrador' : 'Docente'; // Obtenemos el rol del usuario
+  $_SESSION['info'] = [
+    'title' => 'Bienvenido(a)',
+    'message' => "$name ($role)"
+  ]; // Se almacena la variable de información en la sesión para mostrar un mensaje de bienvenida en la página de perfil
   header('Location: ./../profile.php'); // Redireccionamos a la página de perfil
 } catch (Exception $e) { // En caso de que ocurra un error
   $_SESSION['login-error'] = $e->getMessage(); // Se almacena el mensaje de error

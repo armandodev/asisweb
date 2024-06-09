@@ -1,82 +1,56 @@
 <?php
-require_once './../../config.php';
+require_once './../config.php'; // Requerimos nuestro archivo de configuración
 
-if (!isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
-  exit();
+if (!isset($_SESSION['user'])) { // Si no tenemos una sesión
+  header('Location: ./../login.php'); // Redireccionamos a la página de inicio de sesión
+  exit(); // Finalizamos el script
 }
 
 try {
-  if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405);
+  if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('Método no permitido', 405); // Si el método no es POST, lanzamos una excepción
 
-  if (!isset($_POST['first_name']) || $_POST['first_name'] === '') throw new Exception('El nombre es requerido', 400);
-  $first_name = $_POST['first_name'];
+  if (!isset($_POST['name'])) throw new Exception('El nombre es requerido', 400); // Si no se envió el nombre, lanzamos una excepción
+  else $name = $_POST['name']; // Si lo envió, guardamos el nombre
+  if (!isset($_POST['email'])) throw new Exception('El correo electrónico es requerido', 400); // Si no se envió el correo electrónico, lanzamos una excepción
+  else $email = $_POST['email']; // Si lo envió, guardamos el correo electrónico
+  if (!isset($_POST['tel'])) throw new Exception('El teléfono es requerido', 400); // Si no se envió el teléfono, lanzamos una excepción
+  else $tel = $_POST['tel']; // Si lo envió, guardamos el teléfono
 
-  if (!isset($_POST['last_name']) || $_POST['last_name'] === '') throw new Exception('El apellido es requerido', 400);
-  $last_name = $_POST['last_name'];
+  // Quitamos los espacios en blanco del inicio y el final de los datos
+  trim($name);
+  trim($email);
+  trim($tel);
 
-  if (!isset($_POST['email']) || $_POST['email'] === '') throw new Exception('El correo electrónico es requerido', 400);
-  else $email = $_POST['email'];
+  $user = $db->fetch('SELECT name, email, tel, status FROM users WHERE user_id = :user_id LIMIT 1', ['user_id' => $_SESSION['user']['user_id']]); // Obtenemos los valores de nuestro usuario actual de la base de datos
 
-  if (!isset($_POST['tel']) || $_POST['tel'] === '') throw new Exception('El teléfono es requerido', 400);
-  else $tel = $_POST['tel'];
-  if (!preg_match('/^[0-9]{10}$/', preg_replace('/\s+/', '', $tel))) throw new Exception('El teléfono no es válido', 400);
+  if (!$user) throw new Exception('No se encontró tu usuario', 404); // Si no encontramos el usuario, lanzamos una excepción
+  if ($user['status'] === 0) throw new Exception('Tu usuario está inactivo', 400); // Si el usuario está inactivo, lanzamos una excepción
+  if ($user['name'] === $name && $user['email'] === $email && $user['tel'] === $tel) throw new Exception('No hay cambios que guardar', 400); // Si los datos son iguales, lanzamos una excepción
 
-  if (!preg_match('/^(?=.{5,255}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/', $email)) throw new Exception('El correo electrónico no es válido', 400);
-  if (!preg_match('/^[0-9 ]{10,15}$/', $tel)) throw new Exception('El teléfono no es válido', 400);
+  $result = $db->fetch('SELECT user_id FROM users WHERE email = :email OR tel = :tel AND user_id != :user_id', ['email' => $email, 'tel' => $tel, ':user_id' => $_SESSION['user']['user_id']]); // Obtenemos el id del usuario que corresponde al correo electrónico o teléfono
+  if ($result) throw new Exception('El correo electrónico o teléfono ya está en uso', 400); // Si el correo electrónico o teléfono ya está en uso, lanzamos una excepción
 
-  $db = new Database();
+  $result = $db->fetch('SELECT user_id FROM users WHERE tel = :tel', ['tel' => $tel]); // Obtenemos el id del usuario que corresponde al teléfono
+  if ($result) throw new Exception('El teléfono ya está en uso', 400); // Si el teléfono ya está en uso, lanzamos una excepción
 
-  $sql = 'SELECT first_name, last_name, email, tel FROM users WHERE user_id = :user_id';
-  $result = $db->execute($sql, ['user_id' => $_SESSION['user']['user_id']]);
-
-  if ($result->rowCount() === 0) throw new Exception('No se encontró el usuario', 404);
-
-  $user = $result->fetch(PDO::FETCH_ASSOC);
-
-  if ($user['email'] === $email && $user['tel'] === $tel && $user['first_name'] === $first_name && $user['last_name'] === $last_name) throw new Exception('No hay cambios que guardar', 400);
-
-  $sql = 'UPDATE users SET email = :email, tel = :tel, first_name = :first_name, last_name = :last_name WHERE user_id = :user_id';
-  $result = $db->execute($sql, [
+  $result = $db->execute('UPDATE users SET name = :name, email = :email, tel = :tel WHERE user_id = :user_id', [
+    'name' => $name,
     'email' => $email,
     'tel' => $tel,
-    'first_name' => $first_name,
-    'last_name' => $last_name,
     'user_id' => $_SESSION['user']['user_id']
-  ]);
+  ]); // Ejecutamos la consulta SQL para actualizar el perfil
 
-  if ($result->rowCount() === 0) throw new Exception('No se pudo actualizar el perfil', 500);
+  if (!$result) throw new Exception('No se pudo actualizar el perfil', 500); // Si no pudimos actualizar el perfil, lanzamos una excepción
 
-  $_SESSION['user']['first_name'] = $first_name;
-  $_SESSION['user']['last_name'] = $last_name;
-  $_SESSION['user']['email'] = $email;
-  $_SESSION['user']['tel'] = $tel;
+  $_SESSION['info'] = [
+    'title' => 'Perfil actualizado correctamente', // Guardamos el título del mensaje de éxito en la sesión
+    'message' => 'Tu perfil ha sido actualizado correctamente' // Guardamos el mensaje de éxito en la sesión
+  ]; // Guardamos el mensaje de éxito en la sesión
+  header('Location: ./../profile.php'); // Redireccionamos a la página de perfil
 } catch (Exception $e) {
-  echo $e->getMessage();
-  exit();
+  $_SESSION['info'] = [
+    'title' => 'Error al actualizar perfil', // Guardamos el título del mensaje de error en la sesión
+    'message' => $e->getMessage() // Guardamos el mensaje de error en la sesión
+  ]; // Guardamos el mensaje de error en la sesión
+  header('Location: ./../profile.php'); // Redireccionamos a la página de perfil
 }
-?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil actualizado | Docentes <?= SCHOOL_NAME ?></title>
-  <link rel="shortcut icon" href="./../../favicon.ico" type="image/x-icon" />
-
-  <link rel="stylesheet" href="./../../css/output.css">
-</head>
-
-<body>
-  <main>
-    <article class="container min-h-screen flex gap-8 flex-col justify-center">
-      <section>
-        <h1 class="text-5xl sm:text-6xl font-semibold">Perfil actualizado correctamente <small class="block text-xl sm:text-2xl text-[#a91f21] font-medium">Docentes <?= SCHOOL_NAME ?></small></h1>
-      </section>
-      <a class="button sm:w-fit" href="./../../profile.php">Regresar a tu perfil</a>
-    </article>
-  </main>
-</body>
-
-</html>

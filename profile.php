@@ -28,23 +28,20 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
 </head>
 
 <body>
-  <?php if ($_SESSION['welcome']) { // Si la bandera de bienvenida está activada se mostrará el mensaje de bienvenida 
+  <?php if ($_SESSION['info']) { // Si la bandera de bienvenida está activada se mostrará el mensaje de bienvenida 
   ?>
-    <dialog id="welcome-modal" class="modal modal-content">
+    <dialog id="info-modal" class="modal modal-content">
+      <button class="close-button" id="close-info-modal">
+        <img src="./icons/close.svg" alt="Cerrar">
+      </button>
       <h3 className="modal-title">
-        Bienvenido(a)
+        <?= $_SESSION['info']['title'] ?>
       </h3>
       <p className="modal-text">
-        <?= $_SESSION['user']['name'] ?> (<?= $_SESSION['user']['role'] ? 'Administrador' : 'Docente' ?>)
+        <?= $_SESSION['info']['message'] ?>
       </p>
-
-      <ul class="modal-actions">
-        <li>
-          <button class="button" id="close-welcome-modal">Cerrar</button>
-        </li>
-      </ul>
     </dialog>
-  <?php $_SESSION['welcome'] = false; // Se inactiva la bandera de bienvenida
+  <?php unset($_SESSION['info']); // Eliminamos la variable de información
   } ?>
 
   <dialog id="logout-modal" class="modal modal-content">

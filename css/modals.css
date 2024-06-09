@@ -53,7 +53,7 @@
   gap: 0.5rem;
 }
 
-.modal-actions .button:focus {
+button:focus {
   outline: none;
 }
 
