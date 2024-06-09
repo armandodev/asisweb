@@ -28,7 +28,7 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
 </head>
 
 <body>
-  <?php if ($_SESSION['info']) { // Si la bandera de bienvenida está activada se mostrará el mensaje de bienvenida 
+  <?php if (isset($_SESSION['info'])) {
   ?>
     <dialog id="info-modal" class="modal modal-content">
       <button class="close-button" id="close-info-modal">
@@ -133,7 +133,6 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
         <ul>
           <li><a class="h-link active" href="./profile.php">Perfil</a></li>
           <li><a class="h-link" href="./schedule.php">Horario</a></li>
-          <li><a class="h-link" href="./tutoring.php">Tutorías</a></li>
           <?php if ($_SESSION['user']['role']) { ?>
             <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>
