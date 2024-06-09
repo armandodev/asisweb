@@ -1,13 +1,13 @@
 <?php
-require_once './config.php';
+require_once './config.php'; // Requiere nuestra configuración
 
-if (!isset($_SESSION['user'])) {
-  header('Location: ./login.php');
-  exit();
+if (!isset($_SESSION['user'])) { // Si la sesión no existe
+  header('Location: ./login.php'); // Redireccionamos a la página de inicio de sesión
+  exit(); // Cerramos el script
 }
 
-$profileAvatar = './images/avatars/' . $_SESSION['user']['user_id'] . '.png';
-if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png';
+$profileAvatar = './images/avatars/' . $_SESSION['user']['user_id'] . '.png'; // Obtenemos la ruta de la imagen de perfil
+if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png'; // Si la imagen no existe, usamos la imagen de perfil por defecto
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,7 +28,8 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
 </head>
 
 <body>
-  <?php if ($_SESSION['welcome']) { ?>
+  <?php if ($_SESSION['welcome']) { // Si la bandera de bienvenida está activada se mostrará el mensaje de bienvenida 
+  ?>
     <dialog id="welcome-modal" class="modal modal-content">
       <h3 className="modal-title">
         Bienvenido(a)
@@ -43,7 +44,7 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
         </li>
       </ul>
     </dialog>
-  <?php $_SESSION['welcome'] = false;
+  <?php $_SESSION['welcome'] = false; // Se inactiva la bandera de bienvenida
   } ?>
 
   <dialog id="logout-modal" class="modal modal-content">
@@ -168,7 +169,7 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
   </main>
 
   <footer id="bottom-footer">
-    <span>CETis No. 121 Sahuayo, Michoacan.</span>
+    <span><?= FOOTER_ADDRESS ?></span>
 
     <ul>
       <li>

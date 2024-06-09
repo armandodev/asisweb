@@ -1,9 +1,9 @@
 <?php
-require_once './config.php';
+require_once './config.php'; // Configuración del servidor
 
-if (isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
-  exit();
+if (isset($_SESSION['user'])) { // Si se ha iniciado sesión
+  header('Location: ./profile.php'); // Redirigir a la página de perfil
+  exit(); // Salir del script
 }
 ?>
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ if (isset($_SESSION['user'])) {
     <section>
       <?php if (isset($_SESSION['send-email-error'])) { ?>
         <p class="error"><?= $_SESSION['send-email-error'] ?></p>
-      <?php unset($_SESSION['send-email-error']);
+      <?php unset($_SESSION['send-email-error']); // Eliminamos el mensaje de error
       } ?>
       <form action="./verify-email.php" method="post">
         <fieldset>

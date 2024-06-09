@@ -1,9 +1,10 @@
 <?php
-require_once './config.php';
+// TODO: Agregar la subida de imágenes de perfil
+require_once './config.php'; // Requiere nuestra configuración
 
-if (isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
-  exit();
+if (isset($_SESSION['user'])) { // Si la sesión ya existe
+  header('Location: ./profile.php'); // Redireccionamos a la página de perfil 
+  exit(); // Cerramos el script
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@ if (isset($_SESSION['user'])) {
 <body>
   <main class="container">
     <section>
-      <h1>Registrate<small>Docentes <?= SCHOOL_NAME ?></small></h1>
+      <h1>Regístrate<small>Docentes <?= SCHOOL_NAME ?></small></h1>
     </section>
     <section>
       <?php if (isset($_SESSION['register-error'])) { ?>

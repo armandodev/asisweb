@@ -1,8 +1,8 @@
 <?php
-require_once './config.php';
-if (isset($_SESSION['user'])) {
-  header('Location: ./profile.php');
-  exit();
+require_once './config.php'; // Requiere nuestra configuración
+if (isset($_SESSION['user'])) { // Si la sesión ya existe
+  header('Location: ./profile.php'); // Redireccionamos a la página de perfil
+  exit(); // Cerramos el script
 }
 ?>
 <!DOCTYPE html>
@@ -27,11 +27,11 @@ if (isset($_SESSION['user'])) {
     <section>
       <?php if (isset($_SESSION['login-error'])) { ?>
         <p class="error"><?= $_SESSION['login-error'] ?></p>
-      <?php unset($_SESSION['login-error']);
+      <?php unset($_SESSION['login-error']); // Eliminamos el mensaje de error
       } ?>
       <?php if (isset($_SESSION['register-success'])) { ?>
         <p class="success"><?= $_SESSION['register-success'] ?></p>
-      <?php unset($_SESSION['register-success']);
+      <?php unset($_SESSION['register-success']); // Eliminamos el mensaje de success
       } ?>
       <form action="./auth/login.php" method="post">
         <fieldset>
