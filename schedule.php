@@ -20,12 +20,28 @@ $schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Ob
 
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/modals.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/footer.css">
   <link rel="stylesheet" href="./css/schedule.css">
 </head>
 
 <body>
+  <dialog id="logout-modal" class="modal modal-content">
+    <h3 class="modal-title">¿Estás seguro que quieres cerrar la sesión?</h3>
+
+    <p class="modal-text">
+      Al cerrar la sesión, no podrás acceder a tu perfil ni a tus datos.
+    </p>
+
+    <ul class="modal-actions">
+      <li><a class="button" href="./logout.php">Cerrar sesión</a></li>
+      <li>
+        <button class="button" id="close-logout-modal">Cancelar</button>
+      </li>
+    </ul>
+  </dialog>
+
   <header id="top-header">
     <div class="container">
       <a class="logo" href="./profile.php">
@@ -110,6 +126,7 @@ $schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Ob
   </footer>
 
   <script src="./js/menu.js"></script>
+  <script src="./js/modals.js"></script>
 </body>
 
 </html>

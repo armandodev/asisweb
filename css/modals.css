@@ -51,6 +51,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
+  list-style: none;
 }
 
 button:focus {
