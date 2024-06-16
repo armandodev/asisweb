@@ -102,6 +102,24 @@ create table
     `control_number` varchar(14) not null unique
   );
 
+-- Tabla para el registro de asistencias
+create table
+  `attendance` (
+    `attendance_id` int not null auto_increment primary key,
+    `control_number` varchar(14) not null references `students` (`control_number`) on delete cascade,
+    `status` enum ('Presente', 'Ausente', 'Retardo', 'Justificado') not null,
+    `report_id` int not null references `reports` (`report_id`) on delete cascade
+  );
+
+-- Tabla para el registro de reportes
+create table
+  `reports` (
+    `report_id` int not null auto_increment primary key,
+    `group_id` int not null references `groups` (`group_id`) on delete cascade,
+    `subject_id` int not null references `subjects` (`subject_id`) on delete cascade,
+    `user_id` int not null references `users` (`user_id`) on delete cascade
+  );
+
 --------------------------------------------------------------------------------
 -- Inserciones de datos
 --------------------------------------------------------------------------------

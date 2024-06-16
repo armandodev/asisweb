@@ -68,7 +68,7 @@ if (!$schedule_id || !$group_list || !$group_info || !$subject) {
   </header>
 
   <main class="container">
-    <form class="form-container" action="./api/attendance/register.php" method="post">
+    <form class="form-container" action="./attendance/register.php" method="post">
       <span class="group-info">
         <span>Grupo: <span class="group-details"><?= $group_info['group_semester'] ?><?= $group_info['group_letter'] ?> <?= $group_info['career_name'] ?></span></span>
         <span>Materia: <span class="subject-details"><?= $subject['subject_name'] ?> <?= $subject['initialism'] ? '(' . $subject['initialism'] . ')' : '' ?></span></span>
@@ -81,8 +81,10 @@ if (!$schedule_id || !$group_list || !$group_info || !$subject) {
         </label>
       <?php } ?>
 
-      <input type="hidden" name="schedule_id" value="<?= $schedule_id ?>">
-      <input type="submit" class="submit-button" value="Registrar asistencia">
+      <input type="hidden" name="group_id" value="<?= $group_id ?>">
+      <input type="hidden" name="subject_id" value="<?= $subject_id ?>">
+
+      <button type="submit">Registrar asistencia</button>
     </form>
   </main>
 

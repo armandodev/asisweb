@@ -91,6 +91,13 @@ button[type="submit"] {
   border-radius: 0.25rem;
   background-color: rgb(var(--primary));
   color: white;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: rgb(var(--primary) / 90%);
 }
 
 ul {

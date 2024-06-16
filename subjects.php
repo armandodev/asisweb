@@ -27,6 +27,22 @@ $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db
 </head>
 
 <body>
+  <?php if (isset($_SESSION['info'])) {
+  ?>
+    <dialog id="info-modal" class="modal modal-content">
+      <button class="close-button" id="close-info-modal">
+        <img src="./icons/close.svg" alt="Cerrar">
+      </button>
+      <h3 className="modal-title">
+        <?= $_SESSION['info']['title'] ?>
+      </h3>
+      <p className="modal-text">
+        <?= $_SESSION['info']['message'] ?>
+      </p>
+    </dialog>
+  <?php unset($_SESSION['info']); // Eliminamos la variable de información
+  } ?>
+
   <dialog id="logout-modal" class="modal modal-content">
     <h3 class="modal-title">¿Estás seguro que quieres cerrar la sesión?</h3>
 
