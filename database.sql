@@ -20,7 +20,8 @@ create table
     `tel` varchar(15) not null,
     `password` varchar(255) not null,
     `role` tinyint not null default 0,
-    `status` tinyint not null default 0
+    `status` tinyint not null default 0,
+    `full_time` tinyint not null default 0
   );
 
 -- Crear la tabla que almacena los códigos de verificación
@@ -50,10 +51,10 @@ create table
 -- Crear la tabla de grupos
 create table
   `groups` (
-    `group_id` int (11) not null primary key auto_increment,
+    `group_id` int not null primary key auto_increment,
     `classroom` varchar(2) not null,
-    `career_id` int (11) not null,
-    `group_semester` int (11) not null,
+    `career_id` int not null,
+    `group_semester` int not null,
     `group_letter` char(1) not null,
     `period` varchar(6) not null
   );
@@ -96,8 +97,8 @@ create table
 -- Tabla para crear la relación entre estudiantes y su grupo, de manera que se pueda obtener el grupo de un estudiante
 create table
   `group_list` (
-    `list_id` int (11) not null primary key,
-    `group_id` int (11) not null,
+    `list_id` int not null primary key,
+    `group_id` int not null,
     `control_number` varchar(14) not null unique
   );
 
@@ -112,7 +113,8 @@ INSERT INTO
     `tel`,
     `password`,
     `role`,
-    `status`
+    `status`,
+    `full_time`
   )
 VALUES
   (
@@ -121,7 +123,8 @@ VALUES
     '353 000 0001',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Angelica Verónica Arceo Granados',
@@ -129,7 +132,8 @@ VALUES
     '353 000 0002',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Víctor Hugo Lupián Tlalpan',
@@ -137,7 +141,8 @@ VALUES
     '353 000 0003',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Maritza Mendoza Gálvez ',
@@ -145,7 +150,8 @@ VALUES
     '353 000 0004',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Roberto López Buenrostro',
@@ -153,7 +159,8 @@ VALUES
     '353 000 0005',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Francisco Javier Silva García',
@@ -161,7 +168,8 @@ VALUES
     '353 000 0006',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Patricia del Carmen Gutiérrez González ',
@@ -169,7 +177,8 @@ VALUES
     '353 000 0007',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Eréndira Guadalupe Ibarra Rodríguez ',
@@ -177,7 +186,8 @@ VALUES
     '353 000 0008',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Victor Hugo Sánchez Carcova',
@@ -185,7 +195,8 @@ VALUES
     '353 000 0009',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Mónica Amparo Buenrostro Bautista',
@@ -193,7 +204,8 @@ VALUES
     '353 000 0010',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Susana Elena Gámez Rodríguez',
@@ -201,7 +213,8 @@ VALUES
     '353 000 0011',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Jesús Manzo Gálvez',
@@ -209,7 +222,8 @@ VALUES
     '353 000 0012',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Jose Eduardo Martínez Martínez ',
@@ -217,7 +231,8 @@ VALUES
     '353 000 0013',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Alejandra Mendoza Chávez ',
@@ -225,7 +240,8 @@ VALUES
     '353 000 0014',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Francisco Javier Vargas Silva',
@@ -233,7 +249,8 @@ VALUES
     '353 000 0015',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Ernesto Amezcua Montes',
@@ -241,7 +258,8 @@ VALUES
     '353 000 0016',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Martha Isabel Gutiérrez Marinez',
@@ -249,7 +267,8 @@ VALUES
     '353 000 0017',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Eliseo Suárez Campos',
@@ -257,7 +276,8 @@ VALUES
     '353 000 0018',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Silvia Cristina Navarrete Marentes',
@@ -265,7 +285,8 @@ VALUES
     '353 000 0019',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Ana Rosalia Reyes Torres',
@@ -273,7 +294,8 @@ VALUES
     '353 000 0020',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Julio César Cervantes Valencia',
@@ -281,7 +303,8 @@ VALUES
     '353 000 0021',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Rosa Maria Mejía Acevedo',
@@ -289,13 +312,15 @@ VALUES
     '353 000 0022',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Gabriel Arturo Chávez Nuñez',
     'gabrielarturo@gmail.com',
     '353 000 0023',
     '1234567890',
+    1,
     1,
     1
   ),
@@ -305,7 +330,8 @@ VALUES
     '353 000 0024',
     '1234567890',
     0,
-    1
+    1,
+    0
   ),
   (
     'Vidal Alcazar Cervantes',
@@ -313,7 +339,8 @@ VALUES
     '353 000 0025',
     '1234567890',
     0,
-    1
+    1,
+    0
   );
 
 -- Insertar datos en la tabla de carreras
