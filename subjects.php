@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) { // Verificamos que el usuario esté autenticado
   exit(); // Cierra el script
 }
 
-$schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Obtenemos los horarios del docente ingresado
+$groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Obtenemos los horarios del docente ingresado
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +23,7 @@ $schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Ob
   <link rel="stylesheet" href="./css/modals.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/footer.css">
-  <link rel="stylesheet" href="./css/schedule.css">
+  <link rel="stylesheet" href="./css/subjects.css">
 </head>
 
 <body>
@@ -52,8 +52,8 @@ $schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Ob
       <nav id="menu">
         <ul>
           <li><a class="h-link" href="./profile.php">Perfil</a></li>
-          <li><a class="h-link active" href="./schedule.php">Horario</a></li>
-          <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
+          <li><a class="h-link" href="./schedule.php">Horario</a></li>
+          <li><a class="h-link active" href="./groups.php">Grupos</a></li>
           <?php if ($_SESSION['user']['role']) { ?>
             <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>
@@ -68,34 +68,16 @@ $schedule = getSchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Ob
 
   <main class="container">
     <section>
-      <table>
-        <thead>
-          <tr>
-            <th>Hora</th>
-            <th>Lunes</th>
-            <th>Martes</th>
-            <th>Miércoles</th>
-            <th>Jueves</th>
-            <th>Viernes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($schedule as $hour => $days) { ?>
-            <tr>
-              <td data-label="Hora" class="hour"><?= $hour ?></td>
-              <?php foreach ($days as $day => $class) { ?>
-                <td data-label="<?= $day ?>">
-                  <?php if ($class) { ?>
-                    <span class="td-title"><?= $class['subject'] ?></span>
-                    <span class="td-text"><?= $class['group'] ?></span>
-                    <span class="td-text"><?= $class['classroom'] ?></span>
-                  <?php } ?>
-                </td>
-              <?php } ?>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <ul class="groups">
+        <?php foreach ($groups as $group) { ?>
+          <li class="group">
+            <a href="./take-attendance.php?group_id=<?= $group['subject_id'] ?>">
+              <span class="group"><?= $group['group_semester'] . $group['group_letter'] ?> - <?= $group['career_name'] ?></span>
+              <span class="subject"><?= $group['initialism'] ? $group['initialism'] : $group['subject_name'] ?></span>
+            </a>
+          </li>
+        <?php } ?>
+      </ul>
     </section>
   </main>
 

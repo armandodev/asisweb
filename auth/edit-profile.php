@@ -27,7 +27,7 @@ try {
   if ($user['status'] === 0) throw new Exception('Tu usuario está inactivo', 400); // Si el usuario está inactivo, lanzamos una excepción
   if ($user['name'] === $name && $user['email'] === $email && $user['tel'] === $tel) throw new Exception('No hay cambios que guardar', 400); // Si los datos son iguales, lanzamos una excepción
 
-  $result = $db->fetch('SELECT user_id FROM users WHERE email = :email OR tel = :tel AND user_id != :user_id', ['email' => $email, 'tel' => $tel, ':user_id' => $_SESSION['user']['user_id']]); // Obtenemos el id del usuario que corresponde al correo electrónico o teléfono
+  $result = $db->fetch('SELECT user_id FROM users WHERE (email = :email OR tel = :tel) AND user_id != :user_id', ['email' => $email, 'tel' => $tel, ':user_id' => $_SESSION['user']['user_id']]); // Obtenemos el id del usuario que corresponde al correo electrónico o teléfono y que no sea el actual
   if ($result) throw new Exception('El correo electrónico o teléfono ya está en uso', 400); // Si el correo electrónico o teléfono ya está en uso, lanzamos una excepción
 
   $result = $db->fetch('SELECT user_id FROM users WHERE tel = :tel', ['tel' => $tel]); // Obtenemos el id del usuario que corresponde al teléfono

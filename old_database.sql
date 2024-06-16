@@ -1,32 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2024 a las 02:15:09
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `asisweb`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `attendance`
---
-
 CREATE TABLE `attendance` (
   `attendance_id` int(11) NOT NULL,
   `control_number` varchar(14) NOT NULL,
@@ -859,8 +830,7 @@ INSERT INTO `group_list` (`list_id`, `group_id`, `control_number`, `created_at`,
 (685, 6, '23316061210236', '2024-04-23 21:17:53', '2024-04-23 21:17:53'),
 (686, 6, '23316061210237', '2024-04-23 21:17:53', '2024-04-23 21:17:53'),
 (687, 6, '23316061210238', '2024-04-23 21:17:53', '2024-04-23 21:17:53'),
-(688, 6, '23316061210239', '2024-04-23 21:17:53', '2024-04-23 21:17:53');
-INSERT INTO `group_list` (`list_id`, `group_id`, `control_number`, `created_at`, `updated_at`) VALUES
+(688, 6, '23316061210239', '2024-04-23 21:17:53', '2024-04-23 21:17:53'),
 (689, 6, '23316061210240', '2024-04-23 21:17:54', '2024-04-23 21:17:54'),
 (690, 6, '23316061210241', '2024-04-23 21:17:54', '2024-04-23 21:17:54'),
 (691, 6, '23316061210242', '2024-04-23 21:17:54', '2024-04-23 21:17:54'),
@@ -1065,39 +1035,6 @@ INSERT INTO `group_list` (`list_id`, `group_id`, `control_number`, `created_at`,
 (890, 10, '23316061210417', '2024-04-23 21:17:54', '2024-04-23 21:17:54'),
 (891, 10, '23316061210423', '2024-04-23 21:17:54', '2024-04-23 21:17:54');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `reset_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `used` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `used_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  `expires_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `password_resets`
---
-
-INSERT INTO `password_resets` (`reset_id`, `user_id`, `token`, `used`, `created_at`, `used_at`, `expires_at`) VALUES
-(8, 23, 'fb384d9f204bb0e8cbf232c903fc4b39cf3a40ad859862a93379e4df7ceeaedf', 0, '2024-04-23 21:39:45', NULL, '2024-04-23 21:44:45');
-
---
--- Disparadores `password_resets`
---
-DELIMITER $$
-CREATE TRIGGER `password_reset_expiration` BEFORE INSERT ON `password_resets` FOR EACH ROW SET NEW.`expires_at` = DATE_ADD(NEW.`created_at`, INTERVAL 5 MINUTE)
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `reports`
 --
@@ -1133,62 +1070,6 @@ CREATE TABLE `schedule` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `schedule`
---
-
-INSERT INTO `schedule` (`schedule_id`, `user_id`, `group_id`, `subject_id`, `day`, `start_time`, `created_at`, `updated_at`) VALUES
-(1, 23, 23, 9, 'Lunes', '07:00:00', '2024-05-04 18:42:02', '2024-05-04 18:42:02'),
-(2, 23, 23, 64, 'Martes', '07:00:00', '2024-05-04 19:32:58', '2024-05-04 19:34:12'),
-(3, 23, NULL, 63, 'Miércoles', '07:00:00', '2024-05-04 19:32:58', '2024-05-04 19:45:36'),
-(5, 23, 23, 64, 'Jueves', '07:00:00', '2024-05-04 19:32:58', '2024-05-04 19:34:12'),
-(6, 23, NULL, 63, 'Viernes', '07:00:00', '2024-05-04 19:32:58', '2024-05-04 19:45:36'),
-(7, 23, 23, 9, 'Lunes', '08:00:00', '2024-05-04 18:42:02', '2024-05-04 18:42:02'),
-(8, 23, NULL, 63, 'Lunes', '09:00:00', '2024-05-04 19:47:25', '2024-05-04 19:47:25'),
-(9, 23, 15, 3, 'Lunes', '10:00:00', '2024-05-04 19:48:26', '2024-05-04 19:48:45'),
-(10, 23, 15, 3, 'Lunes', '11:00:00', '2024-05-04 19:48:26', '2024-05-04 19:48:45'),
-(11, 23, NULL, 63, 'Lunes', '12:00:00', '2024-05-04 19:47:25', '2024-05-04 19:47:25'),
-(12, 23, NULL, 63, 'Lunes', '13:00:00', '2024-05-04 19:47:25', '2024-05-04 19:47:25'),
-(13, 23, NULL, 63, 'Lunes', '14:00:00', '2024-05-04 19:47:25', '2024-05-04 19:47:25'),
-(14, 23, 23, 9, 'Martes', '08:00:00', '2024-05-04 18:42:02', '2024-05-04 18:42:02'),
-(15, 23, 15, 3, 'Martes', '10:00:00', '2024-05-04 19:48:26', '2024-05-04 19:48:45'),
-(16, 23, 15, 3, 'Martes', '09:00:00', '2024-05-04 19:48:26', '2024-05-04 19:48:45'),
-(17, 23, NULL, 63, 'Martes', '11:00:00', '2024-05-04 19:54:35', '2024-05-04 19:54:35'),
-(18, 23, NULL, 63, 'Martes', '12:00:00', '2024-05-04 19:54:35', '2024-05-04 19:54:35'),
-(19, 23, NULL, 63, 'Martes', '13:00:00', '2024-05-04 19:54:35', '2024-05-04 19:54:35'),
-(20, 23, NULL, 63, 'Martes', '14:00:00', '2024-05-04 19:54:35', '2024-05-04 19:54:35'),
-(21, 23, 15, 3, 'Miércoles', '08:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(22, 23, 15, 3, 'Miércoles', '09:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(23, 23, NULL, 63, 'Miércoles', '10:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(24, 23, NULL, 63, 'Miércoles', '11:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(25, 23, NULL, 63, 'Miércoles', '12:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(26, 23, NULL, 63, 'Miércoles', '13:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(27, 23, NULL, 63, 'Miércoles', '14:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(28, 23, 23, 64, 'Jueves', '07:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(29, 23, 3, 11, 'Jueves', '08:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(30, 23, 3, 11, 'Jueves', '09:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(31, 23, 3, 11, 'Jueves', '10:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(32, 23, NULL, 63, 'Jueves', '11:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(33, 23, 15, 3, 'Jueves', '12:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(34, 23, NULL, 63, 'Jueves', '13:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(35, 23, NULL, 63, 'Jueves', '14:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(36, 23, NULL, 63, 'Viernes', '07:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(37, 23, 23, 9, 'Viernes', '08:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(38, 23, 23, 9, 'Viernes', '09:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(39, 23, 23, 9, 'Viernes', '10:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(40, 23, 15, 3, 'Viernes', '11:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(41, 23, 15, 3, 'Viernes', '12:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(42, 23, NULL, 63, 'Viernes', '13:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(43, 23, NULL, 63, 'Viernes', '14:00:00', '2024-05-04 20:09:57', '2024-05-04 20:09:57'),
-(60, 14, 23, 31, 'Jueves', '09:00:00', '2024-05-05 00:47:38', '2024-05-05 00:47:38'),
-(61, 14, 23, 31, 'Jueves', '10:00:00', '2024-05-05 00:47:38', '2024-05-05 00:47:38');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `students`
---
 
 CREATE TABLE `students` (
   `control_number` varchar(14) NOT NULL,

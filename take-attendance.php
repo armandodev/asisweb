@@ -1,26 +1,25 @@
 <?php
 require_once './config.php';
-require_once './api/group/get.php';
-require_once './api/subject/get.php';
+require_once './attendance/utils.php';
 
 if (!isset($_SESSION['user'])) {
   header('Location: ./');
   exit();
 }
 
-if (!isset($_GET['schedule_id'])) {
-  header('Location: ./schedule.php');
+if (!isset($_GET['group_id'])) {
+  header('Location: ./groups.php');
   exit();
 }
 
-$schedule_id = $_GET['schedule_id'];
-$group_id = $db->execute('SELECT group_id FROM schedule WHERE schedule_id = :schedule_id', ['schedule_id' => $schedule_id]);
+$group_id = $_GET['group_id'];
+$group_id = $db->execute('SELECT group_id FROM schedule WHERE group_id = :group_id', ['group_id' => $group_id]);
 $group_id = $group_id->fetchColumn();
-$subject_id = $db->execute('SELECT subject_id FROM schedule WHERE schedule_id = :schedule_id', ['schedule_id' => $schedule_id]);
+$subject_id = $db->execute('SELECT subject_id FROM schedule WHERE group_id = :group_id', ['group_id' => $group_id]);
 $subject_id = $subject_id->fetchColumn();
 
-$group_list = getGroupList($group_id, $db);
-$group_info = getGroupInfo($group_id, $db);
+/* $group_list = getGroupList($group_id, $db);
+$group_info = getGroupInfo($group_id, $db); */
 $subject = getSubject($subject_id, $db);
 ?>
 <!DOCTYPE html>
@@ -78,7 +77,7 @@ $subject = getSubject($subject_id, $db);
           </label>
         <?php } ?>
 
-        <input type="hidden" name="schedule_id" value="<?= $schedule_id ?>">
+        <input type="hidden" name="group_id" value="<?= $group_id ?>">
 
         <button class="w-full p-2 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">
           Registrar asistencia

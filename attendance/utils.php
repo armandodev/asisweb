@@ -61,3 +61,21 @@ function getSchedule($params, $db)
 
   return $schedule;
 }
+
+// Obtiene los grupos que se asignan a un docente a partir de su horario
+function getSubjectsBySchedule($params, $db)
+{
+  $subjects = $db->fetch('SELECT subjects.subject_id, subjects.subject_name, subjects.initialism, groups.group_semester, groups.group_letter, careers.career_name FROM schedule
+      INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
+      LEFT JOIN `groups` ON schedule.group_id = `groups`.group_id
+      LEFT JOIN careers ON `groups`.career_id = careers.career_id
+      WHERE schedule.user_id = :user_id
+      ORDER BY groups.group_semester, groups.group_letter', $params);
+
+  // Validamos que recibimos al menos un registro
+  if (!$subjects) return [];
+
+  // Eliminamos los grupos duplicados
+  $subjects = array_unique($subjects, SORT_REGULAR);
+  return $subjects;
+}

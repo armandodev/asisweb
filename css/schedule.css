@@ -2,7 +2,6 @@ table {
   width: 100%;
   margin-top: 16px;
   border-collapse: collapse;
-  white-space: nowrap;
 }
 
 thead {
@@ -19,29 +18,26 @@ tbody {
   text-align: center;
 }
 
-tbody span {
-  display: block;
-  text-wrap: wrap;
-}
-
 td {
   padding: 8px;
   border: 1px solid #d1d5db;
+  max-width: 100px;
 }
 
-.bg-gray-200 {
-  background-color: #e2e8f0;
-}
-
-.text-gray-700 {
-  color: #4a5568;
-}
-
-.text-gray-800 {
+.td-title {
+  display: block;
   color: #2d3748;
+  font-weight: 700;
 }
 
-.font-bold {
+.td-text {
+  display: block;
+  color: #4a5568;
+  font-weight: 400;
+}
+
+.hour {
+  background-color: #e2e8f0;
   font-weight: 700;
 }
 
@@ -63,6 +59,7 @@ td {
     border: none;
     position: relative;
     padding-left: 50%;
+    max-width: none;
   }
 
   td::before {

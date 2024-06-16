@@ -31,6 +31,22 @@ create trigger `email_codes_exp` before insert on `email_codes` for each row
 set
   new.`expires_at` = date_add(new.`created_at`, interval 15 minute);
 
+create table
+  `students` (
+    `control_number` varchar(14) not null primary key,
+    `curp` varchar(18) not null unique,
+    `first_name` varchar(100) not null,
+    `last_name` varchar(100) not null,
+    `generation` varchar(12) not null
+  );
+
+create table
+  `group_list` (
+    `list_id` int (11) not null primary key,
+    `group_id` int (11) not null,
+    `control_number` varchar(14) not null unique
+  );
+
 -- Insertar datos en la tabla de usuarios
 INSERT INTO
   `users` (
