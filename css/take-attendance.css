@@ -1,0 +1,92 @@
+main.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: auto;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.group-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #4a5568;
+  font-weight: bold;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.group-details,
+.subject-details {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.student-label {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  color: #4a5568;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.student-label:hover {
+  background-color: #d1d5db;
+  color: #1a202c;
+}
+
+.attendance-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  background-color: #e2e8f0;
+  color: #4a5568;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.attendance-checkbox:hover {
+  background-color: #d1d5db;
+  color: #1a202c;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+}
+
+@media screen and (min-width: 768px) {
+  .student-label {
+    width: calc(50% - 0.5rem);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+  }
+}

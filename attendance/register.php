@@ -1,5 +1,4 @@
 <?php
-/* Path: ./api/attendance/register.php */
 require_once './../../config.php';
 require_once './../group/get.php';
 require_once './../subject/get.php';

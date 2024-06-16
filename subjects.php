@@ -71,7 +71,7 @@ $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db
       <ul class="groups">
         <?php foreach ($groups as $group) { ?>
           <li class="group">
-            <a href="./take-attendance.php?group_id=<?= $group['subject_id'] ?>">
+            <a href="./take-attendance.php?subject_id=<?= $group['subject_id'] ?>&group_id=<?= $group['group_id'] ?>">
               <span class="group"><?= $group['group_semester'] . $group['group_letter'] ?> - <?= $group['career_name'] ?></span>
               <span class="subject"><?= $group['initialism'] ? $group['initialism'] : $group['subject_name'] ?></span>
             </a>

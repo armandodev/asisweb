@@ -7,20 +7,22 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-if (!isset($_GET['group_id'])) {
-  header('Location: ./groups.php');
+if (!isset($_GET['subject_id']) || !isset($_GET['group_id'])) {
+  header('Location: ./subjects.php');
   exit();
 }
 
+$subject_id = $_GET['subject_id'];
 $group_id = $_GET['group_id'];
-$group_id = $db->execute('SELECT group_id FROM schedule WHERE group_id = :group_id', ['group_id' => $group_id]);
-$group_id = $group_id->fetchColumn();
-$subject_id = $db->execute('SELECT subject_id FROM schedule WHERE group_id = :group_id', ['group_id' => $group_id]);
-$subject_id = $subject_id->fetchColumn();
-
+$schedule_id = getScheduleId($subject_id, $group_id, $db);
 $group_list = getGroupList($group_id, $db);
 $group_info = getGroupInfo($group_id, $db);
 $subject = getSubject($subject_id, $db);
+
+if (!$schedule_id || !$group_list || !$group_info || !$subject) {
+  header('Location: ./subjects.php');
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,7 +39,7 @@ $subject = getSubject($subject_id, $db);
   <link rel="stylesheet" href="./css/modals.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/footer.css">
-  <link rel="stylesheet" href="./css/profile.css">
+  <link rel="stylesheet" href="./css/take-attendance.css">
 </head>
 
 <body>
@@ -65,28 +67,23 @@ $subject = getSubject($subject_id, $db);
     </div>
   </header>
 
-  <main>
-    <article class="article container flex flex-col">
-      <form class="flex flex-col gap-4 m-auto w-full mt-4" action="./api/attendance/register.php" method="post">
-        <span class="flex flex-col items-center justify-center text-gray-700 font-bold border border-gray-300 rounded-md p-2 text-xl text-center">
-          <span>Grupo: <span class="text-lg font-medium"><?= $group_info['group_semester'] ?><?= $group_info['group_letter'] ?> <?= $group_info['career_name'] ?></span></span>
-          <span>Materia: <span class="text-lg font-medium"><?= $subject['subject_name'] ?> <?= $subject['initialism'] ? '(' . $subject['initialism'] . ')' : '' ?></span></span>
-        </span>
+  <main class="container">
+    <form class="form-container" action="./api/attendance/register.php" method="post">
+      <span class="group-info">
+        <span>Grupo: <span class="group-details"><?= $group_info['group_semester'] ?><?= $group_info['group_letter'] ?> <?= $group_info['career_name'] ?></span></span>
+        <span>Materia: <span class="subject-details"><?= $subject['subject_name'] ?> <?= $subject['initialism'] ? '(' . $subject['initialism'] . ')' : '' ?></span></span>
+      </span>
 
-        <?php foreach ($group_list as $student) { ?>
-          <label class="flex items-center justify-between gap-2 cursor-pointer text-sm sm:text-base border border-gray-300 rounded-md p-2 text-gray-700 hover:bg-gray-300 hover:text-gray-900 transition-all duration-200">
-            <?= $student['last_name'] ?> <?= $student['first_name'] ?>
-            <input class="w-[20px] h-[20px] rounded-full border-2 border-gray-300 bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-900 transition-all duration-200" type="checkbox" name="attendance[]" value="<?= $student['control_number'] ?>">
-          </label>
-        <?php } ?>
+      <?php foreach ($group_list as $student) { ?>
+        <label class="student-label">
+          <?= $student['last_name'] ?> <?= $student['first_name'] ?>
+          <input class="attendance-checkbox" type="checkbox" name="attendance[]" value="<?= $student['control_number'] ?>">
+        </label>
+      <?php } ?>
 
-        <input type="hidden" name="group_id" value="<?= $group_id ?>">
-
-        <button class="w-full p-2 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">
-          Registrar asistencia
-        </button>
-      </form>
-    </article>
+      <input type="hidden" name="schedule_id" value="<?= $schedule_id ?>">
+      <input type="submit" class="submit-button" value="Registrar asistencia">
+    </form>
   </main>
 
   <footer id="bottom-footer">

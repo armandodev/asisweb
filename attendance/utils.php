@@ -66,7 +66,7 @@ function getSchedule($params, $db)
 function getSubjectsBySchedule($params, $db)
 {
   // Obtenemos las clases del docente a partir de su horario
-  $subjects = $db->fetch('SELECT subjects.subject_id, subjects.subject_name, subjects.initialism, groups.group_semester, groups.group_letter, careers.career_name FROM schedule
+  $subjects = $db->fetch('SELECT subjects.subject_id, subjects.subject_name, subjects.initialism, groups.group_id, groups.group_semester, groups.group_letter, careers.career_name FROM schedule
       INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
       LEFT JOIN `groups` ON schedule.group_id = `groups`.group_id
       LEFT JOIN careers ON `groups`.career_id = careers.career_id
@@ -81,82 +81,30 @@ function getSubjectsBySchedule($params, $db)
   return $subjects;
 }
 
-// Obtiene las listas de los grupos a través de su horario
+function getScheduleId($subject_id, $group_id, $db)
+{
+  $schedule_id = $db->fetch('SELECT schedule_id FROM schedule WHERE user_id = :user_id AND subject_id = :subject_id AND group_id = :group_id', ['user_id' => $_SESSION['user']['user_id'], 'subject_id' => $subject_id, 'group_id' => $group_id]);
+  if (!$schedule_id) return false;
+  return $schedule_id;
+}
+
 function getGroupList($group_id, $db)
 {
-  $group_list = [];
-  $schedule = getSchedule(['group_id' => $group_id], $db);
-
-  foreach ($schedule as $hour => $days) {
-    foreach ($days as $day => $class) {
-      if (!empty($class)) {
-        $group_list[] = [
-          'group_id' => $class['group_id'],
-          'group_semester' => $class['group_semester'],
-          'group_letter' => $class['group_letter'],
-          'career_name' => $class['career_name'],
-          'subject_name' => $class['subject']['subject_name'],
-          'initialism' => $class['subject']['initialism'],
-          'classroom' => $class['classroom'],
-          'day' => $day,
-        ];
-      }
-    }
-  } // Obtenemos las listas de los grupos a través de su horario
-
-  return $group_list;
+  $students = $db->fetch("SELECT first_name, last_name, group_list.control_number FROM group_list INNER JOIN students ON group_list.control_number = students.control_number WHERE group_id = :group_id ORDER BY last_name, first_name", ['group_id' => $group_id]);
+  if (!$students) return false;
+  return $students;
 }
 
-// Obtiene los grupos a través de su horario
 function getGroupInfo($group_id, $db)
 {
-  $group_info = [];
-  $schedule = getSchedule(['group_id' => $group_id], $db);
-
-  foreach ($schedule as $hour => $days) {
-    foreach ($days as $day => $class) {
-      if (!empty($class)) {
-        $group_info[] = [
-          'group_id' => $class['group_id'],
-          'group_semester' => $class['group_semester'],
-          'group_letter' => $class['group_letter'],
-          'career_name' => $class['career_name'],
-          'subject_name' => $class['subject']['subject_name'],
-          'initialism' => $class['subject']['initialism'],
-          'classroom' => $class['classroom'],
-          'day' => $day,
-        ];
-      }
-    }
-  }
-
-  return $group_info;
+  $group = $db->fetch("SELECT group_id, group_semester, group_letter, career_name FROM `groups` INNER JOIN careers ON groups.career_id = careers.career_id WHERE group_id = :group_id", ['group_id' => $group_id]);
+  if (!$group) return false;
+  return $group;
 }
 
-// Obtiene la asignación de un grupo a un docente a partir de su horario
 function getSubject($subject_id, $db)
 {
-  $subject = [];
-  $schedule = getSchedule(['subject_id' => $subject_id], $db);
-
-  foreach ($schedule as $hour => $days) {
-    foreach ($days as $day => $class) {
-      if (!empty($class)) {
-        $subject[] = [
-          'subject_id' => $class['subject_id'],
-          'subject_name' => $class['subject']['subject_name'],
-          'initialism' => $class['subject']['initialism'],
-          'group_id' => $class['group_id'],
-          'group_semester' => $class['group_semester'],
-          'group_letter' => $class['group_letter'],
-          'career_name' => $class['career_name'],
-          'classroom' => $class['classroom'],
-          'start_time' => $hour,
-          'day' => $day,
-        ];
-      }
-    }
-  }
-
+  $subject = $db->fetch("SELECT subject_id, subject_name, initialism FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
+  if (!$subject) return false;
   return $subject;
 }
