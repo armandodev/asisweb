@@ -18,9 +18,9 @@ $group_id = $group_id->fetchColumn();
 $subject_id = $db->execute('SELECT subject_id FROM schedule WHERE group_id = :group_id', ['group_id' => $group_id]);
 $subject_id = $subject_id->fetchColumn();
 
-/* $group_list = getGroupList($group_id, $db);
-$group_info = getGroupInfo($group_id, $db); */
-/* $subject = getSubject($subject_id, $db); */
+$group_list = getGroupList($group_id, $db);
+$group_info = getGroupInfo($group_id, $db);
+$subject = getSubject($subject_id, $db);
 ?>
 <!DOCTYPE html>
 <html lang="es">

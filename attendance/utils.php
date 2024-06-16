@@ -62,9 +62,10 @@ function getSchedule($params, $db)
   return $schedule;
 }
 
-// Obtiene los grupos que se asignan a un docente a partir de su horario
+// Obtiene los grupos y asignaciones que se asignan a un docente a partir de su horario
 function getSubjectsBySchedule($params, $db)
 {
+  // Obtenemos las clases del docente a partir de su horario
   $subjects = $db->fetch('SELECT subjects.subject_id, subjects.subject_name, subjects.initialism, groups.group_semester, groups.group_letter, careers.career_name FROM schedule
       INNER JOIN subjects ON schedule.subject_id = subjects.subject_id
       LEFT JOIN `groups` ON schedule.group_id = `groups`.group_id
@@ -78,4 +79,84 @@ function getSubjectsBySchedule($params, $db)
   // Eliminamos los grupos duplicados
   $subjects = array_unique($subjects, SORT_REGULAR);
   return $subjects;
+}
+
+// Obtiene las listas de los grupos a través de su horario
+function getGroupList($group_id, $db)
+{
+  $group_list = [];
+  $schedule = getSchedule(['group_id' => $group_id], $db);
+
+  foreach ($schedule as $hour => $days) {
+    foreach ($days as $day => $class) {
+      if (!empty($class)) {
+        $group_list[] = [
+          'group_id' => $class['group_id'],
+          'group_semester' => $class['group_semester'],
+          'group_letter' => $class['group_letter'],
+          'career_name' => $class['career_name'],
+          'subject_name' => $class['subject']['subject_name'],
+          'initialism' => $class['subject']['initialism'],
+          'classroom' => $class['classroom'],
+          'day' => $day,
+        ];
+      }
+    }
+  } // Obtenemos las listas de los grupos a través de su horario
+
+  return $group_list;
+}
+
+// Obtiene los grupos a través de su horario
+function getGroupInfo($group_id, $db)
+{
+  $group_info = [];
+  $schedule = getSchedule(['group_id' => $group_id], $db);
+
+  foreach ($schedule as $hour => $days) {
+    foreach ($days as $day => $class) {
+      if (!empty($class)) {
+        $group_info[] = [
+          'group_id' => $class['group_id'],
+          'group_semester' => $class['group_semester'],
+          'group_letter' => $class['group_letter'],
+          'career_name' => $class['career_name'],
+          'subject_name' => $class['subject']['subject_name'],
+          'initialism' => $class['subject']['initialism'],
+          'classroom' => $class['classroom'],
+          'day' => $day,
+        ];
+      }
+    }
+  }
+
+  return $group_info;
+}
+
+// Obtiene la asignación de un grupo a un docente a partir de su horario
+function getSubject($subject_id, $db)
+{
+  $subject = [];
+  $schedule = getSchedule(['subject_id' => $subject_id], $db);
+
+  foreach ($schedule as $hour => $days) {
+    foreach ($days as $day => $class) {
+      if (!empty($class)) {
+        $subject[] = [
+          'subject_id' => $class['subject_id'],
+          'subject_name' => $class['subject']['subject_name'],
+          'initialism' => $class['subject']['initialism'],
+          'group_id' => $class['group_id'],
+          'group_semester' => $class['group_semester'],
+          'group_letter' => $class['group_letter'],
+          'career_name' => $class['career_name'],
+          'classroom' => $class['classroom'],
+          'start_time' => $hour,
+          'day' => $day,
+        ];
+      }
+    }
+  }
+
+  return $subject;
 }
