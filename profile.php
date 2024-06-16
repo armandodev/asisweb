@@ -133,6 +133,7 @@ if (!file_exists($profileAvatar)) $profileAvatar = './images/avatars/default.png
         <ul>
           <li><a class="h-link active" href="./profile.php">Perfil</a></li>
           <li><a class="h-link" href="./schedule.php">Horario</a></li>
+          <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
           <?php if ($_SESSION['user']['role']) { ?>
             <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>

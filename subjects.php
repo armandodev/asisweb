@@ -53,7 +53,7 @@ $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db
         <ul>
           <li><a class="h-link" href="./profile.php">Perfil</a></li>
           <li><a class="h-link" href="./schedule.php">Horario</a></li>
-          <li><a class="h-link active" href="./groups.php">Grupos</a></li>
+          <li><a class="h-link active" href="./subjects.php">Asignaturas</a></li>
           <?php if ($_SESSION['user']['role']) { ?>
             <li><a class="h-link" href="./dashboard/index.php">Panel</a></li>
           <?php } ?>
