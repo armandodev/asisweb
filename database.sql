@@ -1,9 +1,6 @@
-
 create database `asisweb`;
 
-
 use `asisweb`;
-
 
 create table
   `users` (
@@ -17,7 +14,6 @@ create table
     `full_time` tinyint not null default 0
   );
 
-
 create table
   `email_codes` (
     `code_id` int not null auto_increment primary key,
@@ -28,11 +24,9 @@ create table
     `expires_at` datetime default null
   );
 
-
 create trigger `email_codes_exp` before insert on `email_codes` for each row
 set
   new.`expires_at` = date_add(new.`created_at`, interval 5 minute);
-
 
 create table
   `careers` (
@@ -40,7 +34,6 @@ create table
     `career_name` varchar(100) not null,
     `abbreviation` varchar(20) not null
   );
-
 
 create table
   `groups` (
@@ -52,14 +45,12 @@ create table
     `period` varchar(6) not null
   );
 
-
 create table
   `subjects` (
     `subject_id` int not null auto_increment primary key,
     `subject_name` varchar(150) not null,
     `initialism` varchar(20) not null
   );
-
 
 CREATE TABLE
   `schedule` (
@@ -77,7 +68,6 @@ CREATE TABLE
     `start_time` time not null
   );
 
-
 create table
   `students` (
     `control_number` varchar(14) not null primary key,
@@ -87,14 +77,12 @@ create table
     `generation` varchar(12) not null
   );
 
-
 create table
   `group_list` (
     `list_id` int not null primary key,
     `group_id` int not null,
     `control_number` varchar(14) not null unique
   );
-
 
 create table
   `attendance` (
@@ -104,7 +92,6 @@ create table
     `report_id` int not null references `reports` (`report_id`) on delete cascade
   );
 
-
 create table
   `reports` (
     `report_id` int not null auto_increment primary key,
@@ -112,7 +99,6 @@ create table
     `subject_id` int not null references `subjects` (`subject_id`) on delete cascade,
     `user_id` int not null references `users` (`user_id`) on delete cascade
   );
-
 
 INSERT INTO
   `users` (
@@ -351,7 +337,6 @@ VALUES
     0
   );
 
-
 INSERT INTO
   `careers`
 VALUES
@@ -367,7 +352,6 @@ VALUES
     ''
   ),
   (8, 'Trabajo Social', '');
-
 
 INSERT INTO
   `groups`
@@ -397,7 +381,6 @@ VALUES
   (23, '23', 6, 5, 'A', '2023-1'),
   (24, '24', 7, 5, 'A', '2023-1'),
   (25, '25', 8, 5, 'A', '2023-1');
-
 
 INSERT INTO
   `subjects`
@@ -613,7 +596,6 @@ VALUES
     ''
   ),
   (63, 'Tutorías', '');
-
 
 INSERT INTO
   `schedule`
