@@ -55,7 +55,15 @@ if ($subjects->rowCount() === 0) {
 }
 
 $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
+
+$attendance_reports = $db->query('SELECT attendance.*, reports.* FROM attendance JOIN reports ON attendance.report_id = reports.report_id ORDER BY attendance.attendance_id DESC LIMIT 10');
+$attendance_reports = $attendance_reports->fetchAll(PDO::FETCH_ASSOC);
+
+
+$all_attendance_reports = $db->query('SELECT attendance.*, reports.* FROM attendance JOIN reports ON attendance.report_id = reports.report_id ORDER BY attendance.attendance_id DESC')->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -170,6 +178,26 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           </tbody>
         </table>
       </section>
+      
+      <section class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Últimos reportes de asistencias</h2>
+        
+        <?php if (!empty($attendance_reports)) : ?>
+          <ul class="divide-y divide-gray-300">
+            <?php foreach ($attendance_reports as $report) : ?>
+              <li class="py-2">
+                <span class="font-semibold"><?= htmlspecialchars($report['control_number']) ?></span> - <?= htmlspecialchars($report['status']) ?> - <?= htmlspecialchars($report['report_date']) ?>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        <?php else : ?>
+          <p>No hay reportes de asistencias disponibles.</p>
+        <?php endif; ?>
+        <div class="mt-4">
+          <a href="./all-reports.php" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Ver todos</a>
+        </div>
+      </section>
+      
       <section class="flex justify-center mt-4">
         <ul class="flex gap-2">
           <?php if ($page > 1) : ?>

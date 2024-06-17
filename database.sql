@@ -1,17 +1,10 @@
---------------------------------------------------------------------------------
--- Creación de base de datos
---------------------------------------------------------------------------------
+
 create database `asisweb`;
 
---------------------------------------------------------------------------------
--- Usa la base de datos creada para las siguientes consultas
---------------------------------------------------------------------------------
+
 use `asisweb`;
 
---------------------------------------------------------------------------------
--- Creación de tablas
---------------------------------------------------------------------------------
--- Crear la tabla de usuarios (docentes y administradores)
+
 create table
   `users` (
     `user_id` int not null auto_increment primary key,
@@ -24,7 +17,7 @@ create table
     `full_time` tinyint not null default 0
   );
 
--- Crear la tabla que almacena los códigos de verificación
+
 create table
   `email_codes` (
     `code_id` int not null auto_increment primary key,
@@ -35,12 +28,12 @@ create table
     `expires_at` datetime default null
   );
 
--- Trigger para establecer la fecha de expiración de los códigos de verificación, en date_add se esta poniendo un espacio automáticamente antes del paréntesis que no se porque lo hace, date_add(new.`created_at`, interval 5 minute) se debe poner en el lugar de date_add (new.`created_at`, interval 5 minute), verifica esto antes de ejecutar la consulta
+
 create trigger `email_codes_exp` before insert on `email_codes` for each row
 set
   new.`expires_at` = date_add(new.`created_at`, interval 5 minute);
 
--- Crear la tabla de carreras
+
 create table
   `careers` (
     `career_id` int not null auto_increment primary key,
@@ -48,7 +41,7 @@ create table
     `abbreviation` varchar(20) not null
   );
 
--- Crear la tabla de grupos
+
 create table
   `groups` (
     `group_id` int not null primary key auto_increment,
@@ -59,7 +52,7 @@ create table
     `period` varchar(6) not null
   );
 
--- Crear la tabla de asignaturas
+
 create table
   `subjects` (
     `subject_id` int not null auto_increment primary key,
@@ -67,7 +60,7 @@ create table
     `initialism` varchar(20) not null
   );
 
--- Crear la tabla de horarios
+
 CREATE TABLE
   `schedule` (
     `schedule_id` int not null auto_increment primary key,
@@ -84,7 +77,7 @@ CREATE TABLE
     `start_time` time not null
   );
 
--- Crear la tabla de estudiantes
+
 create table
   `students` (
     `control_number` varchar(14) not null primary key,
@@ -94,7 +87,7 @@ create table
     `generation` varchar(12) not null
   );
 
--- Tabla para crear la relación entre estudiantes y su grupo, de manera que se pueda obtener el grupo de un estudiante
+
 create table
   `group_list` (
     `list_id` int not null primary key,
@@ -102,7 +95,7 @@ create table
     `control_number` varchar(14) not null unique
   );
 
--- Tabla para el registro de asistencias
+
 create table
   `attendance` (
     `attendance_id` int not null auto_increment primary key,
@@ -111,7 +104,7 @@ create table
     `report_id` int not null references `reports` (`report_id`) on delete cascade
   );
 
--- Tabla para el registro de reportes
+
 create table
   `reports` (
     `report_id` int not null auto_increment primary key,
@@ -120,10 +113,7 @@ create table
     `user_id` int not null references `users` (`user_id`) on delete cascade
   );
 
---------------------------------------------------------------------------------
--- Inserciones de datos
---------------------------------------------------------------------------------
--- Insertar datos en la tabla de usuarios
+
 INSERT INTO
   `users` (
     `name`,
@@ -361,7 +351,7 @@ VALUES
     0
   );
 
--- Insertar datos en la tabla de carreras
+
 INSERT INTO
   `careers`
 VALUES
@@ -378,7 +368,7 @@ VALUES
   ),
   (8, 'Trabajo Social', '');
 
--- Insertar datos en la tabla de grupos
+
 INSERT INTO
   `groups`
 VALUES
@@ -408,7 +398,7 @@ VALUES
   (24, '24', 7, 5, 'A', '2023-1'),
   (25, '25', 8, 5, 'A', '2023-1');
 
--- Insertar datos en la tabla de asignaturas
+
 INSERT INTO
   `subjects`
 VALUES
@@ -624,7 +614,7 @@ VALUES
   ),
   (63, 'Tutorías', '');
 
--- Insertar datos en la tabla de horarios
+
 INSERT INTO
   `schedule`
 VALUES
@@ -649,7 +639,6 @@ VALUES
   (19, 23, 15, 3, 'Viernes', '11:00:00'),
   (20, 23, 15, 3, 'Viernes', '12:00:00');
 
--- Insertar datos en la tabla de estudiantes
 INSERT INTO
   `students` (
     `control_number`,
