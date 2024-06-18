@@ -16,12 +16,12 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_users = $db->execute('SELECT COUNT(*) FROM users WHERE name LIKE :search OR role LIKE :search OR status LIKE :search', ['search' => "%$search%"]);
+$total_users = $db->execute('SELECT COUNT(*) FROM users WHERE name LIKE :search', ['search' => "%$search%"]);
 $total_users = $total_users->fetchColumn();
 $total_pages = ceil($total_users / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$users = $db->execute("SELECT * FROM users WHERE name LIKE :search OR role LIKE :search OR status LIKE :search ORDER BY status DESC, name ASC LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
+$users = $db->execute("SELECT * FROM users WHERE name LIKE :search ORDER BY status ASC, name ASC LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
 
 if ($users->rowCount() === 0) {
   $empty = true;
@@ -44,10 +44,26 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="./../css/modals.css">
   <link rel="stylesheet" href="./../css/header.css">
   <link rel="stylesheet" href="./../css/footer.css">
-  <link rel="stylesheet" href="./../css/dashboard/users.css">
+  <link rel="stylesheet" href="./../css/table.css">
 </head>
 
 <body>
+  <?php if (isset($_SESSION['info'])) {
+  ?>
+    <dialog id="info-modal" class="modal modal-content">
+      <button class="close-button" id="close-info-modal">
+        <img src="./../icons/close.svg" alt="Cerrar">
+      </button>
+      <h3 className="modal-title">
+        <?= $_SESSION['info']['title'] ?>
+      </h3>
+      <p className="modal-text">
+        <?= $_SESSION['info']['message'] ?>
+      </p>
+    </dialog>
+  <?php unset($_SESSION['info']); // Eliminamos la variable de información
+  } ?>
+
   <dialog id="logout-modal" class="modal modal-content">
     <h3 class="modal-title">¿Estás seguro que quieres cerrar la sesión?</h3>
 
@@ -72,9 +88,13 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
       <nav id="menu">
         <ul>
+          <li><a class="h-link active" href="./users.php">Usuarios</a></li>
+          <li><a class="h-link" href="./students.php">Estudiantes</a></li>
+          <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
+          <li><a class="h-link" href="./careers.php">Carreras</a></li>
+          <li><a class="h-link" href="./groups.php">Grupos</a></li>
+          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><a class="h-link" href="./../profile.php">Perfil</a></li>
-          <li><a class="h-link" href="./../schedule.php">Horario</a></li>
-          <li><a class="h-link active" href="./">Panel</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>
@@ -86,41 +106,46 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
   <main class="container">
     <form method="get">
-      <input class="input" type="search" name="search" placeholder="Nombre, Apellidos, Rol o Estado" value="<?= $search ?>">
+      <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= $search ?>">
     </form>
-    <section class="overflow-x-scroll">
-      <table class="w-full mt-4 border border-gray-300 text-nowrap">
-        <thead class="bg-gray-200 text-gray-700 sticky -top-1">
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Rol</th>
-            <th>Estatus</th>
-            <th>Acciones</th>
+    <section class="table-section">
+      <table class="table">
+        <thead class="table-header">
+          <tr class="table-row">
+            <th class="table-cell">Nombre</th>
+            <th class="table-cell">Correo</th>
+            <th class="table-cell">Teléfono</th>
+            <th class="table-cell">Rol</th>
+            <th class="table-cell">Estatus</th>
+            <th class="table-cell">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-body">
           <?php if (isset($empty)) : ?>
-            <tr>
-              <td colspan="6">No hay docentes registrados.</td>
+            <tr class="table-row">
+              <td class="table-cell" colspan="6">No hay docentes registrados.</td>
             </tr>
           <?php else : ?>
             <?php foreach ($users as $user) : ?>
-              <tr class="border-t border-gray-300">
-                <td><?= $user['name']  ?></td>
-                <td><?= $user['email'] ?></td>
-                <td><?= $user['tel'] ?></td>
-                <td><?= $user['role'] ? 'Administrador' : 'Docente' ?></td>
-                <td><?= $user['status'] ? 'Activo' : 'Inactivo' ?></td>
-                <td class="flex">
-                  <a class="btn w-6" href="./schedule.php?id=<?= $user['user_id'] ?>">
+              <tr class="table-row">
+                <td class="table-cell"><?= $user['name']  ?></td>
+                <td class="table-cell"><?= $user['email'] ?></td>
+                <td class="table-cell"><?= $user['tel'] ?></td>
+                <td class="table-cell">
+                  <a href="./../auth/toggle-role.php?id=<?= $user['user_id'] ?>">
+                    <?= $user['role'] ? 'Administrador' : 'Docente' ?>
+                  </a>
+                </td>
+                <td class="table-cell">
+                  <a href="./../auth/toggle-status.php?id=<?= $user['user_id'] ?>">
+                    <?= $user['status'] ? 'Activo' : 'Inactivo' ?>
+                  </a>
+                </td>
+                <td class="table-cell action">
+                  <a href="./schedule.php?id=<?= $user['user_id'] ?>">
                     <img src="./../icons/schedule.svg" alt="Horario">
                   </a>
-                  <a class="btn w-6" href="./edit-user.php?id=<?= $user['user_id'] ?>">
-                    <img src="./../icons/edit.svg" alt="Editar">
-                  </a>
-                  <a class="btn w-6" href="./delete-user.php?id=<?= $user['user_id'] ?>">
+                  <a href="./../auth/delete.php?id=<?= $user['user_id'] ?>">
                     <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
@@ -133,21 +158,20 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
     <ul>
       <?php if ($page > 1) : ?>
         <li>
-          <a class="btn" href="?page=<?= $page - 1 ?>">
+          <a href="?page=<?= $page - 1 ?>">
             < Anterior </a>
         </li>
       <?php endif; ?>
-      <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
+      <li><span>Página <?= $page ?> de <?= $total_pages ?></span></li>
       <?php if ($page < $total_pages) : ?>
         <li>
-          <a class="btn" href="?page=<?= $page + 1 ?>">
+          <a href="?page=<?= $page + 1 ?>">
             Siguiente >
           </a>
         </li>
       <?php endif; ?>
     </ul>
   </main>
-
 
   <footer id="bottom-footer">
     <span><?= FOOTER_ADDRESS ?></span>

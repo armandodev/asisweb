@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])) { // Verificamos que el usuario esté autenticado
 }
 
 $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db); // Obtenemos los horarios del docente ingresado
+$reports = getAttendanceReports($db); // Obtenemos los registros de asistencia del docente ingresado
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,6 +24,7 @@ $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db
   <link rel="stylesheet" href="./css/modals.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/table.css">
   <link rel="stylesheet" href="./css/subjects.css">
 </head>
 
@@ -84,16 +86,55 @@ $groups = getSubjectsBySchedule(['user_id' => $_SESSION['user']['user_id']], $db
 
   <main class="container">
     <section>
+      <h2>Grupos</h2>
       <ul class="groups">
         <?php foreach ($groups as $group) { ?>
           <li class="group">
             <a href="./take-attendance.php?subject_id=<?= $group['subject_id'] ?>&group_id=<?= $group['group_id'] ?>">
-              <span class="group"><?= $group['group_semester'] . $group['group_letter'] ?> - <?= $group['career_name'] ?></span>
-              <span class="subject"><?= $group['initialism'] ? $group['initialism'] : $group['subject_name'] ?></span>
+              <span class="group-name"><?= $group['group_semester'] . $group['group_letter'] ?> - <?= $group['career_name'] ?></span>
+              <span class="subject-name"><?= $group['initialism'] ? $group['initialism'] : $group['subject_name'] ?></span>
             </a>
           </li>
         <?php } ?>
       </ul>
+    </section>
+
+    <section class="table-section">
+      <h2>Registros de asistencia</h2>
+      <table class="table">
+        <thead class="table-header">
+          <tr class="table-row">
+            <th class="table-cell">Asignatura</th>
+            <th class="table-cell">Grupo</th>
+            <th class="table-cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          <?php if (count($reports) > 0) { ?>
+
+            <?php foreach ($reports as $report) { ?>
+              <tr class="table-row">
+                <td class="table-cell"><?= getSubject($report['subject_id'], $db)['subject_name'] ?></td>
+                <td class="table-cell"><?= getGroupInfo($report['group_id'], $db)['group_semester'] . getGroupInfo($report['group_id'], $db)['group_letter'] . ' - ' . getGroupInfo($report['group_id'], $db)['career_name'] ?></td>
+                <td class="table-cell action">
+                  <a href="./edit-attendance.php?report_id=<?= $report['report_id'] ?>&subject_id=<?= $report['subject_id'] ?>&group_id=<?= $report['group_id'] ?>">
+                    <img src="./icons/edit.svg" alt="Editar">
+                  </a>
+                  <a href="./attendance/delete.php?report_id=<?= $report['report_id'] ?>">
+                    <img src="./icons/delete.svg" alt="Eliminar">
+                  </a>
+                </td>
+              </tr>
+            <?php } ?>
+          <?php } else { ?>
+            <tr class="table-row">
+              <td class="table-cell">Sin registros</td>
+              <td class="table-cell">Sin registros</td>
+              <td class="table-cell"></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
     </section>
   </main>
 

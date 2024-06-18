@@ -28,6 +28,7 @@ function getSchedule($params, $db)
 
   // Iteramos sobre las clases obtenidas y las añadimos al horario
   foreach ($classes as $class) {
+    $id = $class['schedule_id']; // Obtenemos el id de la clase
     $start_time = $class['start_time']; // Obtenemos la hora de inicio de la clase
     $day = $class['day']; // Obtenemos el día de la clase
     $subject = !empty($class['initialism']) ? $class['initialism'] : $class['subject_name']; // Obtenemos el nombre de la asignatura
@@ -35,6 +36,7 @@ function getSchedule($params, $db)
     $classroom = $class['classroom']; // Obtenemos el salón de la clase
 
     $schedule[$start_time][$day] = [ // Añadimos la clase al horario
+      'id' => $id,
       'subject' => $subject,
       'group' => $group,
       'classroom' => "Aula $classroom",
@@ -49,6 +51,7 @@ function getSchedule($params, $db)
       foreach ($days as $day => $class) {
         if (empty($class)) {
           $schedule[$hour][$day] = [
+            'id' => '',
             'subject' => $user['full_time'] ? 'Comisión' : 'Sin asignar',
             'group' => '',
             'classroom' => '',
@@ -107,4 +110,14 @@ function getSubject($subject_id, $db)
   $subject = $db->fetch("SELECT subject_id, subject_name, initialism FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
   if (!$subject) return false;
   return $subject;
+}
+
+function getAttendanceReports($db)
+{
+  $reports = $db->execute('SELECT * FROM reports WHERE user_id = :user_id', ['user_id' => $_SESSION['user']['user_id']]);
+  if ($reports->rowCount() == 0) return [];
+  if (!$reports) return [];
+
+  $reports = $reports->fetchAll(PDO::FETCH_ASSOC);
+  return $reports;
 }

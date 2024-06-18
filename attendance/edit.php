@@ -8,11 +8,12 @@ if (!isset($_SESSION['user'])) {
 }
 
 try {
-  if (!isset($_POST['attendance']) || !isset($_POST['group_id']) || !isset($_POST['subject_id'])) throw new Exception('Faltan datos de entrada');
+  if (!isset($_POST['attendance']) || !isset($_POST['group_id']) || !isset($_POST['subject_id']) || !isset($_POST['report_id'])) throw new Exception('Faltan datos de entrada');
 
   $attendance_control_numbers = $_POST['attendance'];
   $group_id = $_POST['group_id'];
   $subject_id = $_POST['subject_id'];
+  $report_id = $_POST['report_id'];
 
   $group_list = getGroupList($group_id, $db);
 
@@ -26,14 +27,8 @@ try {
     if (!isset($attendance[$student['control_number']])) $attendance[$student['control_number']] = 0;
   }
 
-  $report_request = $db->execute('INSERT INTO reports (group_id, subject_id, user_id) VALUES (:group_id, :subject_id, :user_id)', ['group_id' => $group_id, 'subject_id' => $subject_id, 'user_id' => $_SESSION['user']['user_id']]);
-
-  if (!$report_request) throw new Exception('No se pudo registrar el reporte en la tabla de reportes');
-
-  $report_id = $db->fetch('SELECT report_id FROM reports WHERE group_id = :group_id AND subject_id = :subject_id AND user_id = :user_id ORDER BY report_id DESC LIMIT 1', ['group_id' => $group_id, 'subject_id' => $subject_id, 'user_id' => $_SESSION['user']['user_id']]);
-
-  if (!$report_id) throw new Exception('No se pudo registrar el reporte en la tabla de reportes');
-  $report_id = $report_id['report_id'];
+  $delete_old_data = $db->execute('DELETE FROM attendance WHERE report_id = :report_id', ['report_id' => $report_id]);
+  if (!$delete_old_data) throw new Exception('No se pudo eliminar los datos de asistencia anteriores');
 
   foreach ($attendance as $control_number => $status) {
     $attendance_request = $db->execute('INSERT INTO attendance (control_number, status, report_id) VALUES (:control_number, :status, :report_id)', ['control_number' => $control_number, 'status' => $status, 'report_id' => $report_id]);
@@ -42,8 +37,8 @@ try {
   }
 
   $_SESSION['info'] = [
-    'title' => 'Asistencia registrada',
-    'message' => 'Se ha registrado el reporte en la tabla de reportes'
+    'title' => 'Asistencia actualizada',
+    'message' => 'Se han actualizado los datos de asistencia en la tabla de asistencias'
   ];
 } catch (Exception $e) {
   $_SESSION['info'] = [

@@ -88,7 +88,7 @@ create table
   `attendance` (
     `attendance_id` int not null auto_increment primary key,
     `control_number` varchar(14) not null references `students` (`control_number`) on delete cascade,
-    `status` enum ('Presente', 'Ausente', 'Retardo', 'Justificado') not null,
+    `status` tinyint not null default 0,
     `report_id` int not null references `reports` (`report_id`) on delete cascade
   );
 

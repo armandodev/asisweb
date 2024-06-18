@@ -1,29 +1,29 @@
 <?php
 require_once './../config.php';
-require_once './../api/schedule/get.php';
+require_once './../attendance/utils.php';
 
 if (!isset($_SESSION['user'])) {
   header('Location: ./../');
   exit();
 }
 
-if ($_SESSION['user']['role'] !== 'Administrador') {
+if (!$_SESSION['user']['role']) {
   header('Location: ./../');
   exit();
 }
 
-if (!$_SERVER['REQUEST_METHOD'] === 'GET' || !isset($_GET['id'])) {
+if (!isset($_GET['id'])) {
   header('Location: ./groups.php');
   exit();
 }
 
 $user_id = $_GET['id'];
 
-$schedule = getSchedule($user_id, $db);
+$schedule = getSchedule(['user_id' => $user_id], $db); // Obtenemos los horarios del docente ingresado
 
 $subjects = $db->execute('SELECT subject_id, subject_name, initialism FROM subjects ORDER BY subject_name')->fetchAll(PDO::FETCH_ASSOC);
 array_unshift($subjects, ['subject_id' => '', 'subject_name' => '', 'initialism' => '']);
-$groups = $db->execute('SELECT career_name, abbreviation, group_semester, group_letter, group_id FROM groups INNER JOIN careers ON groups.career_id = careers.career_id ORDER BY group_semester, group_letter')->fetchAll(PDO::FETCH_ASSOC);
+$groups = $db->execute('SELECT career_name, abbreviation, group_semester, group_letter, group_id FROM `groups` INNER JOIN careers ON groups.career_id = careers.career_id ORDER BY group_semester, group_letter')->fetchAll(PDO::FETCH_ASSOC);
 array_unshift($groups, ['group_id' => '', 'group_semester' => '', 'group_letter' => '', 'career_name' => '', 'abbreviation' => '']);
 ?>
 <!DOCTYPE html>
