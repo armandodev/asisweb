@@ -117,6 +117,7 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
             <th class="table-cell">Teléfono</th>
             <th class="table-cell">Rol</th>
             <th class="table-cell">Estatus</th>
+            <th class="table-cell">Tiempo completo</th>
             <th class="table-cell">Acciones</th>
           </tr>
         </thead>
@@ -139,6 +140,11 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
                 <td class="table-cell">
                   <a href="./../auth/toggle-status.php?id=<?= $user['user_id'] ?>">
                     <?= $user['status'] ? 'Activo' : 'Inactivo' ?>
+                  </a>
+                </td>
+                <td class="table-cell">
+                  <a href="./../auth/toggle-time.php?id=<?= $user['user_id'] ?>">
+                    <?= $user['status'] ? 'Completo' : 'Medio tiempo' ?>
                   </a>
                 </td>
                 <td class="table-cell action">
