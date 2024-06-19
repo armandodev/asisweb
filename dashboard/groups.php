@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-if ($_SESSION['user']['role'] !== 'Administrador') {
+if ($_SESSION['user']['role'] !== 1) {
   header('Location: ./../');
   exit();
 }
@@ -16,17 +16,13 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$total_groups = $db->execute('SELECT COUNT(*) FROM groups WHERE group_semester LIKE :search OR group_letter LIKE :search OR classroom LIKE :search', ['search' => "%$search%"]);
+$total_groups = $db->execute('SELECT COUNT(*) FROM `groups` WHERE group_semester LIKE :search OR group_letter LIKE :search OR classroom LIKE :search', ['search' => "%$search%"]);
 $total_groups = $total_groups->fetchColumn();
 $total_pages = ceil($total_groups / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name, first_name, last_name FROM groups INNER JOIN careers ON groups.career_id = careers.career_id INNER JOIN users ON groups.tutor_id = users.user_id WHERE group_semester LIKE :search OR career_name LIKE :search ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
-
-if ($groups->rowCount() === 0) {
-  $empty = true;
-}
-
+$groups = $db->execute("SELECT group_id, classroom, group_semester, group_letter, period, career_name FROM `groups` INNER JOIN careers ON groups.career_id = careers.career_id WHERE group_semester LIKE :search OR career_name LIKE :search ORDER BY group_semester, group_letter, career_name, period LIMIT $limit OFFSET $offset", ['search' => "%$search%"]);
+if ($groups->rowCount() === 0) $empty = true;
 $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -38,126 +34,156 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
   <title>Grupos | Docentes <?= SCHOOL_NAME ?></title>
   <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="./../css/output.css">
+  <link rel="stylesheet" href="./../css/normalize.css">
+  <link rel="stylesheet" href="./../css/styles.css">
+  <link rel="stylesheet" href="./../css/forms.css">
+  <link rel="stylesheet" href="./../css/modals.css">
+  <link rel="stylesheet" href="./../css/header.css">
+  <link rel="stylesheet" href="./../css/footer.css">
+  <link rel="stylesheet" href="./../css/table.css">
 </head>
 
 <body>
-  <header class="bg-[#f8f9fa] border-b-2 border-gray-300">
-    <div class="container flex items-center justify-between">
-      <a class="flex items-center" href="./../profile.php">
-        <img class="w-16 aspect-square" src="./../images/logo.webp" alt="<?= LOGO_ALT ?>">
-        <span class="text-xl font-semibold"><?= SCHOOL_NAME ?></span>
+  <?php if (isset($_SESSION['info'])) {
+  ?>
+    <dialog id="info-modal" class="modal modal-content">
+      <button class="close-button" id="close-info-modal">
+        <img src="./../icons/close.svg" alt="Cerrar">
+      </button>
+      <h3 className="modal-title">
+        <?= $_SESSION['info']['title'] ?>
+      </h3>
+      <p className="modal-text">
+        <?= $_SESSION['info']['message'] ?>
+      </p>
+    </dialog>
+  <?php unset($_SESSION['info']); // Eliminamos la variable de información
+  } ?>
+
+  <dialog id="logout-modal" class="modal modal-content">
+    <h3 class="modal-title">¿Estás seguro que quieres cerrar la sesión?</h3>
+
+    <p class="modal-text">
+      Al cerrar la sesión, no podrás acceder a tu perfil ni a tus datos.
+    </p>
+
+    <ul class="modal-actions">
+      <li><a class="button" href="./../logout.php">Cerrar sesión</a></li>
+      <li>
+        <button class="button" id="close-logout-modal">Cancelar</button>
+      </li>
+    </ul>
+  </dialog>
+
+  <header id="top-header">
+    <div class="container">
+      <a class="logo" href="./../profile.php">
+        <img src="./../images/logo.webp" alt="<?= LOGO_ALT ?>">
+        <strong><?= SCHOOL_NAME ?></strong>
       </a>
 
-      <nav class="absolute -top-full left-0 flex items-center justify-center w-full h-screen bg-[#f8f9fa] text-xl md:text-lg md:static md:h-[initial] md:w-[initial] md:bg-transparent" id="menu">
-        <ul class="flex gap-4 flex-col items-center md:flex-row md:gap-0">
-          <li><a class="h-link" href="./../profile.php">Perfil</a></li>
-          <li><a class="h-link" href="./../schedule.php">Horario</a></li>
-          <li><a class="h-link" href="./../tutoring.php">Tutorías</a></li>
-          <li><a class="h-link active" href="./">Panel</a></li>
-          <li><a class="h-link" href=" ./../logout.php">Cerrar sesión</a></li>
+      <nav id="menu">
+        <ul>
+          <li><a class="h-link" href="./../profile.php">Inicio</a></li>
+          <li><a class="h-link" href="./users.php">Usuarios</a></li>
+          <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
+          <li><a class="h-link" href="./careers.php">Carreras</a></li>
+          <li><a class="h-link active" href="./groups.php">Grupos</a></li>
+          <li><a class="h-link" href="./students.php">Estudiantes</a></li>
+          <li><a class="h-link" href="./reports.php">Registros</a></li>
+          <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
-        <button class="absolute top-6 right-2 md:hidden" id="close-menu">
-          <img src="./../icons/close.svg" alt="Cerrar menú">
-        </button>
       </nav>
-      <button class="md:hidden" id="show-menu">
+      <button id="toggle-menu">
         <img src="./../icons/menu.svg" alt="Abrir menú">
       </button>
     </div>
   </header>
 
-  <main>
-    <article class="article container overflow-x-scroll">
-      <form class="flex gap-4" method="GET" class="mb-4">
-        <input class="input" type="search" name="search" placeholder="Semestre o carrera" value="<?= $search ?>">
-        <button class="button" type="submit">Buscar</button>
-      </form>
-      <section class="overflow-x-scroll">
-        <table class="w-full mt-4 border border-gray-300 text-nowrap">
-          <thead class="bg-gray-200 text-gray-700">
-            <tr>
-              <th class="p-2">Salón</th>
-              <th class="p-2">Grado y grupo</th>
-              <th class="p-2">Periodo</th>
-              <th class="p-2">Tutor</th>
-              <th class="p-2">Acciones</th>
+  <main class="container">
+    <form method="get">
+      <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= $search ?>">
+    </form>
+    <section class="table-section">
+      <table class="table">
+        <thead class="table-header">
+          <tr class="table-row">
+            <th class="table-cell">Salón</th>
+            <th class="table-cell">Grado y grupo</th>
+            <th class="table-cell">Periodo</th>
+            <th class="table-cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <?php if (isset($empty)) : ?>
+            <tr class="table-row">
+              <td class="table-cell" colspan="4">No hay grupos registrados.</td>
             </tr>
-          </thead>
-          <tbody class="text-center">
-            <?php if (isset($empty)) : ?>
-              <tr>
-                <td class="p-2" colspan="6">No hay grupos registrados.</td>
+          <?php else : ?>
+            <?php foreach ($groups as $group) : ?>
+              <tr class="table-row">
+                <td class="table-cell"><?= $group['classroom'] ?></td>
+                <td class="table-cell"><?= $group['group_semester'] . $group['group_letter'] . ' ' . $group['career_name'] ?></td>
+                <td class="table-cell"><?= $group['period'] ?></td>
+                <td class="table-cell action">
+                  <a href="./group-list.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/list.svg" alt="Lista">
+                  </a>
+                  <a href="./group-schedule.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/schedule.svg" alt="Horario">
+                  </a>
+                  <a href="./edit-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/edit.svg" alt="Editar">
+                  </a>
+                  <a href="./delete-group.php?id=<?= $group['group_id'] ?>">
+                    <img src="./../icons/delete.svg" alt="Eliminar">
+                  </a>
+                </td>
               </tr>
-            <?php else : ?>
-              <?php foreach ($groups as $group) : ?>
-                <tr class="border-t border-gray-300">
-                  <td class="p-2"><?= $group['classroom'] ?></td>
-                  <td class="p-2"><?= $group['group_semester'] . $group['group_letter'] . ' ' . $group['career_name'] ?></td>
-                  <td class="p-2"><?= $group['period'] ?></td>
-                  <td class="p-2"><?= $group['first_name'] . ' ' . $group['last_name'] ?></td>
-                  <td class="flex justify-center gap-2 p-2">
-                    <a class="btn w-6" href="./group-list.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/list.svg" alt="Listas">
-                    </a>
-                    <a class="btn w-6" href="./group-schedule.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/schedule.svg" alt="Horario">
-                    </a>
-                    <a class="btn w-6" href="./edit-group.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/edit.svg" alt="Editar">
-                    </a>
-                    <a class="btn w-6" href="./delete-group.php?id=<?= $group['group_id'] ?>">
-                      <img src="./../icons/delete.svg" alt="Eliminar">
-                    </a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            <?php endif; ?>
-          </tbody>
-        </table>
-      </section>
-      <section class="flex justify-center mt-4">
-        <ul class="flex gap-2">
-          <?php if ($page > 1) : ?>
-            <li>
-              <a class="btn" href="?page=<?= $page - 1 ?>">
-                < Anterior </a>
-            </li>
+            <?php endforeach; ?>
           <?php endif; ?>
-          <li><span class="btn">Página <?= $page ?> de <?= $total_pages ?></span></li>
-          <?php if ($page < $total_pages) : ?>
-            <li>
-              <a class="btn" href="?page=<?= $page + 1 ?>">
-                Siguiente >
-              </a>
-            </li>
-          <?php endif; ?>
-        </ul>
-      </section>
-    </article>
+        </tbody>
+      </table>
+    </section>
+    <ul class="pagination">
+      <?php if ($page > 1) : ?>
+        <li>
+          <a href="?page=<?= $page - 1 ?>">
+            < Anterior </a>
+        </li>
+      <?php endif; ?>
+      <li><span>Página <?= $page ?> de <?= $total_pages ?></span></li>
+      <?php if ($page < $total_pages) : ?>
+        <li>
+          <a href="?page=<?= $page + 1 ?>">
+            Siguiente >
+          </a>
+        </li>
+      <?php endif; ?>
+    </ul>
   </main>
 
-  <footer class="w-full max-w-screen-xl p-4 mx-auto border-gray-300 border-t-2 flex flex-col md:flex-row justify-center md:items-center md:justify-between gap-y-4 mt-8">
-    <span>CETis No. 121 Sahuayo, Michoacán.</span>
+  <footer id="bottom-footer">
+    <span><?= FOOTER_ADDRESS ?></span>
 
-    <ul class="list-none flex gap-4">
+    <ul>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.facebook.com/Cetis121SahuayoBuhos" target="_blank" rel="noopener noreferrer">
           <img src="./../icons/facebook.svg" alt="Facebook">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.instagram.com/cetis_121_shy/" target="_blank" rel="noopener noreferrer">
           <img src="./../icons/instagram.svg" alt="Instagram">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="tel:3535322224" target="_blank" rel="noopener noreferrer">
           <img src="./../icons/phone.svg" alt="Teléfono">
         </a>
       </li>
       <li>
-        <a class="hover:scale-125 hover:opacity-90 transition-all duration-200 inline-block" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
+        <a class="f-link" href="https://www.cetis121.edu.mx/" target="_blank" rel="noopener noreferrer">
           <img src="./../icons/web.svg" alt="Sitio web">
         </a>
       </li>
@@ -165,6 +191,7 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
   </footer>
 
   <script src="./../js/menu.js"></script>
+  <script src="./../js/modals.js"></script>
 </body>
 
 </html>

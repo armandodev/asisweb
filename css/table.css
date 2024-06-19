@@ -45,3 +45,9 @@ main.container {
 .table-cell.action a:hover {
   background-color: #ddd;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

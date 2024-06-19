@@ -93,7 +93,7 @@ function getScheduleId($subject_id, $group_id, $db)
 
 function getGroupList($group_id, $db)
 {
-  $students = $db->fetch("SELECT first_name, last_name, group_list.control_number FROM group_list INNER JOIN students ON group_list.control_number = students.control_number WHERE group_id = :group_id ORDER BY last_name, first_name", ['group_id' => $group_id]);
+  $students = $db->fetch("SELECT first_name, last_name, curp, group_list.control_number, generation FROM group_list INNER JOIN students ON group_list.control_number = students.control_number WHERE group_id = :group_id ORDER BY last_name, first_name", ['group_id' => $group_id]);
   if (!$students) return false;
   return $students;
 }

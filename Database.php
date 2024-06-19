@@ -5,7 +5,7 @@ class Database
   private $host = 'localhost'; // Nombre del servidor de la base de datos
   private $db_name = 'asisweb'; // Nombre de la base de datos
   private $username = 'root'; // Nombre de usuario de la base de datos
-  private $password = ''; // Contraseña de la base de datos
+  private $password = '2707'; // Contraseña de la base de datos
   private $port = '3306'; // Puerto de la base de datos
   public $conn; // Conexión a la base de datos
 

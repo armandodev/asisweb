@@ -88,13 +88,13 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
 
       <nav id="menu">
         <ul>
+          <li><a class="h-link" href="./../profile.php">Inicio</a></li>
           <li><a class="h-link active" href="./users.php">Usuarios</a></li>
-          <li><a class="h-link" href="./students.php">Estudiantes</a></li>
           <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
           <li><a class="h-link" href="./careers.php">Carreras</a></li>
           <li><a class="h-link" href="./groups.php">Grupos</a></li>
+          <li><a class="h-link" href="./students.php">Estudiantes</a></li>
           <li><a class="h-link" href="./reports.php">Registros</a></li>
-          <li><a class="h-link" href="./../profile.php">Perfil</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>
@@ -161,7 +161,7 @@ $users = $users->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
       </table>
     </section>
-    <ul>
+    <ul class="pagination">
       <?php if ($page > 1) : ?>
         <li>
           <a href="?page=<?= $page - 1 ?>">
