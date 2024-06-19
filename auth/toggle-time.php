@@ -12,25 +12,25 @@ if (!$_SESSION['user']['role']) {
 }
 
 try {
-  if (!isset($_GET['id'])) throw new Exception('No se ha especificado el usuario a cambiar el tiempo del usuario');
+  if (!isset($_GET['id'])) throw new Exception('No se ha especificado el usuario a cambiar el tipo de horario del usuario');
   $id = $_GET['id'];
 
-  $status = $db->fetch('SELECT status FROM users WHERE user_id = :id', [':id' => $id]);
-  if (!$user) throw new Exception('No se ha podido cambiar el tiempo del usuario');
+  $full_time = $db->fetch('SELECT full_time FROM users WHERE user_id = :id', [':id' => $id]);
+  if (!$user) throw new Exception('No se ha podido cambiar el tipo de horario del usuario');
 
-  $new_status = $status['status'] ? 0 : 1;
+  $new_full_time = $full_time['full_time'] ? 0 : 1;
 
-  $result = $db->execute('UPDATE users SET status = :status WHERE user_id = :id', [':status' => $new_status, ':id' => $id]);
+  $result = $db->execute('UPDATE users SET full_time = :full_time WHERE user_id = :id', [':full_time' => $new_full_time, ':id' => $id]);
 
-  if (!$result) throw new Exception('No se ha podido cambiar el tiempo del usuario');
+  if (!$result) throw new Exception('No se ha podido cambiar el tipo de horario del usuario');
 
   $_SESSION['info'] = [
-    'title' => 'Tiempo actualizado',
-    'message' => 'El tiempo del usuario ha sido actualizado con éxito',
+    'title' => 'Tipo de horario actualizado',
+    'message' => 'El tipo de horario del usuario ha sido actualizado con éxito',
   ];
 } catch (Exception $e) {
   $_SESSION['info'] = [
-    'title' => 'Error al cambiar el tiempo del usuario',
+    'title' => 'Error al cambiar el tipo de horario del usuario',
     'message' => $e->getMessage(),
   ];
 } finally {
