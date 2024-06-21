@@ -1,4 +1,6 @@
 <?php
+
+
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
@@ -20,13 +22,22 @@ $total_students = $db->fetch("SELECT COUNT(*) FROM students WHERE first_name LIK
 $total_pages = ceil($total_students / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
-$students = $db->execute("SELECT students.control_number, students.curp, students.first_name, students.last_name, students.generation, groups.group_semester, groups.group_letter, careers.career_name FROM group_list JOIN `groups` ON group_list.group_id = groups.group_id JOIN students ON group_list.control_number = students.control_number JOIN careers ON groups.career_id = careers.career_id WHERE first_name LIKE :search OR last_name LIKE :search OR students.control_number LIKE :search LIMIT $limit OFFSET $offset", ['search' => "%$search%", 'limit' => $limit, 'offset' => $offset]);
+$students = $db->execute("
+    SELECT students.control_number, students.curp, students.first_name, students.last_name, students.generation, groups.group_semester, groups.group_letter, careers.career_name 
+    FROM group_list 
+    JOIN `groups` ON group_list.group_id = groups.group_id 
+    JOIN students ON group_list.control_number = students.control_number 
+    JOIN careers ON groups.career_id = careers.career_id 
+    WHERE first_name LIKE :search OR last_name LIKE :search OR students.control_number LIKE :search 
+    LIMIT $limit OFFSET $offset
+", ['search' => "%$search"]);
 
 if ($students->rowCount() === 0) $empty = true;
 if (!$students) $empty = true;
 
 $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de asistencia del docente ingresado
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -104,7 +115,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
 
   <main class="container">
     <form method="get">
-      <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= $search ?>">
+    <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= htmlspecialchars($search) ?>">
     </form>
     <section class="table-section">
       <table class="table">
@@ -126,16 +137,16 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
           <?php else : ?>
             <?php foreach ($students as $student) : ?>
               <tr class="table-row">
-                <td class="table-cell"><?= $student['control_number'] ?></td>
-                <td class="table-cell"><?= $student['curp'] ?></td>
-                <td class="table-cell"><?= $student['first_name'] . ' ' . $student['last_name'] ?></td>
-                <td class="table-cell"><?= $student['generation'] ?></td>
-                <td class="table-cell"><?= $student['group_semester'] . $student['group_letter'] . ' - ' . $student['career_name'] ?></td>
+                <td class="table-cell"><?= htmlspecialchars($student['control_number']) ?></td>
+                <td class="table-cell"><?= htmlspecialchars($student['curp']) ?></td>
+                <td class="table-cell"><?= htmlspecialchars($student['first_name'] . ' ' . $student['last_name']) ?></td>
+                <td class="table-cell"><?= htmlspecialchars($student['generation']) ?></td>
+                <td class="table-cell"><?= htmlspecialchars($student['group_semester'] . $student['group_letter'] . ' - ' . $student['career_name']) ?></td>
                 <td class="table-cell action">
-                  <a href="./actions/edit-student.php?id=<?= $student['control_number'] ?>">
+                  <button class="edit-button" data-id="<?= htmlspecialchars($student['control_number']) ?>" data-first_name="<?= htmlspecialchars($student['first_name']) ?>" data-last_name="<?= htmlspecialchars($student['last_name']) ?>" data-generation="<?= htmlspecialchars($student['generation']) ?>" data-group_semester="<?= htmlspecialchars($student['group_semester']) ?>" data-group_letter="<?= htmlspecialchars($student['group_letter']) ?>" data-career_name="<?= htmlspecialchars($student['career_name']) ?>">
                     <img src="./../icons/edit.svg" alt="Editar">
-                  </a>
-                  <a href="./actions/delete-student.php?id=<?= $student['control_number'] ?>">
+                  </button>
+                  <a href="./actions/delete-student.php?id=<?= htmlspecialchars($student['control_number']) ?>">
                     <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>
@@ -162,6 +173,45 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
       <?php endif; ?>
     </ul>
   </main>
+
+  <dialog id="edit-student-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-student-modal">
+      <img src="./../icons/close.svg" alt="Cerrar">
+    </button>
+
+    <h3 class="modal-title">Editar Alumno</h3>
+    <form action="./edit-student.php" method="post" id="edit-form">
+      <input type="hidden" name="control_number" id="modal-control_number">
+      <fieldset>
+        <legend hidden>Datos del Alumno</legend>
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="first_name" id="modal-first_name" required>
+        </label>
+        <label>
+          <span>Apellido</span>
+          <input type="text" name="last_name" id="modal-last_name" required>
+        </label>
+        <label>
+          <span>Generación</span>
+          <input type="text" name="generation" id="modal-generation" required>
+        </label>
+        <label>
+          <span>Semestre</span>
+          <input type="text" name="group_semester" id="modal-group_semester" required>
+        </label>
+        <label>
+          <span>Letra</span>
+          <input type="text" name="group_letter" id="modal-group_letter" required>
+        </label>
+        <label>
+          <span>Carrera</span>
+          <input type="text" name="career_name" id="modal-career_name" required>
+        </label>
+      </fieldset>
+      <button type="submit" class="button">Guardar</button>
+    </form>
+  </dialog>
 
   <footer id="bottom-footer">
     <span><?= FOOTER_ADDRESS ?></span>
@@ -192,6 +242,101 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
 
   <script src="./../js/menu.js"></script>
   <script src="./../js/modals.js"></script>
+  <script>
+    const editButtons = document.querySelectorAll('.edit-button');
+    const editModal = document.getElementById('edit-student-modal');
+    const closeModal = document.getElementById('close-edit-student-modal');
+    const editForm = document.getElementById('edit-form');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const editButtons = document.querySelectorAll('.edit-button');
+            const editModal = document.getElementById('edit-student-modal');
+            const closeModal = document.getElementById('close-edit-student-modal');
+            const editForm = document.getElementById('edit-form');
+            
+            editButtons.forEach(button => {
+              button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const firstName = button.getAttribute('data-first_name');
+                const lastName = button.getAttribute('data-last_name');
+                const generation = button.getAttribute('data-generation');
+                const groupSemester = button.getAttribute('data-group_semester');
+                const groupLetter = button.getAttribute('data-group_letter');
+                const careerName = button.getAttribute('data-career_name');
+            
+                // Set the values in the form
+                editForm['control_number'].value = id;
+                editForm['first_name'].value = firstName;
+                editForm['last_name'].value = lastName;
+                editForm['generation'].value = generation;
+                editForm['group_semester'].value = groupSemester;
+                editForm['group_letter'].value = groupLetter;
+                editForm['career_name'].value = careerName;
+            
+                // Show the modal
+                editModal.showModal();
+              });
+            });
+            
+            // Close the modal when the close button is clicked
+            closeModal.addEventListener('click', () => {
+              editModal.close();
+            });const id = button.getAttribute('data-id');
+            const firstName = button.getAttribute('data-first_name');
+            const lastName = button.getAttribute('data-last_name');
+            const generation = button.getAttribute('data-generation');
+            const groupSemester = button.getAttribute('data-group_semester');
+            const groupLetter = button.getAttribute('data-group_letter');
+            const careerName = button.getAttribute('data-career_name');
+
+            document.getElementById('modal-control_number').value = id;
+            document.getElementById('modal-first_name').value = firstName;
+            document.getElementById('modal-last_name').value = lastName;
+            document.getElementById('modal-generation').value = generation;
+            document.getElementById('modal-group_semester').value = groupSemester;
+            document.getElementById('modal-group_letter').value = groupLetter;
+            document.getElementById('modal-career_name').value = careerName;
+
+            editModal.showModal();
+        });
+    });
+
+    closeModal.addEventListener('click', () => {
+        editModal.close();
+    });
+
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(editForm);
+
+        try {
+            const response = await fetch(editForm.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok) {
+                // Mostrar modal de éxito
+                document.getElementById('info-modal').showModal();
+            } else {
+                // Mostrar modal de error
+                alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
+        } finally {
+            editModal.close();
+            setTimeout(() => {
+                window.location.href = './students.php';
+            }, 2000); // Redireccionar a estudiantes después de 2 segundos
+        }
+    });
+</script>
 </body>
 
 </html>
