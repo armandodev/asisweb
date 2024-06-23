@@ -114,7 +114,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
 
   <main class="container">
     <form method="get">
-    <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= htmlspecialchars($search) ?>">
+      <input class="input" type="search" name="search" placeholder="Nombre completo" value="<?= htmlspecialchars($search) ?>">
     </form>
     <section class="table-section">
       <table class="table">
@@ -194,18 +194,6 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
         <label>
           <span>Generación</span>
           <input type="text" name="generation" id="modal-generation" required>
-        </label>
-        <label>
-          <span>Semestre</span>
-          <input type="text" name="group_semester" id="modal-group_semester" required>
-        </label>
-        <label>
-          <span>Letra</span>
-          <input type="text" name="group_letter" id="modal-group_letter" required>
-        </label>
-        <label>
-          <span>Carrera</span>
-          <input type="text" name="career_name" id="modal-career_name" required>
         </label>
       </fieldset>
       <button type="submit" class="button">Guardar</button>

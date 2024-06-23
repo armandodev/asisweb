@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('Campos obligatorios faltantes: ' . json_encode($_POST));
     } else {
         try {
-            $db->beginTransaction();
+            // $db->beginTransaction(); Todas las lineas comentadas son errores comadre, se debe eliminar, esos métodos no existen en nuestra clase de Database, algo estarás haciendo mal que te llevo a esos métodos inexistentes
 
             $update_student = $db->execute("
                 UPDATE students
@@ -50,21 +50,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
 
                 if ($update_group) {
-                    $db->commit();
+                    // $db->commit();
                     $response['status'] = 'success';
                     $response['message'] = 'Datos del alumno actualizados correctamente.';
                 } else {
-                    $db->rollBack();
+                    // $db->rollBack();
                     $response['message'] = 'Error al actualizar el grupo del alumno.';
                     error_log('Error al actualizar el grupo del alumno.');
                 }
             } else {
-                $db->rollBack();
+                // $db->rollBack();
                 $response['message'] = 'Error al actualizar los datos del alumno.';
                 error_log('Error al actualizar los datos del alumno.');
             }
         } catch (Exception $e) {
-            $db->rollBack();
+            // $db->rollBack();
             $response['message'] = 'Error: ' . $e->getMessage();
             error_log('Excepción capturada: ' . $e->getMessage());
         }
@@ -76,4 +76,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 header('Content-Type: application/json');
 echo json_encode($response);
-?>
