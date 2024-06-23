@@ -1,6 +1,5 @@
 <?php
 
-
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
@@ -180,7 +179,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     </button>
 
     <h3 class="modal-title">Editar Alumno</h3>
-    <form action="./edit-student.php" method="post" id="edit-form">
+    <form action=".actions/edit-student.php" method="post" id="edit-form">
       <input type="hidden" name="control_number" id="modal-control_number">
       <fieldset>
         <legend hidden>Datos del Alumno</legend>
@@ -249,94 +248,67 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     const editForm = document.getElementById('edit-form');
 
     editButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const editButtons = document.querySelectorAll('.edit-button');
-            const editModal = document.getElementById('edit-student-modal');
-            const closeModal = document.getElementById('close-edit-student-modal');
-            const editForm = document.getElementById('edit-form');
-            
-            editButtons.forEach(button => {
-              button.addEventListener('click', () => {
-                const id = button.getAttribute('data-id');
-                const firstName = button.getAttribute('data-first_name');
-                const lastName = button.getAttribute('data-last_name');
-                const generation = button.getAttribute('data-generation');
-                const groupSemester = button.getAttribute('data-group_semester');
-                const groupLetter = button.getAttribute('data-group_letter');
-                const careerName = button.getAttribute('data-career_name');
-            
-                // Set the values in the form
-                editForm['control_number'].value = id;
-                editForm['first_name'].value = firstName;
-                editForm['last_name'].value = lastName;
-                editForm['generation'].value = generation;
-                editForm['group_semester'].value = groupSemester;
-                editForm['group_letter'].value = groupLetter;
-                editForm['career_name'].value = careerName;
-            
-                // Show the modal
-                editModal.showModal();
-              });
-            });
-            
-            // Close the modal when the close button is clicked
-            closeModal.addEventListener('click', () => {
-              editModal.close();
-            });const id = button.getAttribute('data-id');
-            const firstName = button.getAttribute('data-first_name');
-            const lastName = button.getAttribute('data-last_name');
-            const generation = button.getAttribute('data-generation');
-            const groupSemester = button.getAttribute('data-group_semester');
-            const groupLetter = button.getAttribute('data-group_letter');
-            const careerName = button.getAttribute('data-career_name');
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        const firstName = button.getAttribute('data-first_name');
+        const lastName = button.getAttribute('data-last_name');
+        const generation = button.getAttribute('data-generation');
+        const groupSemester = button.getAttribute('data-group_semester');
+        const groupLetter = button.getAttribute('data-group_letter');
+        const careerName = button.getAttribute('data-career_name');
 
-            document.getElementById('modal-control_number').value = id;
-            document.getElementById('modal-first_name').value = firstName;
-            document.getElementById('modal-last_name').value = lastName;
-            document.getElementById('modal-generation').value = generation;
-            document.getElementById('modal-group_semester').value = groupSemester;
-            document.getElementById('modal-group_letter').value = groupLetter;
-            document.getElementById('modal-career_name').value = careerName;
+        editForm['control_number'].value = id;
+        editForm['first_name'].value = firstName;
+        editForm['last_name'].value = lastName;
+        editForm['generation'].value = generation;
+        editForm['group_semester'].value = groupSemester;
+        editForm['group_letter'].value = groupLetter;
+        editForm['career_name'].value = careerName;
 
-            editModal.showModal();
-        });
+        // Mostrar el modal de edición
+        editModal.showModal();
+      });
     });
 
+    // Cerrar el modal al hacer clic en el botón de cerrar
     closeModal.addEventListener('click', () => {
-        editModal.close();
+      editModal.close();
     });
 
+    // Enviar formulario de edición mediante AJAX
     editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        const formData = new FormData(editForm);
+      const formData = new FormData(editForm);
 
-        try {
-            const response = await fetch(editForm.action, {
-                method: 'POST',
-                body: formData
-            });
+      try {
+        const response = await fetch(editForm.action, {
+          method: 'POST',
+          body: formData
+        });
 
-            const responseData = await response.json();
+        const responseData = await response.json();
 
-            if (response.ok) {
-                // Mostrar modal de éxito
-                document.getElementById('info-modal').showModal();
-            } else {
-                // Mostrar modal de error
-                alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
-        } finally {
-            editModal.close();
-            setTimeout(() => {
-                window.location.href = './students.php';
-            }, 2000); // Redireccionar a estudiantes después de 2 segundos
+        if (response.ok) {
+          // Mostrar modal de éxito
+          document.getElementById('info-modal').showModal();
+        } else {
+          // Mostrar mensaje de error
+          alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
         }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
+      } finally {
+        // Cerrar el modal de edición después de enviar el formulario
+        editModal.close();
+        // Redireccionar a la página de estudiantes después de 2 segundos
+        setTimeout(() => {
+          window.location.href = './students.php';
+        }, 2000);
+      }
     });
-</script>
+  </script>
 </body>
 
 </html>
