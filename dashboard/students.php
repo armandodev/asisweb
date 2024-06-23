@@ -179,7 +179,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     </button>
 
     <h3 class="modal-title">Editar Alumno</h3>
-    <form action=".actions/edit-student.php" method="post" id="edit-form">
+    <form action="./actions/edit-student.php" method="post" id="edit-form">
       <input type="hidden" name="control_number" id="modal-control_number">
       <fieldset>
         <legend hidden>Datos del Alumno</legend>
@@ -241,17 +241,11 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
         const firstName = button.getAttribute('data-first_name');
         const lastName = button.getAttribute('data-last_name');
         const generation = button.getAttribute('data-generation');
-        const groupSemester = button.getAttribute('data-group_semester');
-        const groupLetter = button.getAttribute('data-group_letter');
-        const careerName = button.getAttribute('data-career_name');
 
         editForm['control_number'].value = id;
         editForm['first_name'].value = firstName;
         editForm['last_name'].value = lastName;
         editForm['generation'].value = generation;
-        editForm['group_semester'].value = groupSemester;
-        editForm['group_letter'].value = groupLetter;
-        editForm['career_name'].value = careerName;
 
         // Mostrar el modal de edición
         editModal.showModal();
@@ -261,40 +255,6 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     // Cerrar el modal al hacer clic en el botón de cerrar
     closeModal.addEventListener('click', () => {
       editModal.close();
-    });
-
-    // Enviar formulario de edición mediante AJAX
-    editForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(editForm);
-
-      try {
-        const response = await fetch(editForm.action, {
-          method: 'POST',
-          body: formData
-        });
-
-        const responseData = await response.json();
-
-        if (response.ok) {
-          // Mostrar modal de éxito
-          document.getElementById('info-modal').showModal();
-        } else {
-          // Mostrar mensaje de error
-          alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un problema al procesar la solicitud. Por favor, inténtelo de nuevo.');
-      } finally {
-        // Cerrar el modal de edición después de enviar el formulario
-        editModal.close();
-        // Redireccionar a la página de estudiantes después de 2 segundos
-        setTimeout(() => {
-          window.location.href = './students.php';
-        }, 2000);
-      }
     });
   </script>
 </body>
