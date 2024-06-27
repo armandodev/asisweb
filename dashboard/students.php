@@ -1,5 +1,4 @@
 <?php
-
 require_once './../config.php';
 
 if (!isset($_SESSION['user'])) {
@@ -22,7 +21,7 @@ $total_pages = ceil($total_students / $limit);
 $total_pages = $total_pages ? $total_pages : 1;
 
 $students = $db->execute("
-    SELECT students.control_number, students.curp, students.first_name, students.last_name, students.generation, groups.group_semester, groups.group_letter, careers.career_name 
+    SELECT students.control_number, students.curp, students.first_name, students.last_name, students.generation, groups.group_id, groups.group_semester, groups.group_letter, careers.career_name 
     FROM group_list 
     JOIN `groups` ON group_list.group_id = groups.group_id 
     JOIN students ON group_list.control_number = students.control_number 
@@ -35,8 +34,16 @@ if ($students->rowCount() === 0) $empty = true;
 if (!$students) $empty = true;
 
 $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de asistencia del docente ingresado
-?>
+// El código php se ejecuta dentro de la etiqueta <?php para que sea interpretado por PHP ay te encargo conocimientos básicos XD
+// Es gratis pendeja el supermaven XD, te dije solo instala la extension y te pide un correo y ya 
 
+$groups = $db->execute("
+    SELECT `groups`.group_id, `groups`.group_semester, `groups`.group_letter, careers.career_name
+    FROM `groups`
+    JOIN careers ON `groups`.career_id = careers.career_id");
+
+$groups = $groups->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de asistencia del docente ingresado
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -87,6 +94,42 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     </ul>
   </dialog>
 
+  <dialog id="edit-student-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-student-modal">
+      <img src="./../icons/close.svg" alt="Cerrar">
+    </button>
+
+    <h3 class="modal-title">Editar Alumno</h3>
+    <form action="./actions/edit-student.php" method="post" id="edit-student-form">
+      <input type="hidden" name="control_number" id="modal-control_number">
+      <fieldset>
+        <legend hidden>Datos del Alumno</legend>
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="first_name" id="modal-first_name" required>
+        </label>
+        <label>
+          <span>Apellido</span>
+          <input type="text" name="last_name" id="modal-last_name" required>
+        </label>
+        <label>
+          <span>Generación</span>
+          <input type="text" name="generation" id="modal-generation" required>
+        </label>
+        <label>
+          <span>Grupo</span>
+          <select name="group_id" id="modal-group_id" required>
+            <option value="">Seleccionar grupo</option>
+            <?php foreach ($groups as $group) : ?>
+              <option value="<?= htmlspecialchars($group['group_id']) ?>"><?= htmlspecialchars($group['career_name'] . ' - ' . $group['group_semester'] . $group['group_letter']) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </label>
+      </fieldset>
+      <button type="submit" class="button">Guardar</button>
+    </form>
+  </dialog>
+
   <header id="top-header">
     <div class="container">
       <a class="logo" href="./../profile.php">
@@ -102,7 +145,6 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
           <li><a class="h-link" href="./careers.php">Carreras</a></li>
           <li><a class="h-link" href="./groups.php">Grupos</a></li>
           <li><a class="h-link active" href="./students.php">Estudiantes</a></li>
-          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>
@@ -142,7 +184,7 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
                 <td class="table-cell"><?= htmlspecialchars($student['generation']) ?></td>
                 <td class="table-cell"><?= htmlspecialchars($student['group_semester'] . $student['group_letter'] . ' - ' . $student['career_name']) ?></td>
                 <td class="table-cell action">
-                  <button class="edit-button" data-id="<?= htmlspecialchars($student['control_number']) ?>" data-first_name="<?= htmlspecialchars($student['first_name']) ?>" data-last_name="<?= htmlspecialchars($student['last_name']) ?>" data-generation="<?= htmlspecialchars($student['generation']) ?>" data-group_semester="<?= htmlspecialchars($student['group_semester']) ?>" data-group_letter="<?= htmlspecialchars($student['group_letter']) ?>" data-career_name="<?= htmlspecialchars($student['career_name']) ?>">
+                  <button class="edit-student-button" data-id="<?= htmlspecialchars($student['control_number']) ?>" data-first_name="<?= htmlspecialchars($student['first_name']) ?>" data-last_name="<?= htmlspecialchars($student['last_name']) ?>" data-generation="<?= htmlspecialchars($student['generation']) ?>" data-group_semester="<?= htmlspecialchars($student['group_semester']) ?>" data-group_letter="<?= htmlspecialchars($student['group_letter']) ?>" data-career_name="<?= htmlspecialchars($student['career_name']) ?>" data-group_id="<?= htmlspecialchars($student['group_id']) ?>">
                     <img src="./../icons/edit.svg" alt="Editar">
                   </button>
                   <a href="./actions/delete-student.php?id=<?= htmlspecialchars($student['control_number']) ?>">
@@ -173,33 +215,6 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
     </ul>
   </main>
 
-  <dialog id="edit-student-modal" class="modal modal-content">
-    <button class="close-button" id="close-edit-student-modal">
-      <img src="./../icons/close.svg" alt="Cerrar">
-    </button>
-
-    <h3 class="modal-title">Editar Alumno</h3>
-    <form action="./actions/edit-student.php" method="post" id="edit-form">
-      <input type="hidden" name="control_number" id="modal-control_number">
-      <fieldset>
-        <legend hidden>Datos del Alumno</legend>
-        <label>
-          <span>Nombre</span>
-          <input type="text" name="first_name" id="modal-first_name" required>
-        </label>
-        <label>
-          <span>Apellido</span>
-          <input type="text" name="last_name" id="modal-last_name" required>
-        </label>
-        <label>
-          <span>Generación</span>
-          <input type="text" name="generation" id="modal-generation" required>
-        </label>
-      </fieldset>
-      <button type="submit" class="button">Guardar</button>
-    </form>
-  </dialog>
-
   <footer id="bottom-footer">
     <span><?= FOOTER_ADDRESS ?></span>
 
@@ -229,34 +244,6 @@ $students = $students->fetchAll(PDO::FETCH_ASSOC); // Obtenemos los registros de
 
   <script src="./../js/menu.js"></script>
   <script src="./../js/modals.js"></script>
-  <script>
-    const editButtons = document.querySelectorAll('.edit-button');
-    const editModal = document.getElementById('edit-student-modal');
-    const closeModal = document.getElementById('close-edit-student-modal');
-    const editForm = document.getElementById('edit-form');
-
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const id = button.getAttribute('data-id');
-        const firstName = button.getAttribute('data-first_name');
-        const lastName = button.getAttribute('data-last_name');
-        const generation = button.getAttribute('data-generation');
-
-        editForm['control_number'].value = id;
-        editForm['first_name'].value = firstName;
-        editForm['last_name'].value = lastName;
-        editForm['generation'].value = generation;
-
-        // Mostrar el modal de edición
-        editModal.showModal();
-      });
-    });
-
-    // Cerrar el modal al hacer clic en el botón de cerrar
-    closeModal.addEventListener('click', () => {
-      editModal.close();
-    });
-  </script>
 </body>
 
 </html>

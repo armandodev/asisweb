@@ -90,7 +90,6 @@ $groups = $groups->fetchAll(PDO::FETCH_ASSOC);
           <li><a class="h-link" href="./careers.php">Carreras</a></li>
           <li><a class="h-link active" href="./groups.php">Grupos</a></li>
           <li><a class="h-link" href="./students.php">Estudiantes</a></li>
-          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>

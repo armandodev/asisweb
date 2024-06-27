@@ -77,6 +77,29 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
     </ul>
   </dialog>
 
+  <dialog id="edit-subject-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-subject-modal">
+      <img src="./../icons/close.svg" alt="Cerrar">
+    </button>
+
+    <h3 class="modal-title">Editar Alumno</h3>
+    <form action="./actions/edit-subject.php" method="post" id="edit-subject-form">
+      <input type="hidden" name="subject_id" id="modal-subject_id">
+      <fieldset>
+        <legend hidden>Datos de la materia</legend>
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="subject_name" id="modal-subject_name" required>
+        </label>
+        <label>
+          <span>Siglas</span>
+          <input type="text" name="initials" id="modal-initials">
+        </label>
+      </fieldset>
+      <button type="submit" class="button">Guardar</button>
+    </form>
+  </dialog>
+
   <header id="top-header">
     <div class="container">
       <a class="logo" href="./../profile.php">
@@ -92,7 +115,6 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
           <li><a class="h-link" href="./careers.php">Carreras</a></li>
           <li><a class="h-link" href="./groups.php">Grupos</a></li>
           <li><a class="h-link" href="./students.php">Estudiantes</a></li>
-          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>
@@ -126,10 +148,10 @@ $subjects = $subjects->fetchAll(PDO::FETCH_ASSOC);
                 <td class="table-cell"><?= $subject['subject_name'] ?></td>
                 <td class="table-cell"><?= $subject['initialism'] ? $subject['initialism'] : 'Sin siglas' ?></td>
                 <td class="table-cell action">
-                  <a href="./edit-subject.php?id=<?= $subject['subject_id'] ?>">
+                  <button class="edit-subject-button" data-id="<?= $subject['subject_id'] ?>" data-subject="<?= $subject['subject_name'] ?>" data-initials="<?= $subject['initialism'] ? $subject['initialism'] : 'Sin siglas' ?>">
                     <img src="./../icons/edit.svg" alt="Editar">
-                  </a>
-                  <a href="./../api/subject.php?action=delete&id=<?= $subject['subject_id'] ?>">
+                  </button>
+                  <a href="./delete-subject.php?id=<?= $subject['subject_id'] ?>">
                     <img src="./../icons/delete.svg" alt="Eliminar">
                   </a>
                 </td>

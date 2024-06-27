@@ -77,6 +77,28 @@ $careers = $careers->fetchAll(PDO::FETCH_ASSOC);
     </ul>
   </dialog>
 
+  <dialog id="edit-career-modal" class="modal modal-content">
+    <button class="close-button" id="close-edit-career-modal">
+      <img src="./../icons/close.svg" alt="Cerrar">
+    </button>
+    <h3 class="modal-title">Editar Carrera</h3>
+    <form action="./actions/edit-career.php" method="post" id="edit-career-form">
+      <input type="hidden" name="career_id" id="modal-career_id">
+      <fieldset>
+        <legend hidden>Datos de la Carrera</legend>
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="career_name" id="modal-career_name" required>
+        </label>
+        <label>
+          <span>Siglas</span>
+          <input type="text" name="abbreviation" id="modal-abbreviation" required>
+        </label>
+      </fieldset>
+      <button type="submit" class="button">Guardar</button>
+    </form>
+  </dialog>
+
   <header id="top-header">
     <div class="container">
       <a class="logo" href="./../profile.php">
@@ -92,7 +114,6 @@ $careers = $careers->fetchAll(PDO::FETCH_ASSOC);
           <li><a class="h-link active" href="./careers.php">Carreras</a></li>
           <li><a class="h-link" href="./groups.php">Grupos</a></li>
           <li><a class="h-link" href="./students.php">Estudiantes</a></li>
-          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>

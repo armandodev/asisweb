@@ -84,9 +84,8 @@ if (count($students) === 0) $empty = true;
           <li><a class="h-link" href="./../profile.php">Inicio</a></li>
           <li><a class="h-link" href="./users.php">Usuarios</a></li>
           <li><a class="h-link" href="./subjects.php">Asignaturas</a></li>
-          <li><a class="h-link" href=" ./groups.php">Grupos</a></li>
+          <li><a class="h-link active" href=" ./groups.php">Grupos</a></li>
           <li><a class="h-link" href="./students.php">Estudiantes</a></li>
-          <li><a class="h-link" href="./reports.php">Registros</a></li>
           <li><button class="h-link" id="logout">Cerrar sesión</button></li>
         </ul>
       </nav>

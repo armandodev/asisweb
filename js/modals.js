@@ -71,3 +71,103 @@ if (editPassword && showEditPassword && closeEditPassword) {
     if (editProfile) editProfile.showModal(); // Si el modal de editar perfil existe, aseguramos de mostrarlo
   });
 }
+
+ // Modal de editar carrera
+ const editCareerButtons = document.querySelectorAll('.edit-career-button');
+ const editCareerModal = document.getElementById('edit-career-modal');
+ const closeEditCareerModal = document.getElementById('close-edit-career-modal');
+ const editCareerForm = document.getElementById('edit-career-form');
+
+ if (editCareerButtons && editCareerModal && closeEditCareerModal && editCareerForm) {
+   editCareerButtons.forEach((button) => {
+     button.addEventListener('click', () => {
+       const id = button.getAttribute('data-id');
+       const careerName = button.getAttribute('data-career_name');
+       const abbreviation = button.getAttribute('data-abbreviation');
+
+       editCareerForm['career_id'].value = id;
+       editCareerForm['career_name'].value = careerName;
+       editCareerForm['abbreviation'].value = abbreviation;
+
+       editCareerModal.showModal();
+     });
+   });
+
+   closeEditCareerModal.addEventListener('click', () => {
+     editCareerModal.close();
+   });
+ }
+
+// Modal de editar alumno
+const editStudentButtons = document.querySelectorAll(".edit-student-button");
+const editStudentModal = document.getElementById("edit-student-modal");
+const closeEditStudentModal = document.getElementById(
+  "close-edit-student-modal"
+);
+const editStudentForm = document.getElementById("edit-student-form");
+
+if (
+  editStudentButtons &&
+  editStudentModal &&
+  closeEditStudentModal &&
+  editStudentForm
+) {
+  editStudentButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const firstName = button.getAttribute("data-first_name");
+      const lastName = button.getAttribute("data-last_name");
+      const generation = button.getAttribute("data-generation");
+      const groupId = button.getAttribute("data-group_id");
+
+      editStudentForm["control_number"].value = id;
+      editStudentForm["first_name"].value = firstName;
+      editStudentForm["last_name"].value = lastName;
+      editStudentForm["generation"].value = generation;
+      editStudentForm["group_id"].value = groupId;
+
+      // Mostrar el modal de edición
+      editStudentModal.showModal();
+    });
+  });
+
+  // Cerrar el modal al hacer clic en el botón de cerrar
+  closeEditStudentModal.addEventListener("click", () => {
+    editStudentModal.close();
+  });
+}
+
+// Modal de editar asignatura
+const editSubjectButtons = document.querySelectorAll(".edit-subject-button");
+const editSubjectModal = document.getElementById("edit-subject-modal");
+const closeEditSubjectModal = document.getElementById(
+  "close-edit-subject-modal"
+);
+const editSubjectForm = document.getElementById("edit-subject-form");
+
+if (
+  editSubjectButtons &&
+  editSubjectModal &&
+  closeEditSubjectModal &&
+  editSubjectForm
+) {
+  editSubjectButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const subjectName = button.getAttribute("data-subject");
+      const initials = button.getAttribute("data-initials");
+
+      editSubjectForm["subject_id"].value = id;
+      editSubjectForm["subject_name"].value = subjectName;
+      editSubjectForm["initials"].value = initials;
+
+      // Mostrar el modal de edición
+      editSubjectModal.showModal();
+    });
+  });
+
+  // Cerrar el modal al hacer clic en el botón de cerrar
+  closeEditSubjectModal.addEventListener("click", () => {
+    editSubjectModal.close();
+  });
+}

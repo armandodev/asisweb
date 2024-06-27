@@ -1,5 +1,4 @@
 <?php
-
 require_once './../../config.php';
 
 if (!isset($_SESSION['user'])) {
@@ -24,6 +23,7 @@ try {
 	$first_name = $_POST['first_name'];
 	$last_name = $_POST['last_name'];
 	$generation = $_POST['generation'];
+	$group_id = $_POST['group_id'];
 
 	$update_student = $db->execute("
         UPDATE students
@@ -37,6 +37,16 @@ try {
 	]);
 
 	if (!$update_student) throw new Exception('Error al actualizar los datos del alumno.');
+
+	$update_group = $db->execute("
+	UPDATE group_list
+	SET group_id = :group_id
+	WHERE control_number = :control_number", [
+		'group_id' => $group_id,
+		'control_number' => $control_number
+	]);
+
+	if (!$update_group) throw new Exception('Error al actualizar el grupo del alumno.');
 
 	$_SESSION['info'] = [
 		'title' => 'Datos actualizados correctamente.',

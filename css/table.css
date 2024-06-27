@@ -32,7 +32,9 @@ main.container {
   gap: 5px;
 }
 
-.table-cell.action a {
+.table-cell.action a,
+.table-cell.action button {
+  cursor: pointer;
   display: flex;
   width: fit-content;
   height: fit-content;
@@ -42,7 +44,8 @@ main.container {
   transition: background-color 0.3s;
 }
 
-.table-cell.action a:hover {
+.table-cell.action a:hover,
+.table-cell.action button:hover {
   background-color: #ddd;
 }
 
